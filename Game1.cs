@@ -53,6 +53,7 @@ namespace ImagineRITGame
         // Player texture fields
         private Texture2D playerTexture;
         private Texture2D fishingBobTexture;
+        private Texture2D fishTexture;
 
         // Sprite sheet data
         private int numSpritesInSheet;
@@ -99,16 +100,11 @@ namespace ImagineRITGame
 
             playerTexture = Content.Load<Texture2D>("char_all");
             fishingBobTexture = Content.Load<Texture2D>("inv_items");
+            fishTexture = Content.Load<Texture2D>("fish_shadow_black");
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
 
             player = new Player(playerTexture, new Vector2(100, 0), fishingBobTexture);
-
-            // Set up animation data, too
-            fps = 7.0;
-            secondsPerFrame = 1.0 / fps;
-            timeCounter = 0;
-            playerCurrentFrame = 1;
         }
 
         protected override void Update(GameTime gameTime)
