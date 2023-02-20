@@ -2,21 +2,22 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Windows.Forms.VisualStyles;
 
 namespace ImagineRITGame
 {
+    delegate void MenuButtonActivatedDelegate(int state);
+
+    public enum GameState : int
+    {
+        MainMenu = 1,
+        Game = 2,
+        Inventory = 3,
+        PauseMenu = 4
+    }
+
     public class Game1 : Game
     {
-     
-        
-        public enum GameState : int
-        {
-            MainMenu = 1,
-            FishingPost = 2,
-            FishPostCard = 3,
-            PauseMenu = 4
-        }
-
 
         // Default fields
         private GraphicsDeviceManager _graphics;
@@ -54,6 +55,7 @@ namespace ImagineRITGame
         private Texture2D playerTexture;
         private Texture2D fishingBobTexture;
         private Texture2D fishTexture;
+        private Texture2D buttonTexture;
 
         // Sprite sheet data
         private int numSpritesInSheet;
@@ -89,7 +91,9 @@ namespace ImagineRITGame
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // Default GameState is MainMenu
+            gameState = GameState.Game;
+            prevGameState = GameState.Game;
 
             base.Initialize();
         }
@@ -98,9 +102,8 @@ namespace ImagineRITGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            playerTexture = Content.Load<Texture2D>("char_all");
-            fishingBobTexture = Content.Load<Texture2D>("inv_items");
-            fishTexture = Content.Load<Texture2D>("fish_shadow_black");
+            LoadTextures();
+
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
 
@@ -114,6 +117,28 @@ namespace ImagineRITGame
 
             // Always update the animation
             UpdateAnimation(gameTime);
+
+            // Assigning the appropriate current game state
+ //           switch (gameState)
+ //           {
+ //               case GameState.MainMenu:
+ //                   if ()
+ //           }
+
+            switch (gameState)
+            {
+                case GameState.MainMenu:
+                    //mainMenu.Update(gameTime);
+                    break;
+                case GameState.PauseMenu:
+                    //pauseMenu.Update(gameTime);
+                    break;
+                case GameState.Inventory:
+                    //inventory.Update(gameTime);
+                    break;
+                case GameState.Game:
+                    break;
+            }
 
             base.Update(gameTime);
         }
@@ -138,11 +163,34 @@ namespace ImagineRITGame
                 DepthStencilState.Default,
                 RasterizerState.CullCounterClockwise);
 
-            player.Draw(_spriteBatch);
+            if (gameState == GameState.Game)
+            {
+                player.Draw(_spriteBatch);
+            }
 
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
+
+        public void LoadTextures()
+        {
+            playerTexture = Content.Load<Texture2D>("char_all");
+            fishingBobTexture = Content.Load<Texture2D>("inv_items");
+            fishTexture = Content.Load<Texture2D>("fish_shadow_black");
+            buttonTexture = Content.Load<Texture2D>("button maker");
+        }
+
+        /// <summary>
+        /// Returns whether the last key pressed was only pressed one time
+        /// </summary>
+        /// <param name="key">the key that has been pressed</param>
+        /// <returns>if the last key pressed was only pressed one time</returns>
+        public static bool SingleKeyPress(Keys key, KeyboardState prevKBState)
+        {
+            return Keyboard.GetState().IsKeyDown(key) && prevKBState.IsKeyUp(key);
+        }
+
     }
 }
