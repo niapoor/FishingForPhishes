@@ -22,6 +22,10 @@ namespace ImagineRITGame
     /// </summary>
     class QuestionPack
     {
+
+        // Constant for max number of options/answers for a question -- must match the titled columns of the CSV files
+        public const int MaxOptions = 4;
+
         // QuestionPack state
         private Dictionary<Difficulty, List<Question>> questionSet;
         private Random random;
@@ -89,7 +93,7 @@ namespace ImagineRITGame
         /// <returns>An array of length 5, containing the Question, all answers, and if necessary, empty string placeholders</returns>
         private String[] CSVSplitter(string line)
         {
-            String[] splitLine = new string[5];
+            String[] splitLine = new string[MaxOptions + 1];
             int currIndex = 0;
             int pointer = 0;
             for (int i = 0; i < line.Length; i++)
