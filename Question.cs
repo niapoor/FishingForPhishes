@@ -91,6 +91,15 @@ namespace ImagineRITGame
         }
 
         /// <summary>
+        /// Method <c>AnswerList</c> fetches the list of Answer objects contained in the question
+        /// </summary>
+        /// <returns>The list of Answers corresponding to the question</returns>
+        public List<Answer> AnswerList()
+        {
+            return this.answerList;
+        }
+
+        /// <summary>
         /// Method <c>ShuffleList</c> shuffles the Question's AnswerList
         /// </summary>
         private void ShuffleList()
