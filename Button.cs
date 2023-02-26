@@ -56,7 +56,7 @@ namespace ImagineRITGame
         public Button(Point position, ButtonType buttonType, Texture2D texture)
         {
             // Assigning values to fields
-            rect = new Rectangle(position, new Point(297, 109));
+            rect = new Rectangle(position, new Point(330, 246));
             this.buttonType = buttonType;
             this.texture = texture;
             // If the button is being hovered over
@@ -67,22 +67,21 @@ namespace ImagineRITGame
             switch (buttonType)
             {
                 default:
-                    textRect = new Rectangle(0, 0, 297, 109);
+                    textRect = new Rectangle(6, 112, 53, 41);
                     break;
 
                 case ButtonType.Start:
-                    textRect = new Rectangle(297, 0, 297, 109);
+                    textRect = new Rectangle(6, 64, 53, 41);
                     break;
 
                 case ButtonType.Exit:
-                    textRect = new Rectangle(297, 109, 297, 109);
+                    textRect = new Rectangle(70, 64, 53, 41);
                     break;
 
                 case ButtonType.Back:
-                    textRect = new Rectangle(297, 109, 297, 109);
+                    textRect = new Rectangle(198, 64, 53, 41);
                     break;
             }
-
 
         }
 

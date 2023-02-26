@@ -24,7 +24,7 @@ namespace ImagineRITGame
 
         // Fields for the menu's various textures
         protected List<Texture2D> textures;
-        protected List<SpriteFont> fonts;
+        //protected List<SpriteFont> fonts;
 
         // Buttons
         protected List<Button> buttons;
@@ -33,7 +33,7 @@ namespace ImagineRITGame
         //Previous Input States
         protected MouseState prevMState;
         protected KeyboardState prevKBState;
-        protected GamePadState prevGPState;
+        protected bool test;
 
         /// <summary>
         /// A set for the previous keyboard state
@@ -56,11 +56,10 @@ namespace ImagineRITGame
         /// </summary>
         /// <param name="textures">list of all textures used by menus</param>
         /// <param name="fonts">list of all fonts</param>
-        public Menu(List<Texture2D> textures, List<SpriteFont> fonts)
+        public Menu(List<Texture2D> textures)
         {
             // Assigning values to the Menu's fields
             this.textures = textures;
-            this.fonts = fonts;
         }
 
 
@@ -69,9 +68,14 @@ namespace ImagineRITGame
         /// </summary>
         public virtual void Update()
         {
-            // Menus with only 1 button don't need to worry
-            // about changing the current button
-            if (buttons.Count > 1)
+
+            foreach (Button b in buttons)
+            {
+                if (b.IsHovered)
+                    currentButton= b;
+            }
+
+/*            if (buttons.Count > 1)
             {
                 // Move the current button down
                 if (Game1.SingleKeyPress(Keys.Down, prevKBState))
@@ -81,7 +85,7 @@ namespace ImagineRITGame
                     else
                         currentButton = buttons[buttons.IndexOf(currentButton) + 1];
                     currentButton.IsHovered = true;
-                    // PlayEffect(SoundEffects.ChangeButton);
+                    //PlayEffect(SoundEffects.ChangeButton);
                     if (currentButton == buttons[0])
                         buttons[^1].IsHovered = false;
                     else
@@ -95,17 +99,18 @@ namespace ImagineRITGame
                     else
                         currentButton = buttons[buttons.IndexOf(currentButton) - 1];
                     currentButton.IsHovered = true;
-                    // PlayEffect(SoundEffects.ChangeButton);
+                    //PlayEffect(SoundEffects.ChangeButton);
                     if (currentButton == buttons[^1])
                         buttons[0].IsHovered = false;
                     else
                         buttons[buttons.IndexOf(currentButton) + 1].IsHovered = false;
                 }
-            }
+            }*/
             // Check to see if the button should be activated
             if (((Mouse.GetState().LeftButton == ButtonState.Pressed &&
                 prevMState.LeftButton == ButtonState.Released)
-                && currentButton.IsHovered) || Game1.SingleKeyPress(Keys.Enter, prevKBState))
+                && currentButton.IsHovered) ||
+                Game1.SingleKeyPress(Keys.Enter, prevKBState))
                 if (currentButton != null)
                 {
                     ButtonActivated((int)currentButton.ButtonType);
@@ -119,13 +124,13 @@ namespace ImagineRITGame
         public virtual void Draw(SpriteBatch sb, Color hoverColor)
         {
             // Background
-            sb.Draw(textures[(int)MenuTextures.Background],
-                new Rectangle(0, 0, 1280, 960),
-                Color.White);
+            //sb.Draw(textures[(int)MenuTextures.Background],
+            //    new Rectangle(0, 0, 1280, 960),
+            //    Color.White);
 
             // Buttons
             foreach (Button b in buttons)
-                b.Draw(sb, b == currentButton ? hoverColor : Color.White);
+                b.Draw(sb, b.IsHovered ? hoverColor : Color.White);
         }
 
         /// <summary>

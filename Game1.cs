@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms.VisualStyles;
 
 namespace ImagineRITGame
@@ -51,7 +52,11 @@ namespace ImagineRITGame
 
         // Space for fonts
 
-        // Player texture fields
+        // Menu objects
+        private MainMenu mainMenu;
+        private List<Texture2D> menuTextures;
+
+        // Texture fields
         private Texture2D playerTexture;
         private Texture2D fishingBobTexture;
         private Texture2D fishTexture;
@@ -92,8 +97,13 @@ namespace ImagineRITGame
         protected override void Initialize()
         {
             // Default GameState is MainMenu
-            gameState = GameState.Game;
-            prevGameState = GameState.Game;
+            gameState = GameState.MainMenu;
+            prevGameState = GameState.MainMenu;
+
+            menuTextures = new List<Texture2D>();
+
+            // Game properties
+            Window.Title = "ImagineRIT Phishing Game";
 
             base.Initialize();
         }
@@ -103,6 +113,9 @@ namespace ImagineRITGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             LoadTextures();
+
+            // Initializing the Menu object for the main menu
+            mainMenu = new MainMenu(menuTextures);
 
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
@@ -128,7 +141,8 @@ namespace ImagineRITGame
             switch (gameState)
             {
                 case GameState.MainMenu:
-                    //mainMenu.Update(gameTime);
+                    mainMenu.Update(gameTime);
+                    mainMenu.MenuButtonActivated += ChangeGameState;
                     break;
                 case GameState.PauseMenu:
                     //pauseMenu.Update(gameTime);
@@ -163,9 +177,20 @@ namespace ImagineRITGame
                 DepthStencilState.Default,
                 RasterizerState.CullCounterClockwise);
 
-            if (gameState == GameState.Game)
+            switch (gameState)
             {
-                player.Draw(_spriteBatch);
+                case GameState.MainMenu:
+                    mainMenu.Draw(_spriteBatch, Color.Goldenrod);
+                    break;
+                case GameState.PauseMenu:
+                    //draw in
+                    break;
+                case GameState.Inventory:
+                    //draw in
+                    break;
+                case GameState.Game:
+                    player.Draw(_spriteBatch);
+                    break;
             }
 
             _spriteBatch.End();
@@ -173,6 +198,16 @@ namespace ImagineRITGame
             base.Draw(gameTime);
         }
 
+        private void ChangeGameState(int state)
+        {
+            if (state == 0)
+            {
+                gameState = GameState.Game;
+            }
+            else if (state == 1)
+                this.Exit();
+
+        }
 
         public void LoadTextures()
         {
@@ -180,7 +215,10 @@ namespace ImagineRITGame
             fishingBobTexture = Content.Load<Texture2D>("inv_items");
             fishTexture = Content.Load<Texture2D>("fish_shadow_black");
             buttonTexture = Content.Load<Texture2D>("button maker");
+            menuTextures.Add(buttonTexture);
         }
+
+
 
         /// <summary>
         /// Returns whether the last key pressed was only pressed one time
