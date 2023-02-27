@@ -15,9 +15,9 @@ namespace ImagineRITGame
     /// </summary>
     public enum ButtonType
     {
-        Start = 0,
-        Exit = 1,
-        Back = 2
+        Exit = 0,
+        Start = 1,
+        Back = -1
     }
 
     internal class Button

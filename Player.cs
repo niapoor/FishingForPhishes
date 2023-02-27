@@ -173,6 +173,7 @@ namespace ImagineRITGame
             if (!faceRight)
                 spe = SpriteEffects.FlipHorizontally;
             
+            // Drawing in the player
             sb.Draw(texture,
                 new Rectangle(500, 100, widthOfSingleSprite * 9, (int)(texture.Height / 5)),
                 new Rectangle((playerCurrentFrame) * widthOfSingleSprite, (animationType * 32), widthOfSingleSprite, texture.Height / 44),

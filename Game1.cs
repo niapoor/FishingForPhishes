@@ -54,6 +54,7 @@ namespace ImagineRITGame
 
         // Menu objects
         private MainMenu mainMenu;
+        private PauseMenu pauseMenu;
         private List<Texture2D> menuTextures;
 
         // Texture fields
@@ -114,8 +115,9 @@ namespace ImagineRITGame
 
             LoadTextures();
 
-            // Initializing the Menu object for the main menu
+            // Initializing Menu objects
             mainMenu = new MainMenu(menuTextures);
+            pauseMenu = new PauseMenu(menuTextures);
 
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
@@ -125,45 +127,55 @@ namespace ImagineRITGame
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
             // Always update the animation
             UpdateAnimation(gameTime);
 
-            // Assigning the appropriate current game state
- //           switch (gameState)
- //           {
- //               case GameState.MainMenu:
- //                   if ()
- //           }
-
+            // Assigning the appropriate current game state and updating the frame based on the game state
             switch (gameState)
             {
                 case GameState.MainMenu:
                     mainMenu.Update(gameTime);
+                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                        Exit();
                     mainMenu.MenuButtonActivated += ChangeGameState;
                     break;
                 case GameState.PauseMenu:
-                    //pauseMenu.Update(gameTime);
+                    // If the player selects 'esc' in the pause menu, return to the game
+                    pauseMenu.Update(gameTime);
+                    if (SingleKeyPress(Keys.Escape, previousKbState))
+                        ChangeGameState(-1);
+                    pauseMenu.MenuButtonActivated += ChangeGameState;
                     break;
                 case GameState.Inventory:
                     //inventory.Update(gameTime);
                     break;
                 case GameState.Game:
+                    // If the player selects 'esc' in the game, go to the pause menu
+                    if (SingleKeyPress(Keys.Escape, previousKbState))
+                        ChangeGameState(2);
                     break;
             }
+
+            // Updates the previous position of the keyboard / mouse
+            // (this is critical for the SingleKeyPress function, a very important function)
+            UpdatePrevInputStates();
 
             base.Update(gameTime);
         }
 
-        /// <summary>
+        // </summary>
         /// Helper for updating the selected player's animation based on time
         /// </summary>
         /// <param name="gameTime">Info about time from MonoGame</param>
         private void UpdateAnimation(GameTime gameTime)
         {
-            player.UpdateAnimation(gameTime);
+            switch (gameState)
+            {
+                case GameState.Game:
+                    player.UpdateAnimation(gameTime);
+                    break;
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -177,13 +189,14 @@ namespace ImagineRITGame
                 DepthStencilState.Default,
                 RasterizerState.CullCounterClockwise);
 
+            // Drawing in assets based on the current game state
             switch (gameState)
             {
                 case GameState.MainMenu:
                     mainMenu.Draw(_spriteBatch, Color.Goldenrod);
                     break;
                 case GameState.PauseMenu:
-                    //draw in
+                    pauseMenu.Draw(_spriteBatch, Color.Goldenrod);
                     break;
                 case GameState.Inventory:
                     //draw in
@@ -200,12 +213,39 @@ namespace ImagineRITGame
 
         private void ChangeGameState(int state)
         {
+            // The player pressed esc in the main menu or the exit button
             if (state == 0)
             {
+                // If the player pressed the exit button or esc in the main menu, exit the application (the game)
+                if (gameState == GameState.MainMenu)
+                    this.Exit();
+                // If the player pressed the exit button in the pause menu, return to the main menu
+                else if (gameState == GameState.PauseMenu)
+                {
+                    prevGameState = gameState;
+                    gameState = GameState.MainMenu;
+                }
+            }
+            // Brings you back to the previous GameState (the player probably presssed the back button but in some cases they may have pressed esc)
+            else if (state == -1)
+            {
+                GameState temp = gameState;
+                gameState = prevGameState;
+                prevGameState = temp;
+            }
+            // Pressing the start button triggers this event to start the game
+            else if (state == 1)
+            {
+                prevGameState = gameState;
                 gameState = GameState.Game;
             }
-            else if (state == 1)
-                this.Exit();
+            // Pressing esc in the game triggers this state to go to the pause menu
+            else if (state == 2)
+            {
+                prevGameState = gameState;
+                gameState = GameState.PauseMenu;
+            }
+                
 
         }
 
@@ -229,6 +269,18 @@ namespace ImagineRITGame
         {
             return Keyboard.GetState().IsKeyDown(key) && prevKBState.IsKeyUp(key);
         }
+
+        /// <summary>
+        /// Updates the previous state of each input method for each class that needs it
+        /// </summary>
+        public void UpdatePrevInputStates()
+        {
+            previousKbState = Keyboard.GetState();
+            previousMouseState = Mouse.GetState();
+
+            player.PrevKBState = previousKbState;
+        }
+
 
     }
 }

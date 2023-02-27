@@ -75,37 +75,6 @@ namespace ImagineRITGame
                     currentButton= b;
             }
 
-/*            if (buttons.Count > 1)
-            {
-                // Move the current button down
-                if (Game1.SingleKeyPress(Keys.Down, prevKBState))
-                {
-                    if (currentButton == buttons[^1])
-                        currentButton = buttons[0];
-                    else
-                        currentButton = buttons[buttons.IndexOf(currentButton) + 1];
-                    currentButton.IsHovered = true;
-                    //PlayEffect(SoundEffects.ChangeButton);
-                    if (currentButton == buttons[0])
-                        buttons[^1].IsHovered = false;
-                    else
-                        buttons[buttons.IndexOf(currentButton) - 1].IsHovered = false;
-                }
-                // Move the current button up
-                else if (Game1.SingleKeyPress(Keys.Up, prevKBState))
-                {
-                    if (currentButton == buttons[0])
-                        currentButton = buttons[^1];
-                    else
-                        currentButton = buttons[buttons.IndexOf(currentButton) - 1];
-                    currentButton.IsHovered = true;
-                    //PlayEffect(SoundEffects.ChangeButton);
-                    if (currentButton == buttons[^1])
-                        buttons[0].IsHovered = false;
-                    else
-                        buttons[buttons.IndexOf(currentButton) + 1].IsHovered = false;
-                }
-            }*/
             // Check to see if the button should be activated
             if (((Mouse.GetState().LeftButton == ButtonState.Pressed &&
                 prevMState.LeftButton == ButtonState.Released)
