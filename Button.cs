@@ -17,6 +17,22 @@ namespace ImagineRITGame
     {
         Exit = 0,
         Start = 1,
+        MainMenu = 2,
+        ViewItems = 3,
+        NewSave = 4,
+        LoadSave = 5,
+        Options = 6,
+        Settings = 7,
+        ChangeMode = 8,
+        Easy = 9,
+        Medium = 10,
+        Hard = 11,
+        True = 12,
+        False = 13,
+        A = 14,
+        B = 15,
+        C = 16,
+        D = 17,
         Back = -1
     }
 
@@ -55,8 +71,11 @@ namespace ImagineRITGame
         /// <param name="texture">the button's texture</param>
         public Button(Point position, ButtonType buttonType, Texture2D texture)
         {
+            if (buttonType == ButtonType.A || buttonType == ButtonType.B || buttonType == ButtonType.C || buttonType == ButtonType.D)
+                rect = new Rectangle(position, new Point(230, 246));
+            else
+                rect = new Rectangle(position, new Point(330, 246));
             // Assigning values to fields
-            rect = new Rectangle(position, new Point(330, 246));
             this.buttonType = buttonType;
             this.texture = texture;
             // If the button is being hovered over
@@ -67,19 +86,83 @@ namespace ImagineRITGame
             switch (buttonType)
             {
                 default:
-                    textRect = new Rectangle(6, 112, 53, 41);
+                    textRect = new Rectangle(310, 0, 104, 81);
+                    break;
+
+                case ButtonType.MainMenu:
+                    textRect = new Rectangle(0, 0, 104, 81);
+                    break;
+
+                case ButtonType.True:
+                    textRect = new Rectangle(104, 0, 104, 81);
+                    break;
+
+                case ButtonType.False:
+                    textRect = new Rectangle(208, 0, 104, 81);
+                    break;
+
+                case ButtonType.A:
+                    textRect = new Rectangle(0, 81, 74, 80);
+                    break;
+
+                case ButtonType.B:
+                    textRect = new Rectangle(74, 81, 74, 80);
+                    break;
+
+                case ButtonType.C:
+                    textRect = new Rectangle(148, 81, 75, 80);
+                    break;
+
+                case ButtonType.D:
+                    textRect = new Rectangle(223, 81, 75, 80);
                     break;
 
                 case ButtonType.Start:
-                    textRect = new Rectangle(6, 64, 53, 41);
+                    textRect = new Rectangle(0, 161, 104, 80);
                     break;
 
                 case ButtonType.Exit:
-                    textRect = new Rectangle(70, 64, 53, 41);
+                    textRect = new Rectangle(103, 161, 104, 80);
+                    break;
+
+                case ButtonType.ViewItems:
+                    textRect = new Rectangle(207, 161, 104, 80);
                     break;
 
                 case ButtonType.Back:
-                    textRect = new Rectangle(198, 64, 53, 41);
+                    textRect = new Rectangle(310, 161, 104, 80);
+                    break;
+
+                case ButtonType.NewSave:
+                    textRect = new Rectangle(0, 239, 104, 82);
+                    break;
+
+                case ButtonType.LoadSave:
+                    textRect = new Rectangle(103, 239, 104, 82);
+                    break;
+
+                case ButtonType.Options:
+                    textRect = new Rectangle(207, 239, 104, 82);
+                    break;
+
+                case ButtonType.Settings:
+                    textRect = new Rectangle(310, 239, 104, 82);
+                    break;
+
+                case ButtonType.ChangeMode:
+                    textRect = new Rectangle(0, 320, 104, 81);
+                    break;
+
+                case ButtonType.Easy:
+                    textRect = new Rectangle(103, 320, 104, 81);
+                    break;
+
+                case ButtonType.Medium:
+                    textRect = new Rectangle(207, 320, 104, 81);
+                    break;
+
+                case ButtonType.Hard:
+                    textRect = new Rectangle(310, 320, 104, 81);
                     break;
             }
 

@@ -22,8 +22,8 @@ namespace ImagineRITGame
         {
             // Giving positions and sizes to the main menu's buttons
             buttons = new List<Button>() {
-                new Button(new Point(790, 265), ButtonType.Start, textures[(int)MenuTextures.GeneralButtons]),
-                new Button(new Point(790, 765), ButtonType.Exit, textures[(int)MenuTextures.GeneralButtons])
+                new Button(new Point(790, 765), ButtonType.Start, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(new Point(1390, 765), ButtonType.Exit, textures[(int)MenuTextures.GeneralButtons])
             };
         }
 
@@ -34,6 +34,16 @@ namespace ImagineRITGame
         public void Update(GameTime gameTime)
         {
             base.Update();
+        }
+
+        public void Draw(SpriteBatch sb, Color hoverColor)
+        {
+            base.Draw(sb, hoverColor);
+
+            sb.Draw(textures[(int)MenuTextures.TitleCard],
+                new Rectangle(800, 100, 894, 588),
+                new Rectangle(0, 0, 149, 98),
+                Color.White);
         }
 
     }

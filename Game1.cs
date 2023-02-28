@@ -62,6 +62,7 @@ namespace ImagineRITGame
         private Texture2D fishingBobTexture;
         private Texture2D fishTexture;
         private Texture2D buttonTexture;
+        private Texture2D titleCardTexture;
 
         // Sprite sheet data
         private int numSpritesInSheet;
@@ -153,7 +154,7 @@ namespace ImagineRITGame
                 case GameState.Game:
                     // If the player selects 'esc' in the game, go to the pause menu
                     if (SingleKeyPress(Keys.Escape, previousKbState))
-                        ChangeGameState(2);
+                        ChangeGameState(18);
                     break;
             }
 
@@ -239,8 +240,13 @@ namespace ImagineRITGame
                 prevGameState = gameState;
                 gameState = GameState.Game;
             }
-            // Pressing esc in the game triggers this state to go to the pause menu
+            // Pressing "Main Menu" in the pause menu brings the player to the main menu
             else if (state == 2)
+            {
+                prevGameState = gameState;
+                gameState = GameState.MainMenu;
+            }
+            else if (state == 18)
             {
                 prevGameState = gameState;
                 gameState = GameState.PauseMenu;
@@ -254,8 +260,10 @@ namespace ImagineRITGame
             playerTexture = Content.Load<Texture2D>("char_all");
             fishingBobTexture = Content.Load<Texture2D>("inv_items");
             fishTexture = Content.Load<Texture2D>("fish_shadow_black");
-            buttonTexture = Content.Load<Texture2D>("button maker");
+            buttonTexture = Content.Load<Texture2D>("button spritesheet");
             menuTextures.Add(buttonTexture);
+            titleCardTexture = Content.Load<Texture2D>("phishing_game_logo");
+            menuTextures.Add(titleCardTexture);
         }
 
 
