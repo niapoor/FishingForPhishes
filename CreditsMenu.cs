@@ -42,7 +42,7 @@ namespace ImagineRITGame
             string text;
 
             text = "Credits";
-            sb.DrawString(fonts[1], text, Game1.CenterText(text, 150, fonts[1]), Color.DarkGoldenrod);
+            sb.DrawString(fonts[1], GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height.ToString(), Game1.CenterText(text, 150, fonts[1]), Color.DarkGoldenrod);
 
             //   sb.Draw(textures[(int)MenuTextures.TitleCard],
             //       new Rectangle(800, 100, 894, 588),

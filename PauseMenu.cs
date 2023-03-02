@@ -21,8 +21,8 @@ namespace ImagineRITGame
         {
             // Giving positions and sizes to the main menu's buttons
             buttons = new List<Button>() {
-                new Button(new Point(140, 1060), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons]),
-                new Button(new Point(2090, 1060), ButtonType.MainMenu, textures[(int)MenuTextures.GeneralButtons])
+                new Button(new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2560) * 140, (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 1140) * 1060), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2560) * 2090, (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 1140) * 1060), ButtonType.MainMenu, textures[(int)MenuTextures.GeneralButtons])
             };
         }
 
