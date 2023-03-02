@@ -76,14 +76,15 @@ namespace ImagineRITGame
             }
 
             // Check to see if the button should be activated
-            if (((Mouse.GetState().LeftButton == ButtonState.Pressed &&
+            if (currentButton != null)
+            {
+                if ((Mouse.GetState().LeftButton == ButtonState.Pressed &&
                 prevMState.LeftButton == ButtonState.Released)
-                && currentButton.IsHovered) ||
-                Game1.SingleKeyPress(Keys.Enter, prevKBState))
-                if (currentButton != null)
+                && currentButton.IsHovered)
                 {
                     ButtonActivated((int)currentButton.ButtonType);
                 }
+            }
         }
 
         /// <summary>

@@ -33,6 +33,7 @@ namespace ImagineRITGame
         B = 15,
         C = 16,
         D = 17,
+        Title = 18,
         Back = -1
     }
 
@@ -73,6 +74,8 @@ namespace ImagineRITGame
         {
             if (buttonType == ButtonType.A || buttonType == ButtonType.B || buttonType == ButtonType.C || buttonType == ButtonType.D)
                 rect = new Rectangle(position, new Point(230, 246));
+            else if (buttonType == ButtonType.Title)
+                rect = new Rectangle(position, new Point(768, 471));
             else
                 rect = new Rectangle(position, new Point(330, 246));
             // Assigning values to fields
@@ -163,6 +166,10 @@ namespace ImagineRITGame
 
                 case ButtonType.Hard:
                     textRect = new Rectangle(310, 320, 104, 81);
+                    break;
+
+                case ButtonType.Title:
+                    textRect = new Rectangle(0, 401, 256, 167);
                     break;
             }
 

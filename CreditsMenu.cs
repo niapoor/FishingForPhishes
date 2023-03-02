@@ -7,22 +7,23 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using SharpDX.Direct2D1;
 
 namespace ImagineRITGame
 {
-    internal class PauseMenu : Menu
+    internal class CreditsMenu : Menu
     {
+
         /// <summary>
-        /// A constructor that defines a Pause Menu object
+        /// A constructor that defines a Credits Menu object
         /// </summary>
         /// <param name="textures">list of all textures used by menus</param>
         /// <param name="fonts">list of all fonts</param>
-        public PauseMenu(List<Texture2D> textures) : base(textures)
+        public CreditsMenu(List<Texture2D> textures, SpriteFont font) : base(textures)
         {
             // Giving positions and sizes to the main menu's buttons
             buttons = new List<Button>() {
-                new Button(new Point(140, 1060), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons]),
-                new Button(new Point(2090, 1060), ButtonType.MainMenu, textures[(int)MenuTextures.GeneralButtons])
+                new Button(new Point(140, 1060), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons])
             };
         }
 
@@ -34,5 +35,21 @@ namespace ImagineRITGame
         {
             base.Update();
         }
+
+        public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Color hoverColor, SpriteFont font)
+        {
+            base.Draw(sb, hoverColor);
+            string text;
+
+            text = "Credits";
+            sb.DrawString(font, text, Game1.CenterText(text, 150, font), Color.DarkGoldenrod);
+
+            //   sb.Draw(textures[(int)MenuTextures.TitleCard],
+            //       new Rectangle(800, 100, 894, 588),
+            //       new Rectangle(0, 0, 149, 98),
+            //       Color.White);
+        }
+
+
     }
 }

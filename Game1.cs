@@ -14,7 +14,8 @@ namespace ImagineRITGame
         MainMenu = 1,
         Game = 2,
         Inventory = 3,
-        PauseMenu = 4
+        PauseMenu = 4,
+        CreditsMenu = 5
     }
 
     public class Game1 : Game
@@ -51,10 +52,12 @@ namespace ImagineRITGame
         // Space for sound effects
 
         // Space for fonts
+        private SpriteFont peaberryBase;
 
         // Menu objects
         private MainMenu mainMenu;
         private PauseMenu pauseMenu;
+        private CreditsMenu creditsMenu;
         private List<Texture2D> menuTextures;
 
         // Texture fields
@@ -119,6 +122,7 @@ namespace ImagineRITGame
             // Initializing Menu objects
             mainMenu = new MainMenu(menuTextures);
             pauseMenu = new PauseMenu(menuTextures);
+            creditsMenu= new CreditsMenu(menuTextures, peaberryBase);
 
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
@@ -137,7 +141,7 @@ namespace ImagineRITGame
             {
                 case GameState.MainMenu:
                     mainMenu.Update(gameTime);
-                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    if (SingleKeyPress(Keys.Escape, previousKbState))
                         Exit();
                     mainMenu.MenuButtonActivated += ChangeGameState;
                     break;
@@ -154,7 +158,13 @@ namespace ImagineRITGame
                 case GameState.Game:
                     // If the player selects 'esc' in the game, go to the pause menu
                     if (SingleKeyPress(Keys.Escape, previousKbState))
-                        ChangeGameState(18);
+                        ChangeGameState(100);
+                    break;
+                case GameState.CreditsMenu:
+                    creditsMenu.Update(gameTime);
+                    if (SingleKeyPress(Keys.Escape, previousKbState))
+                        ChangeGameState(2);
+                    creditsMenu.MenuButtonActivated += ChangeGameState;
                     break;
             }
 
@@ -181,7 +191,7 @@ namespace ImagineRITGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
             // Making it so that the drawn in assets don't become blurred when enlarged
             _spriteBatch.Begin
                 (SpriteSortMode.Immediate,
@@ -204,6 +214,9 @@ namespace ImagineRITGame
                     break;
                 case GameState.Game:
                     player.Draw(_spriteBatch);
+                    break;
+                case GameState.CreditsMenu:
+                    creditsMenu.Draw(_spriteBatch, Color.Goldenrod, peaberryBase);
                     break;
             }
 
@@ -248,6 +261,11 @@ namespace ImagineRITGame
             }
             else if (state == 18)
             {
+                prevGameState = GameState.MainMenu;
+                gameState = GameState.CreditsMenu;
+            }
+            else if (state == 100)
+            {
                 prevGameState = gameState;
                 gameState = GameState.PauseMenu;
             }
@@ -264,6 +282,7 @@ namespace ImagineRITGame
             menuTextures.Add(buttonTexture);
             titleCardTexture = Content.Load<Texture2D>("phishing_game_logo");
             menuTextures.Add(titleCardTexture);
+            peaberryBase = Content.Load<SpriteFont>("peaberry_base");
         }
 
 
@@ -287,6 +306,19 @@ namespace ImagineRITGame
             previousMouseState = Mouse.GetState();
 
             player.PrevKBState = previousKbState;
+        }
+
+        /// <summary>
+        /// Determines the starting location of a string of text 
+        /// in order for it be centered horizontally on the screen
+        /// </summary>
+        /// <param name="str">the text to be centered</param>
+        /// <param name="y">the Y location of the text</param>
+        /// <param name="font">the font the text will be drawn in</param>
+        /// <returns>the location the text should be at</returns>
+        public static Vector2 CenterText(string str, float y, SpriteFont font)
+        {
+            return new Vector2(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - font.MeasureString(str).X) / 2), y);
         }
 
 
