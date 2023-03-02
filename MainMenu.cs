@@ -24,7 +24,7 @@ namespace ImagineRITGame
             buttons = new List<Button>() {
                 new Button(new Point(790, 765), ButtonType.Start, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2560) * 1390, (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 1140) * 765), ButtonType.Exit, textures[(int)MenuTextures.GeneralButtons]),
-                new Button(new Point(860, 265), ButtonType.Title, textures[(int)MenuTextures.GeneralButtons])
+                new Button(new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2560) * 860, (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 1140) * 265), ButtonType.Title, textures[(int)MenuTextures.GeneralButtons])
             };
         }
 
