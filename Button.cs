@@ -73,11 +73,11 @@ namespace ImagineRITGame
         public Button(Point position, ButtonType buttonType, Texture2D texture)
         {
             if (buttonType == ButtonType.A || buttonType == ButtonType.B || buttonType == ButtonType.C || buttonType == ButtonType.D)
-                rect = new Rectangle(position, new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2560) * 230, (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 1140) * 246));
+                rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 11.13), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 5.53)));
             else if (buttonType == ButtonType.Title)
-                rect = new Rectangle(position, new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2560) * 768, (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 1140) * 471));
+                rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 3.45), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 3)));
             else
-                rect = new Rectangle(position, new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2560) * 330, (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 1140) * 246));
+                rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 7.76), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 5.53)));
             // Assigning values to fields
             this.buttonType = buttonType;
             this.texture = texture;
