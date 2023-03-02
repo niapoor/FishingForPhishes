@@ -53,6 +53,8 @@ namespace ImagineRITGame
 
         // Space for fonts
         private SpriteFont peaberryBase;
+        private SpriteFont peaberryBase2;
+        private List<SpriteFont> fonts;
 
         // Menu objects
         private MainMenu mainMenu;
@@ -106,6 +108,7 @@ namespace ImagineRITGame
             prevGameState = GameState.MainMenu;
 
             menuTextures = new List<Texture2D>();
+            fonts = new List<SpriteFont>();
 
             // Game properties
             Window.Title = "ImagineRIT Phishing Game";
@@ -122,7 +125,7 @@ namespace ImagineRITGame
             // Initializing Menu objects
             mainMenu = new MainMenu(menuTextures);
             pauseMenu = new PauseMenu(menuTextures);
-            creditsMenu= new CreditsMenu(menuTextures, peaberryBase);
+            creditsMenu= new CreditsMenu(menuTextures, fonts);
 
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
@@ -216,7 +219,7 @@ namespace ImagineRITGame
                     player.Draw(_spriteBatch);
                     break;
                 case GameState.CreditsMenu:
-                    creditsMenu.Draw(_spriteBatch, Color.Goldenrod, peaberryBase);
+                    creditsMenu.Draw(_spriteBatch, Color.Goldenrod, fonts);
                     break;
             }
 
@@ -283,6 +286,9 @@ namespace ImagineRITGame
             titleCardTexture = Content.Load<Texture2D>("phishing_game_logo");
             menuTextures.Add(titleCardTexture);
             peaberryBase = Content.Load<SpriteFont>("peaberry_base");
+            fonts.Add(peaberryBase);
+            peaberryBase2 = Content.Load<SpriteFont>("peaberry_base_2");
+            fonts.Add(peaberryBase2);
         }
 
 

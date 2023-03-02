@@ -19,7 +19,7 @@ namespace ImagineRITGame
         /// </summary>
         /// <param name="textures">list of all textures used by menus</param>
         /// <param name="fonts">list of all fonts</param>
-        public CreditsMenu(List<Texture2D> textures, SpriteFont font) : base(textures)
+        public CreditsMenu(List<Texture2D> textures, List<SpriteFont> fonts) : base(textures)
         {
             // Giving positions and sizes to the main menu's buttons
             buttons = new List<Button>() {
@@ -36,13 +36,13 @@ namespace ImagineRITGame
             base.Update();
         }
 
-        public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Color hoverColor, SpriteFont font)
+        public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Color hoverColor, List<SpriteFont> fonts)
         {
             base.Draw(sb, hoverColor);
             string text;
 
             text = "Credits";
-            sb.DrawString(font, text, Game1.CenterText(text, 150, font), Color.DarkGoldenrod);
+            sb.DrawString(fonts[1], text, Game1.CenterText(text, 150, fonts[1]), Color.DarkGoldenrod);
 
             //   sb.Draw(textures[(int)MenuTextures.TitleCard],
             //       new Rectangle(800, 100, 894, 588),
