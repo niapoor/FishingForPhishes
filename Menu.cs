@@ -117,5 +117,21 @@ namespace ImagineRITGame
         //    PlaySoundEffect?.Invoke(soundEffect);
         //}
 
+        protected virtual Point AlignButton(double x, double y)
+        {
+            return new Point((int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) * x)), (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * y)));
+        }
+
+        protected virtual Point CenterButton(ButtonType buttonType, double y)
+        {
+            if (buttonType == ButtonType.A || buttonType == ButtonType.B || buttonType == ButtonType.C || buttonType == ButtonType.D)
+                return new Point((int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) * .5) - (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (11.13 * 2))), (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * y)));
+            else if (buttonType == ButtonType.Title)
+                return new Point((int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) * .5) - (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (3.45 * 2))), (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * y)));
+            else
+                return new Point((int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) * .5) - (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (7.76 * 2))), (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * y)));
+        }
+
+
     }
 }
