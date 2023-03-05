@@ -294,7 +294,43 @@ namespace ImagineRITGame
             // The fonts get really screwy if the aspect ratio is changed. Fonts are annoying in that they cannot be size changed
             // dynamically. Therefore, I have created many spritefonts of different sizes, and which ones are used are dependant
             // on the width of the user's screen.
-            if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 2560)
+            if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 6000)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text22");   // 328
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text19");   // 210
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text18");   // 121
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 6000 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 5120)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text21");   // 280
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text16");   // 188
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text4");    // 105
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 5120 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 4096)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text20");   // 234
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text1");    // 140
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text9");    // 79
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 4096 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 3840)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text19");   // 210
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text1");    // 140
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text9");    // 79
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 3840 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 3440)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text17");   // 188
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text18");   // 121
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text5");    // 67
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 3440 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 3000)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text16");   // 164
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text4");    // 105
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text7");    // 59
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 3000 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 2560)
             {
                                                                                         // Sizes    Sizing Factors
                 peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text1");    // 140      18.286
@@ -349,6 +385,7 @@ namespace ImagineRITGame
                 peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text12");   // 20
                 peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text15");   // 12
             }
+            // Adding the chosen fonts to the font list
             fonts.Add(peaberryBaseText1);
             fonts.Add(peaberryBaseText2);
             fonts.Add(peaberryBaseText3);
