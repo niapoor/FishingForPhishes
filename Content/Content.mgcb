@@ -92,12 +92,26 @@
 /processorParam:TextureFormat=Compressed
 /build:peaberry_base_2.spritefont
 
+#begin peaberry_base_2.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_2.spritefont
+
 #begin peaberry_base_4.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:peaberry_base_4.spritefont;peaberry_base_text4.spritefont
+
+#begin peaberry_base_4.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_4.spritefont
 
 #begin peaberry_base_text10.spritefont
 /importer:FontDescriptionImporter
@@ -232,6 +246,13 @@
 /processorParam:TextureFormat=Compressed
 /build:peaberry_base_title.spritefont
 
+#begin peaberry_base_title.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_title.spritefont
+
 #begin peaberry_body_text9.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -257,4 +278,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:phishing_game_logo.png
+
+#begin transparenthorizontal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:transparenthorizontal.png
 

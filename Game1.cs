@@ -70,6 +70,8 @@ namespace ImagineRITGame
         private Texture2D fishTexture;
         private Texture2D buttonTexture;
         private Texture2D titleCardTexture;
+        private Texture2D cyberCorpsLogo;
+
 
         // Sprite sheet data
         private int numSpritesInSheet;
@@ -292,13 +294,14 @@ namespace ImagineRITGame
             titleCardTexture = Content.Load<Texture2D>("phishing_game_logo");
             menuTextures.Add(titleCardTexture);
             // The fonts get really screwy if the aspect ratio is changed. Fonts are annoying in that they cannot be size changed
-            // dynamically. Therefore, I have created many spritefonts of different sizes, and which ones are used are dependant
-            // on the width of the user's screen.
+            // after compile time or dynamically. Therefore, I have created many spritefonts of different sizes, and which ones are
+            // used are dependant on the width of the user's screen.
             if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 6000)
             {
-                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text22");   // 328
-                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text19");   // 210
-                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text18");   // 121
+                                                                                        // Sizes    Sizing Factors
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text22");   // 328      18.286
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text19");   // 210      28.444
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text18");   // 121      51.2
             }
             else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 6000 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 5120)
             {
@@ -332,10 +335,9 @@ namespace ImagineRITGame
             }
             else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 3000 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 2560)
             {
-                                                                                        // Sizes    Sizing Factors
-                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text1");    // 140      18.286
-                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text2");    // 90       28.444
-                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50       51.2
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text1");    // 140
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text2");    // 90
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50
             }
             else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 2560 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1920)
             {
