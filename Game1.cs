@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms.VisualStyles;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ImagineRITGame
 {
@@ -208,7 +209,12 @@ namespace ImagineRITGame
                 BlendState.AlphaBlend,
                 SamplerState.PointClamp,
                 DepthStencilState.Default,
-                RasterizerState.CullCounterClockwise);
+            RasterizerState.CullCounterClockwise);
+
+            // width: 2732, height: 2048
+            //string text = cyberCorpsLogo.Height.ToString();
+            //_spriteBatch.DrawString(fonts[0], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .9)), fonts[0]), Color.DarkGoldenrod); /6
+            _spriteBatch.Draw(cyberCorpsLogo, new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .8), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .8), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .18213), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .13653)), new Rectangle(0, 0, 2732, 2048), Color.White);
 
             // Drawing in assets based on the current game state
             switch (gameState)
@@ -293,6 +299,7 @@ namespace ImagineRITGame
             menuTextures.Add(buttonTexture);
             titleCardTexture = Content.Load<Texture2D>("phishing_game_logo");
             menuTextures.Add(titleCardTexture);
+            cyberCorpsLogo = Content.Load<Texture2D>("transparenthorizontal");
             // The fonts get really screwy if the aspect ratio is changed. Fonts are annoying in that they cannot be size changed
             // after compile time or dynamically. Therefore, I have created many spritefonts of different sizes, and which ones are
             // used are dependant on the width of the user's screen.
