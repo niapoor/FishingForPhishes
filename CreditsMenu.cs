@@ -42,7 +42,25 @@ namespace ImagineRITGame
             string text;
 
             text = "Credits";
-            sb.DrawString(fonts[1], text, Game1.CenterText(text, 150, fonts[1]), Color.DarkGoldenrod);
+            sb.DrawString(fonts[0], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
+            text = "Created By...";
+            sb.DrawString(fonts[1], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .28)), fonts[1]), Color.DarkGoldenrod);
+            text = "Nia Poor, Brandon Keller, Lalitha Donga,";
+            sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .4)), fonts[2]), Color.DarkGoldenrod);
+            text = "Jaime Campanelli, Alexa Krempa, Elijah Heilman";
+            sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .47)), fonts[2]), Color.DarkGoldenrod);
+            text = "Special Thanks To Our PIs";
+            sb.DrawString(fonts[1], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .56)), fonts[1]), Color.DarkGoldenrod);
+            text = "Bo Yuan, Andy Meneely, Rajendra Raj";
+            sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .68)), fonts[2]), Color.DarkGoldenrod);
+            
+            // This is a debug thing to see the screen size when drawing text
+            /*
+            text = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height.ToString();
+            sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .8)), fonts[2]), Color.DarkGoldenrod);
+            text = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width.ToString();
+            sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .85)), fonts[2]), Color.DarkGoldenrod);
+            */
 
             //   sb.Draw(textures[(int)MenuTextures.TitleCard],
             //       new Rectangle(800, 100, 894, 588),

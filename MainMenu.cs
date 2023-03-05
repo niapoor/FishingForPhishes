@@ -17,7 +17,6 @@ namespace ImagineRITGame
         /// A constructor that defines a Main Menu object
         /// </summary>
         /// <param name="textures">list of all textures used by menus</param>
-        /// <param name="fonts">list of all fonts</param>
         public MainMenu(List<Texture2D> textures) : base(textures)
         {
             // Giving positions and sizes to the main menu's buttons

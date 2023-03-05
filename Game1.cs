@@ -52,14 +52,16 @@ namespace ImagineRITGame
         // Space for sound effects
 
         // Space for fonts
-        private SpriteFont peaberryBase;
-        private SpriteFont peaberryBase2;
+        private SpriteFont peaberryBaseText1;
+        private SpriteFont peaberryBaseText2;
+        private SpriteFont peaberryBaseText3;
         private List<SpriteFont> fonts;
 
         // Menu objects
         private MainMenu mainMenu;
         private PauseMenu pauseMenu;
         private CreditsMenu creditsMenu;
+        private GameButtonsOverlay gameButtonsOverlay;
         private List<Texture2D> menuTextures;
 
         // Texture fields
@@ -126,6 +128,7 @@ namespace ImagineRITGame
             mainMenu = new MainMenu(menuTextures);
             pauseMenu = new PauseMenu(menuTextures);
             creditsMenu= new CreditsMenu(menuTextures, fonts);
+            gameButtonsOverlay= new GameButtonsOverlay(menuTextures);
 
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
@@ -159,9 +162,11 @@ namespace ImagineRITGame
                     //inventory.Update(gameTime);
                     break;
                 case GameState.Game:
+                    gameButtonsOverlay.Update(gameTime);
                     // If the player selects 'esc' in the game, go to the pause menu
                     if (SingleKeyPress(Keys.Escape, previousKbState))
-                        ChangeGameState(100);
+                        ChangeGameState(19);
+                    gameButtonsOverlay.MenuButtonActivated += ChangeGameState;
                     break;
                 case GameState.CreditsMenu:
                     creditsMenu.Update(gameTime);
@@ -216,6 +221,7 @@ namespace ImagineRITGame
                     //draw in
                     break;
                 case GameState.Game:
+                    gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
                     player.Draw(_spriteBatch);
                     break;
                 case GameState.CreditsMenu:
@@ -267,9 +273,9 @@ namespace ImagineRITGame
                 prevGameState = GameState.MainMenu;
                 gameState = GameState.CreditsMenu;
             }
-            else if (state == 100)
+            else if (state == 19)
             {
-                prevGameState = gameState;
+                prevGameState = GameState.Game;
                 gameState = GameState.PauseMenu;
             }
                 
@@ -285,10 +291,67 @@ namespace ImagineRITGame
             menuTextures.Add(buttonTexture);
             titleCardTexture = Content.Load<Texture2D>("phishing_game_logo");
             menuTextures.Add(titleCardTexture);
-            peaberryBase = Content.Load<SpriteFont>("peaberry_base");
-            fonts.Add(peaberryBase);
-            peaberryBase2 = Content.Load<SpriteFont>("peaberry_base_2");
-            fonts.Add(peaberryBase2);
+            // The fonts get really screwy if the aspect ratio is changed. Fonts are annoying in that they cannot be size changed
+            // dynamically. Therefore, I have created many spritefonts of different sizes, and which ones are used are dependant
+            // on the width of the user's screen.
+            if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 2560)
+            {
+                                                                                        // Sizes    Sizing Factors
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text1");    // 140      18.286
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text2");    // 90       28.444
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50       51.2
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 2560 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1920)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text4");    // 105
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text5");    // 67   
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text6");    // 37
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1920 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1600)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text2");    // 90
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text7");    // 59
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text8");    // 33
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1600 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1440)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text9");    // 79
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text8");    // 33
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1440 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1360)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text9");    // 79
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text10");   // 27
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1360 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1280)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text5");    // 67
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text10");   // 27
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1280 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1024)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text11");   // 56
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text6");    // 37
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text12");   // 20
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1024 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 800)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text13");   // 44
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text10");   // 27
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text14");   // 16
+            }
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 800)
+            {
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text8");    // 33
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text12");   // 20
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text15");   // 12
+            }
+            fonts.Add(peaberryBaseText1);
+            fonts.Add(peaberryBaseText2);
+            fonts.Add(peaberryBaseText3);
         }
 
 

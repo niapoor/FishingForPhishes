@@ -12,6 +12,12 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\peaberry_base.fx" />
+    <None Remove="Content\peaberry_base.spritefont" />
+    <None Remove="Content\peaberry_base_text6.fx" />
+    <None Remove="Content\peaberry_base_text9.fx" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>

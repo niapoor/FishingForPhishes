@@ -34,6 +34,7 @@ namespace ImagineRITGame
         C = 16,
         D = 17,
         Title = 18,
+        Pause = 19,
         Back = -1
     }
 
@@ -102,6 +103,10 @@ namespace ImagineRITGame
 
                 case ButtonType.False:
                     textRect = new Rectangle(208, 0, 104, 81);
+                    break;
+
+                case ButtonType.Pause:
+                    textRect = new Rectangle(310, 0, 104, 81);
                     break;
 
                 case ButtonType.A:
