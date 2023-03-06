@@ -309,7 +309,7 @@ namespace ImagineRITGame
             playerTexture = Content.Load<Texture2D>("char_all");
             fishingBobTexture = Content.Load<Texture2D>("inv_items");
             fishTexture = Content.Load<Texture2D>("fish_shadow_black");
-            buttonTexture = Content.Load<Texture2D>("button spritesheet");
+            buttonTexture = Content.Load<Texture2D>("button_spritesheet");
             menuTextures.Add(buttonTexture);
             titleCardTexture = Content.Load<Texture2D>("phishing_game_logo");
             menuTextures.Add(titleCardTexture);
