@@ -12,6 +12,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\button spritesheet.png" />
     <None Remove="Content\peaberry_base.fx" />
     <None Remove="Content\peaberry_base.spritefont" />
     <None Remove="Content\peaberry_base_text6.fx" />
