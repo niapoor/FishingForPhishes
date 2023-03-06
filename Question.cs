@@ -47,10 +47,10 @@ namespace ImagineRITGame
                 this.ShuffleList();
             }
 
-            // If there is an 'all of the above' answer, put it at the bottom
+            // If there is an 'all of the above' or 'none of the above' answer, put it at the bottom
             for (int i = 0; i < this.answerList.Count; i++)
             {
-                if (this.answerList[i].Text().ToLower().Contains("all of the above"))
+                if (this.answerList[i].Text().ToLower().Contains("all of the above") || this.answerList[i].Text().ToLower().Contains("none of the above"))
                 {
                     Answer temp = this.answerList[i];
                     this.answerList[i] = this.answerList[this.answerList.Count - 1];
@@ -88,6 +88,15 @@ namespace ImagineRITGame
         public int NumAnswers()
         {
             return this.numAnswers;
+        }
+
+        /// <summary>
+        /// Method <c>AnswerList</c> fetches the list of Answer objects contained in the question
+        /// </summary>
+        /// <returns>The list of Answers corresponding to the question</returns>
+        public List<Answer> AnswerList()
+        {
+            return this.answerList;
         }
 
         /// <summary>
