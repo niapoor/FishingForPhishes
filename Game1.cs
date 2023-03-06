@@ -63,6 +63,7 @@ namespace ImagineRITGame
         private PauseMenu pauseMenu;
         private CreditsMenu creditsMenu;
         private GameButtonsOverlay gameButtonsOverlay;
+        private Inventory inventory;
         private List<Texture2D> menuTextures;
 
         // Texture fields
@@ -72,6 +73,9 @@ namespace ImagineRITGame
         private Texture2D buttonTexture;
         private Texture2D titleCardTexture;
         private Texture2D cyberCorpsLogo;
+        private Texture2D fishingPostCard;
+        private Texture2D allFish;
+        private Texture2D fishInvShadow;
 
 
         // Sprite sheet data
@@ -132,6 +136,7 @@ namespace ImagineRITGame
             pauseMenu = new PauseMenu(menuTextures);
             creditsMenu= new CreditsMenu(menuTextures, fonts);
             gameButtonsOverlay= new GameButtonsOverlay(menuTextures);
+            inventory = new Inventory(menuTextures);
 
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
@@ -162,7 +167,10 @@ namespace ImagineRITGame
                     pauseMenu.MenuButtonActivated += ChangeGameState;
                     break;
                 case GameState.Inventory:
-                    //inventory.Update(gameTime);
+                    inventory.Update(gameTime);
+                    if (SingleKeyPress(Keys.Escape, previousKbState))
+                        ChangeGameState(-1);
+                    inventory.MenuButtonActivated += ChangeGameState;
                     break;
                 case GameState.Game:
                     gameButtonsOverlay.Update(gameTime);
@@ -212,9 +220,10 @@ namespace ImagineRITGame
             RasterizerState.CullCounterClockwise);
 
             // width: 2732, height: 2048
-            //string text = cyberCorpsLogo.Height.ToString();
-            //_spriteBatch.DrawString(fonts[0], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .9)), fonts[0]), Color.DarkGoldenrod); /6
-            _spriteBatch.Draw(cyberCorpsLogo, new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .8), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .8), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .18213), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .13653)), new Rectangle(0, 0, 2732, 2048), Color.White);
+            // Drawing in the RIT CyberCorps logo in the bottom right. This will always be drawn in regardless of other settings.
+            // Drawing in size and position is dynamic based on the screen size
+            _spriteBatch.Draw(cyberCorpsLogo, new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .8), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .8),
+                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .18213), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .13653)), new Rectangle(0, 0, 2732, 2048), Color.White);
 
             // Drawing in assets based on the current game state
             switch (gameState)
@@ -226,7 +235,7 @@ namespace ImagineRITGame
                     pauseMenu.Draw(_spriteBatch, Color.Goldenrod);
                     break;
                 case GameState.Inventory:
-                    //draw in
+                    inventory.Draw(_spriteBatch, Color.Goldenrod);
                     break;
                 case GameState.Game:
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
@@ -276,6 +285,11 @@ namespace ImagineRITGame
                 prevGameState = gameState;
                 gameState = GameState.MainMenu;
             }
+            else if (state == 3)
+            {
+                prevGameState = GameState.Game;
+                gameState = GameState.Inventory;
+            }
             else if (state == 18)
             {
                 prevGameState = GameState.MainMenu;
@@ -299,6 +313,12 @@ namespace ImagineRITGame
             menuTextures.Add(buttonTexture);
             titleCardTexture = Content.Load<Texture2D>("phishing_game_logo");
             menuTextures.Add(titleCardTexture);
+            fishingPostCard = Content.Load<Texture2D>("fishing_postcard_blank");
+            menuTextures.Add(fishingPostCard);
+            allFish = Content.Load<Texture2D>("fish_all");
+            menuTextures.Add(allFish);
+            fishInvShadow = Content.Load<Texture2D>("inv_fish_shadow");
+            menuTextures.Add(fishInvShadow);
             cyberCorpsLogo = Content.Load<Texture2D>("transparenthorizontal");
             // The fonts get really screwy if the aspect ratio is changed. Fonts are annoying in that they cannot be size changed
             // after compile time or dynamically. Therefore, I have created many spritefonts of different sizes, and which ones are

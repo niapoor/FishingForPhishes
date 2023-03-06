@@ -14,7 +14,10 @@ namespace ImagineRITGame
     public enum MenuTextures
     {
         GeneralButtons = 0,
-        TitleCard = 1
+        TitleCard = 1,
+        FishingPostCard = 2,
+        AllFish = 3,
+        FishInvShadow = 4
     }
 
     class Menu
