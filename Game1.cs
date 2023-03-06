@@ -334,7 +334,7 @@ namespace ImagineRITGame
             {
                 peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text21");   // 280
                 peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text16");   // 188
-                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_4");    // 105
+                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_4");        // 105
             }
             else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 5120 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 4096)
             {
@@ -357,24 +357,24 @@ namespace ImagineRITGame
             else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 3440 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 3000)
             {
                 peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text16");   // 164
-                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_4");    // 105
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_4");        // 105
                 peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text7");    // 59
             }
             else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 3000 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 2560)
             {
                 peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text1");    // 140
-                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_2");    // 90
+                peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_2");        // 90
                 peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50
             }
             else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 2560 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1920)
             {
-                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_4");    // 105
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_4");        // 105
                 peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text5");    // 67   
                 peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text6");    // 37
             }
             else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1920 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1600)
             {
-                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_2");    // 90
+                peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_2");        // 90
                 peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text7");    // 59
                 peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text8");    // 33
             }
