@@ -273,6 +273,13 @@
 /processorParam:TextureFormat=Compressed
 /build:peaberry_base_text8.spritefont
 
+#begin peaberry_base_text9.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_text9.spritefont
+
 #begin peaberry_base_title.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
