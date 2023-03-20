@@ -13,6 +13,15 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../../../Downloads/EasyTemp.csv
+/copy:../../../../Downloads/EasyTemp.csv;EasyTemp.csv
+
+#begin ../../../../Downloads/HardTemp.csv
+/copy:../../../../Downloads/HardTemp.csv;HardTemp.csv
+
+#begin ../../../../Downloads/MediumTemp.csv
+/copy:../../../../Downloads/MediumTemp.csv;MediumTemp.csv
+
 #begin button maker.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -324,18 +333,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:phishing_game_logo.png
-
-#begin tiles_all.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:tiles_all.png
 
 #begin transparenthorizontal.png
 /importer:TextureImporter

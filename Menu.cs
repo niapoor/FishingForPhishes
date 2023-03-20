@@ -33,10 +33,11 @@ namespace ImagineRITGame
         protected List<Button> buttons;
         protected Button currentButton;
 
+        protected List<string> strings;
+
         //Previous Input States
         protected MouseState prevMState;
         protected KeyboardState prevKBState;
-        protected bool test;
 
         /// <summary>
         /// A set for the previous keyboard state
@@ -133,6 +134,44 @@ namespace ImagineRITGame
                 return new Point((int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) * .5) - (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (3.45 * 2))), (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * y)));
             else
                 return new Point((int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) * .5) - (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (7.76 * 2))), (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * y)));
+        }
+
+        protected virtual List<string> WrapText(string text, int stringLengthFactor)
+        {
+            strings = new List<string>();
+            if (text.Length <= stringLengthFactor)
+            {
+                strings.Add(text);
+                return strings;
+            }
+            else if (text.Length > stringLengthFactor && text.Length <= (stringLengthFactor * 2))
+            {
+                int indexOfMiddleSpace = text.LastIndexOf(' ', text.Length / 2);
+                strings.Add(text.Substring(0, indexOfMiddleSpace));
+                strings.Add(text.Substring(indexOfMiddleSpace + 1));
+                return strings;
+            }
+            else if (text.Length > (stringLengthFactor * 2) && text.Length <= (stringLengthFactor * 3))
+            {
+                int indexOfFirstThirdSpace = text.LastIndexOf(' ', text.Length / 3);
+                int indexOfSecondThirdSpace = text.LastIndexOf(' ', (text.Length / 3) * 2);
+                strings.Add(text.Substring(0, indexOfFirstThirdSpace));
+                strings.Add(text.Substring(indexOfFirstThirdSpace + 1, indexOfSecondThirdSpace - (indexOfFirstThirdSpace + 1)));
+                strings.Add(text.Substring(indexOfSecondThirdSpace + 1));
+                return strings;
+            }
+            else
+            {
+                int indexOfFirstQuarterSpace = text.LastIndexOf(' ', text.Length / 4);
+                int indexOfSecondQuarterSpace = text.LastIndexOf(' ', (text.Length / 4) * 2);
+                int indexOfThirdQuarterSpace = text.LastIndexOf(' ', (text.Length / 4) * 3);
+                int len = text.Length;
+                strings.Add(text.Substring(0, indexOfFirstQuarterSpace));
+                strings.Add(text.Substring(indexOfFirstQuarterSpace + 1, indexOfSecondQuarterSpace - (indexOfFirstQuarterSpace + 1)));
+                strings.Add(text.Substring(indexOfSecondQuarterSpace + 1, indexOfThirdQuarterSpace - (indexOfSecondQuarterSpace + 1)));
+                strings.Add(text.Substring(indexOfThirdQuarterSpace + 1));
+                return strings;
+            }
         }
 
 

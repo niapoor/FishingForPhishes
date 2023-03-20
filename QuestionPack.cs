@@ -33,10 +33,11 @@ namespace ImagineRITGame
         /// <summary>
         /// Method <c>QuestionPack</c> Constructs a new QuestionPack instance given a path to the directory containing the difficulty CSVs
         /// </summary>
-        /// <param name="questionFilePath">The string path to the directory containing the difficulty CSVs</param>
-        public QuestionPack(string questionFilePath)
+        /// <param name="questionFilePath">The list containing the difficulty CSVs</param>
+        public QuestionPack()
         {
             this.questionSet = new Dictionary<Difficulty, List<Question>>();
+
             try
             {
                 // For each difficulty level
@@ -45,10 +46,11 @@ namespace ImagineRITGame
                     // Create a new list of Questions
                     this.questionSet[difficulty] = new List<Question>();
 
-                    // Read from the CSV file 
-                    IEnumerable<String> lines = File.ReadLines(questionFilePath + "/" + difficulty.ToString() + ".csv");
+                    // Read from the CSV file
+                    IEnumerable<String> lines = File.ReadLines(Directory.GetFiles("Content\\", difficulty + "*.csv")[0]);
+
                     // LINQ that performs CSV parsing on each line of the file
-                    IEnumerable<String[]> csv = from line in lines select CSVSplitter(line);
+                    IEnumerable<String[]> csv = from line in lines select CSVSplitter(line.ToString());
                     bool route = false;
                     // For each parsed line from the CSV
                     foreach (string[] line in csv)

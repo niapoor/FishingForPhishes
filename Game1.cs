@@ -66,6 +66,19 @@ namespace ImagineRITGame
         private Inventory inventory;
         private List<Texture2D> menuTextures;
 
+        // Should only be drawn at the proper time during the game
+        private bool drawInQuestion;
+
+        // Question variables
+        private DisplayQuestion displayQuestion;
+        private QuestionPack questionPack;
+        private Question currentQuestion;
+        private bool correctOrIncorrect;
+        private List<IEnumerable<String>> questionCSVFiles;
+        private IEnumerable<String> easyCSV;
+        private IEnumerable<String> mediumCSV;
+        private IEnumerable<String> hardCSV;
+
         // Texture fields
         private Texture2D playerTexture;
         private Texture2D fishingBobTexture;
@@ -131,12 +144,18 @@ namespace ImagineRITGame
 
             LoadTextures();
 
+            questionPack = new QuestionPack();
+
             // Initializing Menu objects
             mainMenu = new MainMenu(menuTextures);
             pauseMenu = new PauseMenu(menuTextures);
             creditsMenu= new CreditsMenu(menuTextures, fonts);
             gameButtonsOverlay= new GameButtonsOverlay(menuTextures);
             inventory = new Inventory(menuTextures);
+            displayQuestion= new DisplayQuestion(menuTextures, fonts);
+
+            // TODO: add question pack
+            //questionPack = new QuestionPack();
 
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
@@ -177,6 +196,17 @@ namespace ImagineRITGame
                     // If the player selects 'esc' in the game, go to the pause menu
                     if (SingleKeyPress(Keys.Escape, previousKbState))
                         ChangeGameState(19);
+                    else if (SingleKeyPress(Keys.Space, previousKbState) && drawInQuestion == false)
+                    {
+                        currentQuestion = questionPack.FetchRandomQuestion(Difficulty.Hard);
+                        displayQuestion.SetUpQuestion(currentQuestion);
+                        drawInQuestion = true;
+                    }
+                    if (drawInQuestion == true)
+                    {
+                        displayQuestion.Update(gameTime);
+                        displayQuestion.MenuButtonActivated += ChangeGameState;
+                    }
                     gameButtonsOverlay.MenuButtonActivated += ChangeGameState;
                     break;
                 case GameState.CreditsMenu:
@@ -239,6 +269,10 @@ namespace ImagineRITGame
                     break;
                 case GameState.Game:
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
+                    if(drawInQuestion == true)
+                        displayQuestion.Draw(_spriteBatch, Color.Goldenrod, currentQuestion, fonts);
+                    else
+                        _spriteBatch.DrawString(fonts[0], correctOrIncorrect ? "Correct":"Incorrect", Game1.CenterText(correctOrIncorrect ? "Correct" : "Incorrect", (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
                     player.Draw(_spriteBatch);
                     break;
                 case GameState.CreditsMenu:
@@ -290,6 +324,20 @@ namespace ImagineRITGame
                 prevGameState = GameState.Game;
                 gameState = GameState.Inventory;
             }
+            else if (state >= 12 && state <= 17)
+            {
+                foreach (Answer a in currentQuestion.AnswerList())
+                {
+                    if (a.Text() == "True" && currentQuestion.NumAnswers() == 2)
+                    {
+                        correctOrIncorrect = currentQuestion.CheckAnswer(state - 12);
+                        drawInQuestion = false;
+                        break;
+                    }
+                }
+                correctOrIncorrect = currentQuestion.CheckAnswer(state - 14);
+                drawInQuestion = false;
+            }
             else if (state == 18)
             {
                 prevGameState = GameState.MainMenu;
@@ -320,6 +368,12 @@ namespace ImagineRITGame
             fishInvShadow = Content.Load<Texture2D>("inv_fish_shadow");
             menuTextures.Add(fishInvShadow);
             cyberCorpsLogo = Content.Load<Texture2D>("transparenthorizontal");
+            //easyCSV = Content.Load<IEnumerable<String>>("EasyTemp");
+            //mediumCSV = Content.Load<IEnumerable<String>>("MediumTemp");
+            //hardCSV = Content.Load<IEnumerable<String>>("HardTemp");
+            //questionCSVFiles.Add(easyCSV);
+            //questionCSVFiles.Add(mediumCSV);
+            //questionCSVFiles.Add(hardCSV);
             // The fonts get really screwy if the aspect ratio is changed. Fonts are annoying in that they cannot be size changed
             // after compile time or dynamically. Therefore, I have created many spritefonts of different sizes, and which ones are
             // used are dependant on the width of the user's screen.
