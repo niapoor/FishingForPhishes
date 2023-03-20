@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,8 @@ namespace ImagineRITGame
 
         // Constant for max number of options/answers for a question -- must match the titled columns of the CSV files
         public const int MaxOptions = 4;
+        public const string url = "https://raw.githubusercontent.com/niapoor/ImagineRITGame/master/";
+
 
         // QuestionPack state
         private Dictionary<Difficulty, List<Question>> questionSet;
@@ -40,14 +43,23 @@ namespace ImagineRITGame
 
             try
             {
+
+                HttpClient client = new()
+                {
+                    BaseAddress = new Uri(url),
+                };
+
                 // For each difficulty level
                 foreach (Difficulty difficulty in Enum.GetValues(typeof(Difficulty)))
                 {
                     // Create a new list of Questions
                     this.questionSet[difficulty] = new List<Question>();
 
-                    // Read from the CSV file
-                    IEnumerable<String> lines = File.ReadLines(Directory.GetFiles("Content\\", difficulty + "*.csv")[0]);
+                    // Pull the CSV from online
+                    using HttpResponseMessage resp = client.GetAsync(difficulty.ToString() + ".csv").GetAwaiter().GetResult();
+                    string result = resp.Content.ReadAsStringAsync().GetAwaiter().GetResult().Replace("\r", "");
+                    string[] lines = result.Split("\n");
+
 
                     // LINQ that performs CSV parsing on each line of the file
                     IEnumerable<String[]> csv = from line in lines select CSVSplitter(line.ToString());
@@ -56,7 +68,7 @@ namespace ImagineRITGame
                     foreach (string[] line in csv)
                     {
                         // If this is the first line, skip it (header data)
-                        if (!route)
+                        if (!route || line[0] == "")
                         {
                             route = true;
                             continue;
@@ -95,32 +107,40 @@ namespace ImagineRITGame
         /// <returns>An array of length MaxOptions + 1, containing the Question, all answers, and if necessary, empty string placeholders</returns>
         private String[] CSVSplitter(string line)
         {
-            String[] splitLine = new string[MaxOptions + 1];
-            int currIndex = 0;
-            int pointer = 0;
-            for (int i = 0; i < line.Length; i++)
+            try
             {
-                // if we hit a , outside of quotes, split the string
-                if (line[i] == ',')
+                String[] splitLine = new string[MaxOptions + 1];
+                int currIndex = 0;
+                int pointer = 0;
+                for (int i = 0; i < line.Length; i++)
                 {
-                    splitLine[currIndex] = line.Substring(pointer, i - pointer);
-                    currIndex++;
-                    pointer = i + 1;
-                }
-                // If we hit a quote, skip to the next quote
-                if (line[i] == '"')
-                {
-                    i++;
-                    while (line[i] != '"')
+                    // if we hit a , outside of quotes, split the string
+                    if (line[i] == ',')
+                    {
+                        splitLine[currIndex] = line.Substring(pointer, i - pointer);
+                        currIndex++;
+                        pointer = i + 1;
+                    }
+                    // If we hit a quote, skip to the next quote
+                    if (line[i] == '"')
                     {
                         i++;
+                        while (line[i] != '"')
+                        {
+                            i++;
+                        }
                     }
                 }
-            }
-            // Add in the last part of the CSV line that doesn't end with a comma
-            splitLine[currIndex] = line.Substring(pointer, line.Length - pointer);
+                // Add in the last part of the CSV line that doesn't end with a comma
+                splitLine[currIndex] = line.Substring(pointer, line.Length - pointer);
 
-            return splitLine;
+                return splitLine;
+            } catch (System.IndexOutOfRangeException e)
+            {
+                Console.Error.WriteLine("Malformed CSV file");
+                Environment.Exit(1);
+            }
+            return null;
         }
 
 
