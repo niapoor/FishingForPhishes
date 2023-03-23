@@ -34,6 +34,18 @@
 /processorParam:TextureFormat=Color
 /build:background.png
 
+#begin basic.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:basic.png
+
 #begin black.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -45,6 +57,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:black.png
+
+#begin bob .png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:bob .png
 
 #begin button maker.png
 /importer:TextureImporter
@@ -105,6 +129,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:cybercorps_scholarship_for_service_hor_k1.png
+
+#begin eyes.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:eyes.png
 
 #begin fish_all.png
 /importer:TextureImporter
@@ -189,6 +225,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:inv_items.png
+
+#begin pants.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:pants.png
 
 #begin peaberry_base_2.spritefont
 /importer:FontDescriptionImporter
@@ -369,6 +417,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:phishing_game_logo.png
+
+#begin shoes.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:shoes.png
 
 #begin transparenthorizontal.png
 /importer:TextureImporter

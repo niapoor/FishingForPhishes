@@ -46,6 +46,7 @@ namespace ImagineRITGame
         private MouseState mouseState;
         private MouseState previousMouseState;
 
+        private Fish testFish;
 
         int _width;
         int _height;
@@ -83,7 +84,6 @@ namespace ImagineRITGame
         private IEnumerable<String> hardCSV;
 
         // Texture fields
-        private Texture2D playerTexture;
         private Texture2D fishingBobTexture;
         private Texture2D fishTexture;
         private Texture2D buttonTexture;
@@ -92,6 +92,15 @@ namespace ImagineRITGame
         private Texture2D fishingPostCard;
         private Texture2D allFish;
         private Texture2D fishInvShadow;
+
+        // Player outfit texture fields
+        private Texture2D playerTexture;
+        private Texture2D shirt;
+        private Texture2D pants;
+        private Texture2D shoes;
+        private Texture2D hair;
+        private Texture2D eyes;
+        private List<Texture2D> outfitTextures;
 
 
         // Sprite sheet data
@@ -134,6 +143,7 @@ namespace ImagineRITGame
 
             menuTextures = new List<Texture2D>();
             fonts = new List<SpriteFont>();
+            outfitTextures = new List<Texture2D>();
 
             // Game properties
             Window.Title = "ImagineRIT Phishing Game";
@@ -157,13 +167,16 @@ namespace ImagineRITGame
             inventory = new Inventory(menuTextures);
             displayQuestion= new DisplayQuestion(menuTextures, fonts);
 
+            // Fish for testing
+            testFish = new Fish(fishTexture, new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .48), (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .91)));
+
             // TODO: add question pack
             //questionPack = new QuestionPack();
 
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
 
-            player = new Player(playerTexture, new Vector2(100, 0), fishingBobTexture);
+            player = new Player(outfitTextures, 0.43, 0.5);
         }
 
         protected override void Update(GameTime gameTime)
@@ -237,6 +250,7 @@ namespace ImagineRITGame
             {
                 case GameState.Game:
                     player.UpdateAnimation(gameTime);
+                    testFish.UpdateAnimation(gameTime);
                     break;
             }
         }
@@ -252,10 +266,16 @@ namespace ImagineRITGame
                 DepthStencilState.Default,
             RasterizerState.CullCounterClockwise);
 
-            _spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(110, 0, 1700, 960), Color.White);
+            _spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(110, 0, 1700, 960), Color.White, 0f,
+               Vector2.Zero,
+               0,
+               .9f);
 
             if (gameState == GameState.CreditsMenu || (gameState == GameState.Game && drawInQuestion) || gameState == GameState.PauseMenu || gameState == GameState.Inventory)
-                _spriteBatch.Draw(darkenBackground, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(110, 0, 1700, 960), new Color(Color.Black, 0.6f));
+                _spriteBatch.Draw(darkenBackground, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(110, 0, 1700, 960), new Color(Color.Black, 0.6f), 0f,
+               Vector2.Zero,
+               0,
+               .0001f);
 
             // width: 2732, height: 2048
             // Drawing in the RIT CyberCorps logo in the bottom right. This will always be drawn in regardless of other settings.
@@ -278,9 +298,12 @@ namespace ImagineRITGame
                 case GameState.Game:
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
                     if(drawInQuestion == true)
+                    {
                         displayQuestion.Draw(_spriteBatch, Color.Goldenrod, currentQuestion, fonts);
-             //       else
-             //           _spriteBatch.DrawString(fonts[0], correctOrIncorrect ? "Correct":"Incorrect", Game1.CenterText(correctOrIncorrect ? "Correct" : "Incorrect", (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
+                    }
+                    else
+                        _spriteBatch.DrawString(fonts[0], correctOrIncorrect ? "Correct":"Incorrect", Game1.CenterText(correctOrIncorrect ? "Correct" : "Incorrect", (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
+                    testFish.Draw(_spriteBatch);
                     player.Draw(_spriteBatch);
                     break;
                 case GameState.CreditsMenu:
@@ -362,7 +385,6 @@ namespace ImagineRITGame
 
         public void LoadTextures()
         {
-            playerTexture = Content.Load<Texture2D>("char_all");
             fishingBobTexture = Content.Load<Texture2D>("inv_items");
             fishTexture = Content.Load<Texture2D>("fish_shadow_black");
             buttonTexture = Content.Load<Texture2D>("button_spritesheet");
@@ -375,6 +397,19 @@ namespace ImagineRITGame
             menuTextures.Add(allFish);
             fishInvShadow = Content.Load<Texture2D>("inv_fish_shadow");
             menuTextures.Add(fishInvShadow);
+            // Outfit / Player textures
+            playerTexture = Content.Load<Texture2D>("char_all");
+            shirt = Content.Load<Texture2D>("basic");
+            pants = Content.Load<Texture2D>("pants");
+            shoes = Content.Load<Texture2D>("shoes");
+            hair = Content.Load<Texture2D>("bob ");
+            eyes = Content.Load<Texture2D>("eyes");
+            outfitTextures.Add(playerTexture);
+            outfitTextures.Add(shirt);
+            outfitTextures.Add(pants);
+            outfitTextures.Add(shoes);
+            outfitTextures.Add(hair);
+            outfitTextures.Add(eyes);
             cyberCorpsLogo = Content.Load<Texture2D>("cybercorps_scholarship_for_service_hor_k1");
             background = Content.Load<Texture2D>("background");
             darkenBackground = Content.Load<Texture2D>("black");
