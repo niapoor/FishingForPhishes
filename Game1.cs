@@ -164,7 +164,7 @@ namespace ImagineRITGame
             pauseMenu = new PauseMenu(menuTextures);
             creditsMenu= new CreditsMenu(menuTextures, fonts);
             gameButtonsOverlay= new GameButtonsOverlay(menuTextures);
-            inventory = new Inventory(menuTextures);
+            inventory = new Inventory(menuTextures, fonts);
             displayQuestion= new DisplayQuestion(menuTextures, fonts);
 
             // Fish for testing
@@ -293,7 +293,9 @@ namespace ImagineRITGame
                     pauseMenu.Draw(_spriteBatch, Color.Goldenrod);
                     break;
                 case GameState.Inventory:
+                    inventory.DrawFonts(_spriteBatch, fonts);
                     inventory.Draw(_spriteBatch, Color.Goldenrod);
+                    inventory.DrawFonts(_spriteBatch, fonts);
                     break;
                 case GameState.Game:
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);

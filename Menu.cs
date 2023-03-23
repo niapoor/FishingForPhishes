@@ -172,7 +172,7 @@ namespace ImagineRITGame
                 strings.Add(text.Substring(indexOfThirdQuarterSpace + 1));
                 return strings;
             }
-            else
+            else if (text.Length > (stringLengthFactor * 4) && text.Length <= (stringLengthFactor * 5))
             {
                 int indexOfFirstFifthSpace = text.LastIndexOf(' ', text.Length / 5);
                 int indexOfSecondFifthSpace = text.LastIndexOf(' ', (text.Length / 5) * 2);
@@ -184,6 +184,40 @@ namespace ImagineRITGame
                 strings.Add(text.Substring(indexOfSecondFifthSpace + 1, indexOfThirdFifthSpace - (indexOfSecondFifthSpace + 1)));
                 strings.Add(text.Substring(indexOfThirdFifthSpace + 1, indexOfFourthFifthSpace - (indexOfThirdFifthSpace + 1)));
                 strings.Add(text.Substring(indexOfFourthFifthSpace + 1));
+                return strings;
+            }
+            else if (text.Length > (stringLengthFactor * 5) && text.Length <= (stringLengthFactor * 6))
+            {
+                int indexOfFirstSixthSpace = text.LastIndexOf(' ', text.Length / 6);
+                int indexOfSecondSixthSpace = text.LastIndexOf(' ', (text.Length / 6) * 2);
+                int indexOfThirdSixthSpace = text.LastIndexOf(' ', (text.Length / 6) * 3);
+                int indexOfFourthSixthSpace = text.LastIndexOf(' ', (text.Length / 6) * 4);
+                int indexOfFifthSixthSpace = text.LastIndexOf(' ', (text.Length / 6) * 5);
+                int len = text.Length;
+                strings.Add(text.Substring(0, indexOfFirstSixthSpace));
+                strings.Add(text.Substring(indexOfFirstSixthSpace + 1, indexOfSecondSixthSpace - (indexOfFirstSixthSpace + 1)));
+                strings.Add(text.Substring(indexOfSecondSixthSpace + 1, indexOfThirdSixthSpace - (indexOfSecondSixthSpace + 1)));
+                strings.Add(text.Substring(indexOfThirdSixthSpace + 1, indexOfFourthSixthSpace - (indexOfThirdSixthSpace + 1)));
+                strings.Add(text.Substring(indexOfFourthSixthSpace + 1, indexOfFifthSixthSpace - (indexOfFourthSixthSpace + 1)));
+                strings.Add(text.Substring(indexOfFifthSixthSpace + 1));
+                return strings;
+            }
+            else
+            {
+                int indexOfFirstSeventhSpace = text.LastIndexOf(' ', text.Length / 7);
+                int indexOfSecondSeventhSpace = text.LastIndexOf(' ', (text.Length / 7) * 2);
+                int indexOfThirdSeventhSpace = text.LastIndexOf(' ', (text.Length / 7) * 3);
+                int indexOfFourthSeventhSpace = text.LastIndexOf(' ', (text.Length / 7) * 4);
+                int indexOfFifthSeventhSpace = text.LastIndexOf(' ', (text.Length / 7) * 5);
+                int indexOfSixthSeventhSpace = text.LastIndexOf(' ', (text.Length / 7) * 6);
+                int len = text.Length;
+                strings.Add(text.Substring(0, indexOfFirstSeventhSpace));
+                strings.Add(text.Substring(indexOfFirstSeventhSpace + 1, indexOfSecondSeventhSpace - (indexOfFirstSeventhSpace + 1)));
+                strings.Add(text.Substring(indexOfSecondSeventhSpace + 1, indexOfThirdSeventhSpace - (indexOfSecondSeventhSpace + 1)));
+                strings.Add(text.Substring(indexOfThirdSeventhSpace + 1, indexOfFourthSeventhSpace - (indexOfThirdSeventhSpace + 1)));
+                strings.Add(text.Substring(indexOfFourthSeventhSpace + 1, indexOfFifthSeventhSpace - (indexOfFourthSeventhSpace + 1)));
+                strings.Add(text.Substring(indexOfFifthSeventhSpace + 1, indexOfSixthSeventhSpace - (indexOfFifthSeventhSpace + 1)));
+                strings.Add(text.Substring(indexOfSixthSeventhSpace + 1));
                 return strings;
             }
 
