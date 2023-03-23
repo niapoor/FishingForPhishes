@@ -66,6 +66,9 @@ namespace ImagineRITGame
         private Inventory inventory;
         private List<Texture2D> menuTextures;
 
+        private Texture2D background;
+        private Texture2D darkenBackground;
+
         // Should only be drawn at the proper time during the game
         private bool drawInQuestion;
 
@@ -198,7 +201,7 @@ namespace ImagineRITGame
                         ChangeGameState(19);
                     else if (SingleKeyPress(Keys.Space, previousKbState) && drawInQuestion == false)
                     {
-                        currentQuestion = questionPack.FetchRandomQuestion(Difficulty.Hard);
+                        currentQuestion = questionPack.FetchRandomQuestion(Difficulty.Medium);
                         displayQuestion.SetUpQuestion(currentQuestion);
                         drawInQuestion = true;
                     }
@@ -249,11 +252,16 @@ namespace ImagineRITGame
                 DepthStencilState.Default,
             RasterizerState.CullCounterClockwise);
 
+            _spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(110, 0, 1700, 960), Color.White);
+
+            if (gameState == GameState.CreditsMenu || (gameState == GameState.Game && drawInQuestion) || gameState == GameState.PauseMenu || gameState == GameState.Inventory)
+                _spriteBatch.Draw(darkenBackground, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(110, 0, 1700, 960), new Color(Color.Black, 0.6f));
+
             // width: 2732, height: 2048
             // Drawing in the RIT CyberCorps logo in the bottom right. This will always be drawn in regardless of other settings.
             // Drawing in size and position is dynamic based on the screen size
-            _spriteBatch.Draw(cyberCorpsLogo, new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .8), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .8),
-                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .18213), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .13653)), new Rectangle(0, 0, 2732, 2048), Color.White);
+            _spriteBatch.Draw(cyberCorpsLogo, new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .82), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .02),
+                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (.075 * 2.3)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (.0149 * 2.3))), new Rectangle(0, 0, 750, 149), Color.White);
 
             // Drawing in assets based on the current game state
             switch (gameState)
@@ -271,8 +279,8 @@ namespace ImagineRITGame
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
                     if(drawInQuestion == true)
                         displayQuestion.Draw(_spriteBatch, Color.Goldenrod, currentQuestion, fonts);
-                    else
-                        _spriteBatch.DrawString(fonts[0], correctOrIncorrect ? "Correct":"Incorrect", Game1.CenterText(correctOrIncorrect ? "Correct" : "Incorrect", (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
+             //       else
+             //           _spriteBatch.DrawString(fonts[0], correctOrIncorrect ? "Correct":"Incorrect", Game1.CenterText(correctOrIncorrect ? "Correct" : "Incorrect", (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
                     player.Draw(_spriteBatch);
                     break;
                 case GameState.CreditsMenu:
@@ -367,7 +375,9 @@ namespace ImagineRITGame
             menuTextures.Add(allFish);
             fishInvShadow = Content.Load<Texture2D>("inv_fish_shadow");
             menuTextures.Add(fishInvShadow);
-            cyberCorpsLogo = Content.Load<Texture2D>("transparenthorizontal");
+            cyberCorpsLogo = Content.Load<Texture2D>("cybercorps_scholarship_for_service_hor_k1");
+            background = Content.Load<Texture2D>("background");
+            darkenBackground = Content.Load<Texture2D>("black");
             //easyCSV = Content.Load<IEnumerable<String>>("EasyTemp");
             //mediumCSV = Content.Load<IEnumerable<String>>("MediumTemp");
             //hardCSV = Content.Load<IEnumerable<String>>("HardTemp");

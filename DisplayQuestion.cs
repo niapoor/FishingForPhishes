@@ -37,24 +37,24 @@ namespace ImagineRITGame
                 if (q.AnswerList()[0].Text() == "true") // q.AnswerList()[0].Text().ToLower().Contains("true")
                 {
                     buttons = new List<Button>() {
-                        new Button(base.AlignButton(.35, .57), ButtonType.True, textures[(int)MenuTextures.GeneralButtons]),
-                        new Button(base.AlignButton(.45, .57), ButtonType.False, textures[(int)MenuTextures.GeneralButtons]),
+                        new Button(base.AlignButton(.35, .65), ButtonType.True, textures[(int)MenuTextures.GeneralButtons]),
+                        new Button(base.AlignButton(.45, .65), ButtonType.False, textures[(int)MenuTextures.GeneralButtons]),
                     };
                 }
                 // If the answer choices are false/true
                 else if (q.AnswerList()[0].Text() == "False") // q.AnswerList()[0].Text().ToLower().Contains("false")
                 {
                     buttons = new List<Button>() {
-                        new Button(base.AlignButton(.35, .57), ButtonType.False, textures[(int)MenuTextures.GeneralButtons]),
-                        new Button(base.AlignButton(.45, .57), ButtonType.True, textures[(int)MenuTextures.GeneralButtons]),
+                        new Button(base.AlignButton(.35, .65), ButtonType.False, textures[(int)MenuTextures.GeneralButtons]),
+                        new Button(base.AlignButton(.45, .65), ButtonType.True, textures[(int)MenuTextures.GeneralButtons]),
                     };
                 }
                 // If there are two answer choices, not true/false
                 else
                 {
                     buttons = new List<Button>() {
-                        new Button(base.AlignButton(.35, .57), ButtonType.A, textures[(int)MenuTextures.GeneralButtons]),
-                        new Button(base.AlignButton(.45, .57), ButtonType.B, textures[(int)MenuTextures.GeneralButtons]),
+                        new Button(base.AlignButton(.4, .65), ButtonType.A, textures[(int)MenuTextures.GeneralButtons]),
+                        new Button(base.AlignButton(.5, .65), ButtonType.B, textures[(int)MenuTextures.GeneralButtons]),
                     };
                 }
             }
@@ -62,19 +62,19 @@ namespace ImagineRITGame
             else if (q.NumAnswers() == 3)
             {
                 buttons = new List<Button>() {
-                    new Button(base.AlignButton(.35, .57), ButtonType.A, textures[(int)MenuTextures.GeneralButtons]),
-                    new Button(base.AlignButton(.45, .57), ButtonType.B, textures[(int)MenuTextures.GeneralButtons]),
-                    new Button(base.AlignButton(.55, .57), ButtonType.C, textures[(int)MenuTextures.GeneralButtons])
+                    new Button(base.AlignButton(.35, .65), ButtonType.A, textures[(int)MenuTextures.GeneralButtons]),
+                    new Button(base.AlignButton(.45, .65), ButtonType.B, textures[(int)MenuTextures.GeneralButtons]),
+                    new Button(base.AlignButton(.55, .65), ButtonType.C, textures[(int)MenuTextures.GeneralButtons])
                 };
             }
             // If there are 4 answer choices
             else
             {
                 buttons = new List<Button>() {
-                    new Button(base.AlignButton(.3, .57), ButtonType.A, textures[(int)MenuTextures.GeneralButtons]),
-                    new Button(base.AlignButton(.4, .57), ButtonType.B, textures[(int)MenuTextures.GeneralButtons]),
-                    new Button(base.AlignButton(.5, .57), ButtonType.C, textures[(int)MenuTextures.GeneralButtons]),
-                    new Button(base.AlignButton(.6, .57), ButtonType.D, textures[(int)MenuTextures.GeneralButtons])
+                    new Button(base.AlignButton(.3, .65), ButtonType.A, textures[(int)MenuTextures.GeneralButtons]),
+                    new Button(base.AlignButton(.4, .65), ButtonType.B, textures[(int)MenuTextures.GeneralButtons]),
+                    new Button(base.AlignButton(.5, .65), ButtonType.C, textures[(int)MenuTextures.GeneralButtons]),
+                    new Button(base.AlignButton(.6, .65), ButtonType.D, textures[(int)MenuTextures.GeneralButtons])
                 };
             }
         }
@@ -110,7 +110,7 @@ namespace ImagineRITGame
                 currentTextList = base.WrapText(q.QuestionText(), 25);
 
             // Make sure to assign the y value of the question based off of how many lines it is
-            double y = ((4 - currentTextList.Count) * .08) + 0.2;
+            double y = ((5 - currentTextList.Count) * .08) + 0.2;
 
             for (int i = 0; i < currentTextList.Count; i++)
             {
@@ -128,14 +128,14 @@ namespace ImagineRITGame
                 if (buttons[i].IsHovered)
                 {
                     if (q.AnswerList()[i].Text()[0].ToString() == "\"")
-                        currentTextList = base.WrapText(q.AnswerList()[i].Text().Substring(1, q.AnswerList()[i].Text().Length - 2), 50);
+                        currentTextList = base.WrapText(q.AnswerList()[i].Text().Substring(1, q.AnswerList()[i].Text().Length - 2), 90);
                     else
                         currentTextList = base.WrapText(q.AnswerList()[i].Text(), 50);
                     for (int j = 0; j < currentTextList.Count; j++){
                         sb.DrawString
                             (fonts[2],
                             currentTextList[j],
-                            Game1.CenterText(currentTextList[j], (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * ((.06 * j) + 0.78))), fonts[2]),
+                            Game1.CenterText(currentTextList[j], (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * ((.06 * j) + 0.86))), fonts[2]),
                             Color.DarkGoldenrod);
                     }
                 }

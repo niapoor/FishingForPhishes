@@ -160,7 +160,7 @@ namespace ImagineRITGame
                 strings.Add(text.Substring(indexOfSecondThirdSpace + 1));
                 return strings;
             }
-            else
+            else if (text.Length > (stringLengthFactor * 3) && text.Length <= (stringLengthFactor * 4))
             {
                 int indexOfFirstQuarterSpace = text.LastIndexOf(' ', text.Length / 4);
                 int indexOfSecondQuarterSpace = text.LastIndexOf(' ', (text.Length / 4) * 2);
@@ -172,6 +172,21 @@ namespace ImagineRITGame
                 strings.Add(text.Substring(indexOfThirdQuarterSpace + 1));
                 return strings;
             }
+            else
+            {
+                int indexOfFirstFifthSpace = text.LastIndexOf(' ', text.Length / 5);
+                int indexOfSecondFifthSpace = text.LastIndexOf(' ', (text.Length / 5) * 2);
+                int indexOfThirdFifthSpace = text.LastIndexOf(' ', (text.Length / 5) * 3);
+                int indexOfFourthFifthSpace = text.LastIndexOf(' ', (text.Length / 5) * 4);
+                int len = text.Length;
+                strings.Add(text.Substring(0, indexOfFirstFifthSpace));
+                strings.Add(text.Substring(indexOfFirstFifthSpace + 1, indexOfSecondFifthSpace - (indexOfFirstFifthSpace + 1)));
+                strings.Add(text.Substring(indexOfSecondFifthSpace + 1, indexOfThirdFifthSpace - (indexOfSecondFifthSpace + 1)));
+                strings.Add(text.Substring(indexOfThirdFifthSpace + 1, indexOfFourthFifthSpace - (indexOfThirdFifthSpace + 1)));
+                strings.Add(text.Substring(indexOfFourthFifthSpace + 1));
+                return strings;
+            }
+
         }
 
 
