@@ -13,15 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../../Downloads/EasyTemp.csv
-/copy:../../../../Downloads/EasyTemp.csv;EasyTemp.csv
-
-#begin ../../../../Downloads/HardTemp.csv
-/copy:../../../../Downloads/HardTemp.csv;HardTemp.csv
-
-#begin ../../../../Downloads/MediumTemp.csv
-/copy:../../../../Downloads/MediumTemp.csv;MediumTemp.csv
-
 #begin background.png
 /importer:TextureImporter
 /processor:TextureProcessor
