@@ -190,8 +190,9 @@ namespace ImagineRITGame
             // Drawing in the player
             for (int i = 0; i < textures.Count; i++)
                 sb.Draw(textures[i],
-                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * yLoc), widthOfSingleSprite * 9, (int)(textures[i].Height / 5)),
-                new Rectangle((playerCurrentFrame) * widthOfSingleSprite, (animationType * 32), widthOfSingleSprite, textures[i].Height / 44),
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * yLoc), 
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765)),
+                new Rectangle((playerCurrentFrame * widthOfSingleSprite) + (3 * 8 * widthOfSingleSprite), (animationType * 32), widthOfSingleSprite, textures[i].Height / 44),
                 Color.White,
                 0f,
                 Vector2.Zero,

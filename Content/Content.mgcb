@@ -13,6 +13,15 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../../../Downloads/EasyTemp.csv
+/copy:../../../../Downloads/EasyTemp.csv;EasyTemp.csv
+
+#begin ../../../../Downloads/HardTemp.csv
+/copy:../../../../Downloads/HardTemp.csv;HardTemp.csv
+
+#begin ../../../../Downloads/MediumTemp.csv
+/copy:../../../../Downloads/MediumTemp.csv;MediumTemp.csv
+
 #begin background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -24,6 +33,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:background.png
+
+#begin backgroundv2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:backgroundv2.png
 
 #begin basic.png
 /importer:TextureImporter

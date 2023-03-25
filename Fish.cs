@@ -94,7 +94,7 @@ namespace ImagineRITGame
         {
             // Draw in the fish
             sb.Draw(texture,
-               new Rectangle((int)position.X, (int)position.Y, 128, 128),
+               new Rectangle((int)position.X, (int)position.Y, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16),
                new Rectangle(fishCurrentFrame * widthOfSingleSprite, 0, widthOfSingleSprite, 16),
                Color.White,
                0f,
