@@ -9,6 +9,7 @@ using System.Dynamic;
 using SharpDX.Direct3D9;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using SharpDX.Direct2D1;
+using SharpDX.MediaFoundation;
 
 namespace ImagineRITGame
 {
@@ -21,6 +22,17 @@ namespace ImagineRITGame
         HoldingFish
     }
 
+    // An enum that holds all of the outfit pieces a player can have
+    enum OutfitPieces
+    {
+        Body = 0,
+        Shirt = 1,
+        Pants = 2,
+        Shoes = 3,
+        Hair = 4,
+        Eyes = 5
+    }
+
     class Player : DynamicObject
     {
 
@@ -28,8 +40,9 @@ namespace ImagineRITGame
         private PlayerStates playerState;
         private PlayerStates prevState;
 
-        private Texture2D texture;
-        private Vector2 position;
+        private List<Texture2D> textures;
+        private double xLoc;
+        private double yLoc;
 
         // Keyboard states
         private KeyboardState kbState;
@@ -65,10 +78,11 @@ namespace ImagineRITGame
         }
 
 
-        public Player(Texture2D sprite, Vector2 location, Texture2D fishingBob)
+        public Player(List<Texture2D> sprites, double x, double y)
         {
-            texture = sprite;
-            position = location;
+            textures = sprites;
+            xLoc = x;
+            yLoc = y;
 
             // The player is idle by default because the game starts with them not moving
             playerState = PlayerStates.Idle;
@@ -172,11 +186,13 @@ namespace ImagineRITGame
 
             if (!faceRight)
                 spe = SpriteEffects.FlipHorizontally;
-            
+
             // Drawing in the player
-            sb.Draw(texture,
-                new Rectangle(500, 100, widthOfSingleSprite * 9, (int)(texture.Height / 5)),
-                new Rectangle((playerCurrentFrame) * widthOfSingleSprite, (animationType * 32), widthOfSingleSprite, texture.Height / 44),
+            for (int i = 0; i < textures.Count; i++)
+                sb.Draw(textures[i],
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * yLoc), 
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765)),
+                new Rectangle((playerCurrentFrame * widthOfSingleSprite) + (3 * 8 * widthOfSingleSprite), (animationType * 32), widthOfSingleSprite, textures[i].Height / 44),
                 Color.White,
                 0f,
                 Vector2.Zero,

@@ -46,9 +46,13 @@ namespace ImagineRITGame
         private MouseState mouseState;
         private MouseState previousMouseState;
 
+        private Fish testFish;
 
         int _width;
         int _height;
+
+        // Cooldown for "Change Mode" button press
+        double cooldownTime = 0;
 
         // Space for sound effects
 
@@ -66,8 +70,27 @@ namespace ImagineRITGame
         private Inventory inventory;
         private List<Texture2D> menuTextures;
 
+        private Texture2D background;
+        private Texture2D darkenBackground;
+
+        // Should only be drawn at the proper time during the game
+        private bool drawInQuestion;
+
+        // The current difficulty
+        private Difficulty currentDifficulty;
+        private Difficulty prevDifficulty;
+
+        // Question variables
+        private DisplayQuestion displayQuestion;
+        private QuestionPack questionPack;
+        private Question currentQuestion;
+        private bool correctOrIncorrect;
+        private List<IEnumerable<String>> questionCSVFiles;
+        private IEnumerable<String> easyCSV;
+        private IEnumerable<String> mediumCSV;
+        private IEnumerable<String> hardCSV;
+
         // Texture fields
-        private Texture2D playerTexture;
         private Texture2D fishingBobTexture;
         private Texture2D fishTexture;
         private Texture2D buttonTexture;
@@ -76,6 +99,15 @@ namespace ImagineRITGame
         private Texture2D fishingPostCard;
         private Texture2D allFish;
         private Texture2D fishInvShadow;
+
+        // Player outfit texture fields
+        private Texture2D playerTexture;
+        private Texture2D shirt;
+        private Texture2D pants;
+        private Texture2D shoes;
+        private Texture2D hair;
+        private Texture2D eyes;
+        private List<Texture2D> outfitTextures;
 
 
         // Sprite sheet data
@@ -116,8 +148,13 @@ namespace ImagineRITGame
             gameState = GameState.MainMenu;
             prevGameState = GameState.MainMenu;
 
+            // The default difficulty for questions is easy
+            currentDifficulty = Difficulty.Easy;
+            prevDifficulty = Difficulty.Hard;
+
             menuTextures = new List<Texture2D>();
             fonts = new List<SpriteFont>();
+            outfitTextures = new List<Texture2D>();
 
             // Game properties
             Window.Title = "ImagineRIT Phishing Game";
@@ -131,17 +168,26 @@ namespace ImagineRITGame
 
             LoadTextures();
 
+            questionPack = new QuestionPack();
+
             // Initializing Menu objects
             mainMenu = new MainMenu(menuTextures);
-            pauseMenu = new PauseMenu(menuTextures);
+            pauseMenu = new PauseMenu(menuTextures, fonts);
             creditsMenu= new CreditsMenu(menuTextures, fonts);
             gameButtonsOverlay= new GameButtonsOverlay(menuTextures);
-            inventory = new Inventory(menuTextures);
+            inventory = new Inventory(menuTextures, fonts);
+            displayQuestion= new DisplayQuestion(menuTextures, fonts);
+
+            // Fish for testing
+            testFish = new Fish(fishTexture, new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47), (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)));
+
+            // TODO: add question pack
+            //questionPack = new QuestionPack();
 
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
 
-            player = new Player(playerTexture, new Vector2(100, 0), fishingBobTexture);
+            player = new Player(outfitTextures, 0.42, 0.4);
         }
 
         protected override void Update(GameTime gameTime)
@@ -149,6 +195,10 @@ namespace ImagineRITGame
 
             // Always update the animation
             UpdateAnimation(gameTime);
+
+            mouseState = Mouse.GetState();
+
+            cooldownTime += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             // Assigning the appropriate current game state and updating the frame based on the game state
             switch (gameState)
@@ -177,6 +227,17 @@ namespace ImagineRITGame
                     // If the player selects 'esc' in the game, go to the pause menu
                     if (SingleKeyPress(Keys.Escape, previousKbState))
                         ChangeGameState(19);
+                    else if (SingleKeyPress(Keys.Space, previousKbState) && drawInQuestion == false)
+                    {
+                        currentQuestion = questionPack.FetchRandomQuestion(currentDifficulty);
+                        displayQuestion.SetUpQuestion(currentQuestion);
+                        drawInQuestion = true;
+                    }
+                    if (drawInQuestion == true)
+                    {
+                        displayQuestion.Update(gameTime);
+                        displayQuestion.MenuButtonActivated += ChangeGameState;
+                    }
                     gameButtonsOverlay.MenuButtonActivated += ChangeGameState;
                     break;
                 case GameState.CreditsMenu:
@@ -204,6 +265,7 @@ namespace ImagineRITGame
             {
                 case GameState.Game:
                     player.UpdateAnimation(gameTime);
+                    testFish.UpdateAnimation(gameTime);
                     break;
             }
         }
@@ -219,11 +281,22 @@ namespace ImagineRITGame
                 DepthStencilState.Default,
             RasterizerState.CullCounterClockwise);
 
+            _spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(0, 0, 1705, 955), Color.White, 0f,
+               Vector2.Zero,
+               0,
+               .9f);
+
+            if (gameState == GameState.CreditsMenu || (gameState == GameState.Game && drawInQuestion) || gameState == GameState.PauseMenu || gameState == GameState.Inventory)
+                _spriteBatch.Draw(darkenBackground, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(110, 0, 1700, 960), new Color(Color.Black, 0.6f), 0f,
+               Vector2.Zero,
+               0,
+               .0001f);
+
             // width: 2732, height: 2048
             // Drawing in the RIT CyberCorps logo in the bottom right. This will always be drawn in regardless of other settings.
             // Drawing in size and position is dynamic based on the screen size
-            _spriteBatch.Draw(cyberCorpsLogo, new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .8), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .8),
-                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .18213), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .13653)), new Rectangle(0, 0, 2732, 2048), Color.White);
+            _spriteBatch.Draw(cyberCorpsLogo, new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .82), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .02),
+                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (.075 * 2.3)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (.0149 * 2.3))), new Rectangle(0, 0, 750, 149), Color.White);
 
             // Drawing in assets based on the current game state
             switch (gameState)
@@ -232,13 +305,22 @@ namespace ImagineRITGame
                     mainMenu.Draw(_spriteBatch, Color.Goldenrod);
                     break;
                 case GameState.PauseMenu:
-                    pauseMenu.Draw(_spriteBatch, Color.Goldenrod);
+                    pauseMenu.Draw(_spriteBatch, Color.Goldenrod, fonts, currentDifficulty);
                     break;
                 case GameState.Inventory:
+                    inventory.DrawFonts(_spriteBatch, fonts);
                     inventory.Draw(_spriteBatch, Color.Goldenrod);
+                    inventory.DrawFonts(_spriteBatch, fonts);
                     break;
                 case GameState.Game:
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
+                    if(drawInQuestion == true)
+                    {
+                        displayQuestion.Draw(_spriteBatch, Color.Goldenrod, currentQuestion, fonts);
+                    }
+                    else
+                        _spriteBatch.DrawString(fonts[0], correctOrIncorrect ? "Correct":"Incorrect", Game1.CenterText(correctOrIncorrect ? "Correct" : "Incorrect", (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
+                    testFish.Draw(_spriteBatch);
                     player.Draw(_spriteBatch);
                     break;
                 case GameState.CreditsMenu:
@@ -290,6 +372,42 @@ namespace ImagineRITGame
                 prevGameState = GameState.Game;
                 gameState = GameState.Inventory;
             }
+            else if (state == 8)
+            {
+                if (SingleMousePress(mouseState, previousMouseState) && cooldownTime >= 3)
+                {
+                    cooldownTime = 0;
+                    if (currentDifficulty == Difficulty.Easy && prevDifficulty == Difficulty.Hard)
+                    {
+                        currentDifficulty = Difficulty.Medium;
+                        prevDifficulty = Difficulty.Easy;
+                    }
+                    else if (currentDifficulty == Difficulty.Medium && prevDifficulty == Difficulty.Easy)
+                    {
+                        currentDifficulty = Difficulty.Hard;
+                        prevDifficulty = Difficulty.Medium;
+                    }
+                    else
+                    {
+                        currentDifficulty = Difficulty.Easy;
+                        prevDifficulty = Difficulty.Hard;
+                    }
+                }
+            }
+            else if (state >= 12 && state <= 17)
+            {
+                foreach (Answer a in currentQuestion.AnswerList())
+                {
+                    if (a.Text() == "True" && currentQuestion.NumAnswers() == 2)
+                    {
+                        correctOrIncorrect = currentQuestion.CheckAnswer(state - 12);
+                        drawInQuestion = false;
+                        break;
+                    }
+                }
+                correctOrIncorrect = currentQuestion.CheckAnswer(state - 14);
+                drawInQuestion = false;
+            }
             else if (state == 18)
             {
                 prevGameState = GameState.MainMenu;
@@ -306,7 +424,6 @@ namespace ImagineRITGame
 
         public void LoadTextures()
         {
-            playerTexture = Content.Load<Texture2D>("char_all");
             fishingBobTexture = Content.Load<Texture2D>("inv_items");
             fishTexture = Content.Load<Texture2D>("fish_shadow_black");
             buttonTexture = Content.Load<Texture2D>("button_spritesheet");
@@ -319,7 +436,28 @@ namespace ImagineRITGame
             menuTextures.Add(allFish);
             fishInvShadow = Content.Load<Texture2D>("inv_fish_shadow");
             menuTextures.Add(fishInvShadow);
-            cyberCorpsLogo = Content.Load<Texture2D>("transparenthorizontal");
+            // Outfit / Player textures
+            playerTexture = Content.Load<Texture2D>("char_all");
+            shirt = Content.Load<Texture2D>("basic");
+            pants = Content.Load<Texture2D>("pants");
+            shoes = Content.Load<Texture2D>("shoes");
+            hair = Content.Load<Texture2D>("bob ");
+            eyes = Content.Load<Texture2D>("eyes");
+            outfitTextures.Add(playerTexture);
+            outfitTextures.Add(shirt);
+            outfitTextures.Add(pants);
+            outfitTextures.Add(shoes);
+            outfitTextures.Add(hair);
+            outfitTextures.Add(eyes);
+            cyberCorpsLogo = Content.Load<Texture2D>("cybercorps_scholarship_for_service_hor_k1");
+            background = Content.Load<Texture2D>("backgroundv2");
+            darkenBackground = Content.Load<Texture2D>("black");
+            //easyCSV = Content.Load<IEnumerable<String>>("EasyTemp");
+            //mediumCSV = Content.Load<IEnumerable<String>>("MediumTemp");
+            //hardCSV = Content.Load<IEnumerable<String>>("HardTemp");
+            //questionCSVFiles.Add(easyCSV);
+            //questionCSVFiles.Add(mediumCSV);
+            //questionCSVFiles.Add(hardCSV);
             // The fonts get really screwy if the aspect ratio is changed. Fonts are annoying in that they cannot be size changed
             // after compile time or dynamically. Therefore, I have created many spritefonts of different sizes, and which ones are
             // used are dependant on the width of the user's screen.
@@ -430,6 +568,16 @@ namespace ImagineRITGame
         public static bool SingleKeyPress(Keys key, KeyboardState prevKBState)
         {
             return Keyboard.GetState().IsKeyDown(key) && prevKBState.IsKeyUp(key);
+        }
+        
+        /// <summary>
+        /// Returns whether the last key pressed was only pressed one time
+        /// </summary>
+        /// <param name="key">the key that has been pressed</param>
+        /// <returns>if the last key pressed was only pressed one time</returns>
+        public static bool SingleMousePress(MouseState mouseState, MouseState prevMouseState)
+        {
+            return Mouse.GetState().LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released;
         }
 
         /// <summary>
