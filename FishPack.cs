@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpDX.Direct2D1;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,38 +9,17 @@ using System.Threading.Tasks;
 
 namespace ImagineRITGame
 {
-    /// <summary>
-    /// Enum <c>Difficulty</c> represents the difficulty level of the questions as well as indicates the file name to access for that difficulty
-    /// </summary>
-    public enum Difficulty
-    {
-        Easy,
-        Medium,
-        Hard
-    }
-
-    /// <summary>
-    /// Class <c>QuestionPack</c> Represents the complete collection of questions to be used in the game
-    /// </summary>
-    class QuestionPack
+    internal class FishPack
     {
 
-        // Constant for max number of options/answers for a question -- must match the titled columns of the CSV files
-        public const int MaxOptions = 4;
         public const string url = "https://raw.githubusercontent.com/niapoor/ImagineRITGame/master/";
 
-
-        // QuestionPack state
-        private Dictionary<Difficulty, List<Question>> questionSet;
+        private Dictionary<Difficulty, List<string>> fishSet;
         private Random random;
 
-        /// <summary>
-        /// Method <c>QuestionPack</c> Constructs a new QuestionPack instance given a path to the directory containing the difficulty CSVs
-        /// </summary>
-        /// <param name="questionFilePath">The list containing the difficulty CSVs</param>
-        public QuestionPack()
+        public FishPack()
         {
-            this.questionSet = new Dictionary<Difficulty, List<Question>>();
+            this.fishSet = new Dictionary<Difficulty, List<string>>();
 
             try
             {
@@ -52,14 +32,10 @@ namespace ImagineRITGame
                 // For each difficulty level
                 foreach (Difficulty difficulty in Enum.GetValues(typeof(Difficulty)))
                 {
-                    // Create a new list of Questions
-                    this.questionSet[difficulty] = new List<Question>();
-
                     // Pull the CSV from online
-                    using HttpResponseMessage resp = client.GetAsync(difficulty.ToString() + ".csv").GetAwaiter().GetResult();
+                    using HttpResponseMessage resp = client.GetAsync("FishData" + difficulty.ToString() + ".csv").GetAwaiter().GetResult();
                     string result = resp.Content.ReadAsStringAsync().GetAwaiter().GetResult().Replace("\r", "");
                     string[] lines = result.Split("\n");
-
 
                     // LINQ that performs CSV parsing on each line of the file
                     IEnumerable<String[]> csv = from line in lines select CSVSplitter(line.ToString());
@@ -73,8 +49,8 @@ namespace ImagineRITGame
                             route = true;
                             continue;
                         }
-                        // Create the new question
-                        this.questionSet[difficulty].Add(new Question(line));
+                        // Create the new fish info
+                        this.fishSet[difficulty].Add(line.ToString());
                     }
 
                 }
@@ -82,12 +58,13 @@ namespace ImagineRITGame
             catch (DirectoryNotFoundException)
             {
                 // if we fail to locate the file, report the error and close gracefully 
-                Console.Error.WriteLine("Couldn't load question data");
+                Console.Error.WriteLine("Couldn't load fish data");
                 Environment.Exit(1);
             }
 
-            // Create our Random instance to be used when selecting a question
+            // Create our Random instance to be used when selecting a fish
             this.random = new Random();
+
         }
 
         /// <summary>
@@ -95,21 +72,21 @@ namespace ImagineRITGame
         /// </summary>
         /// <param name="difficulty">The enum difficulty to pick a question from</param>
         /// <returns>A question object reference of the given difficulty</returns>
-        public Question FetchRandomQuestion(Difficulty difficulty)
+        public string FetchRandomFish(Difficulty difficulty)
         {
-            return this.questionSet[difficulty][this.random.Next(this.questionSet[difficulty].Count)];
+            return this.fishSet[difficulty][this.random.Next(this.fishSet[difficulty].Count)];
         }
 
         /// <summary>
         /// Method <c>CSVSplitter</c> performs manual CSV parsing of a given String line of CSV data
         /// </summary>
         /// <param name="line">The string line to parse</param>
-        /// <returns>An array of length MaxOptions + 1, containing the Question, all answers, and if necessary, empty string placeholders</returns>
+        /// <returns>An array of length MaxOptions + 1, containing the fish info, all answers, and if necessary, empty string placeholders</returns>
         private String[] CSVSplitter(string line)
         {
             try
             {
-                String[] splitLine = new string[MaxOptions + 1];
+                String[] splitLine = new string[3];
                 int currIndex = 0;
                 int pointer = 0;
                 for (int i = 0; i < line.Length; i++)
@@ -143,7 +120,6 @@ namespace ImagineRITGame
             }
             return null;
         }
-
 
     }
 }

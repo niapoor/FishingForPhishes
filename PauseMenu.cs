@@ -16,7 +16,7 @@ namespace ImagineRITGame
         /// A constructor that defines a Pause Menu object
         /// </summary>
         /// <param name="textures">list of all textures used by menus</param>
-        public PauseMenu(List<Texture2D> textures) : base(textures)
+        public PauseMenu(List<Texture2D> textures, List<SpriteFont> fonts) : base(textures)
         {
             // Giving positions and sizes to the main menu's buttons
             buttons = new List<Button>() {
@@ -34,5 +34,28 @@ namespace ImagineRITGame
         {
             base.Update();
         }
+
+        public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Color hoverColor, List<SpriteFont> fonts, Difficulty currentDifficulty)
+        {
+            base.Draw(sb, hoverColor);
+            string text;
+
+            text = currentDifficulty.ToString();
+            sb.DrawString(fonts[0], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
+
+            // This is a debug thing to see the screen size when drawing text
+            /*
+            text = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height.ToString();
+            sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .8)), fonts[2]), Color.DarkGoldenrod);
+            text = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width.ToString();
+            sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .85)), fonts[2]), Color.DarkGoldenrod);
+            */
+
+            //   sb.Draw(textures[(int)MenuTextures.TitleCard],
+            //       new Rectangle(800, 100, 894, 588),
+            //       new Rectangle(0, 0, 149, 98),
+            //       Color.White);
+        }
+
     }
 }

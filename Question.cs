@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ImagineRITGame
 {
     /// <summary>
-    /// Class <c>Question</c> represents a question to be asked and asnwers
+    /// Class <c>Question</c> represents a question to be asked and answered
     /// </summary>
     class Question
     {
