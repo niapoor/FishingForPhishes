@@ -431,7 +431,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tiles_all.png
+/build:shoes.png
 
 #begin transparenthorizontal.png
 /importer:TextureImporter

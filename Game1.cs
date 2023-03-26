@@ -156,6 +156,10 @@ namespace ImagineRITGame
             gameState = GameState.MainMenu;
             prevGameState = GameState.MainMenu;
 
+            // The default difficulty for questions is easy
+            currentDifficulty = Difficulty.Easy;
+            prevDifficulty = Difficulty.Hard;
+
             menuTextures = new List<Texture2D>();
             fonts = new List<SpriteFont>();
             outfitTextures = new List<Texture2D>();
@@ -337,6 +341,7 @@ namespace ImagineRITGame
                     pauseMenu.Draw(_spriteBatch, Color.Goldenrod, fonts, currentDifficulty);
                     break;
                 case GameState.Inventory:
+                    inventory.DrawFonts(_spriteBatch, fonts);
                     inventory.Draw(_spriteBatch, Color.Goldenrod);
                     inventory.DrawFonts(_spriteBatch, fonts);
                     break;
@@ -457,7 +462,6 @@ namespace ImagineRITGame
 
         public void LoadTextures()
         {
-            playerTexture = Content.Load<Texture2D>("char_all");
             fishingBobTexture = Content.Load<Texture2D>("inv_items");
             fishTexture = Content.Load<Texture2D>("fish_shadow_black");
             buttonTexture = Content.Load<Texture2D>("button_spritesheet");
@@ -605,7 +609,7 @@ namespace ImagineRITGame
         {
             return Keyboard.GetState().IsKeyDown(key) && prevKBState.IsKeyUp(key);
         }
-
+        
         /// <summary>
         /// Returns whether the last key pressed was only pressed one time
         /// </summary>
