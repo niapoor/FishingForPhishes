@@ -35,6 +35,7 @@ namespace ImagineRITGame
         D = 17,
         Title = 18,
         Pause = 19,
+        Inventory = 20,
         Back = -1
     }
 
@@ -77,6 +78,8 @@ namespace ImagineRITGame
                 rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 11.13), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 5.53)));
             else if (buttonType == ButtonType.Title)
                 rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 3.45), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 3)));
+            else if (buttonType == ButtonType.Inventory)
+                rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10)));
             else
                 rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 7.76), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 5.53)));
             // Assigning values to fields
@@ -175,6 +178,10 @@ namespace ImagineRITGame
 
                 case ButtonType.Title:
                     textRect = new Rectangle(0, 401, 256, 167);
+                    break;
+
+                case ButtonType.Inventory:
+                    textRect = new Rectangle(1, 1, 1, 1);
                     break;
             }
 

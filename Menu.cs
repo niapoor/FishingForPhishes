@@ -31,7 +31,10 @@ namespace ImagineRITGame
 
         // Buttons
         protected List<Button> buttons;
+        protected List<Button> buttons2;
         protected Button currentButton;
+
+        protected List<string[]> fishInfo;
 
         protected List<string> strings;
 

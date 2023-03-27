@@ -17,8 +17,7 @@ namespace ImagineRITGame
     {
         FadeIn,
         FadeOut,
-        Swim,
-        Invisible
+        Swim
     }
 
     internal class Fish
@@ -31,6 +30,7 @@ namespace ImagineRITGame
         private Texture2D shadowTexture;
         private Texture2D fishTextures;
         private Vector2 position;
+        private List<string> catchInfo;
 
         // Keyboard states
         private KeyboardState kbState;
@@ -45,15 +45,16 @@ namespace ImagineRITGame
         private int widthOfSingleSprite;
         private int animationIndex;
 
-        public Fish(List<Texture2D> textures, Vector2 location, string catchInfo)
+        public Fish(List<Texture2D> textures, Vector2 location, List<string> fishInfo, List<SpriteFont> fonts)
         {
             shadowTexture = textures[0];
             fishTextures = textures[1];
             position = location;
+            catchInfo = fishInfo;
 
             // The player is idle by default because the game starts with them not moving
-            fishState = FishStates.Invisible;
-            prevState = FishStates.Invisible;
+            fishState = FishStates.Swim;
+            prevState = FishStates.Swim;
 
             // Initializing the keyboard states
             prevKBState = new KeyboardState();
@@ -66,6 +67,14 @@ namespace ImagineRITGame
             fishCurrentFrame = 0;
             fishMaxFrame = 15;
             widthOfSingleSprite = (240 / 15); // Height is 16
+        }
+
+        public List<string> CatchInfo
+        {
+            get
+            {
+                return catchInfo;
+            }
         }
 
         public void UpdateAnimation(GameTime gameTime)
@@ -82,6 +91,7 @@ namespace ImagineRITGame
                 // Increment the active frame
                 fishCurrentFrame++;
 
+                // Reset which frame is being drawn in once the end is reached
                 if (fishCurrentFrame >= fishMaxFrame)
                 {
                     fishCurrentFrame = 0;
@@ -104,6 +114,6 @@ namespace ImagineRITGame
                0,
                .01f);
         }
-
+        
     }
 }

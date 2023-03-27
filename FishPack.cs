@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ImagineRITGame
 {
@@ -14,12 +15,13 @@ namespace ImagineRITGame
 
         public const string url = "https://raw.githubusercontent.com/niapoor/ImagineRITGame/master/";
 
-        private Dictionary<Difficulty, List<string>> fishSet;
+        private Dictionary<Difficulty, List<List<string>>> fishSet;
         private Random random;
+        private List<string> strings;
 
         public FishPack()
         {
-            this.fishSet = new Dictionary<Difficulty, List<string>>();
+            this.fishSet = new Dictionary<Difficulty, List<List<string>>>();
 
             try
             {
@@ -32,6 +34,8 @@ namespace ImagineRITGame
                 // For each difficulty level
                 foreach (Difficulty difficulty in Enum.GetValues(typeof(Difficulty)))
                 {
+                    this.fishSet[difficulty] = new List<List<string>>();
+
                     // Pull the CSV from online
                     using HttpResponseMessage resp = client.GetAsync("FishData" + difficulty.ToString() + ".csv").GetAwaiter().GetResult();
                     string result = resp.Content.ReadAsStringAsync().GetAwaiter().GetResult().Replace("\r", "");
@@ -49,8 +53,13 @@ namespace ImagineRITGame
                             route = true;
                             continue;
                         }
-                        // Create the new fish info
-                        this.fishSet[difficulty].Add(line.ToString());
+
+                        strings = new List<string>();
+                        foreach (string element in line)
+                        {
+                            strings.Add(element);
+                        }
+                        this.fishSet[difficulty].Add(strings);
                     }
 
                 }
@@ -72,7 +81,7 @@ namespace ImagineRITGame
         /// </summary>
         /// <param name="difficulty">The enum difficulty to pick a question from</param>
         /// <returns>A question object reference of the given difficulty</returns>
-        public string FetchRandomFish(Difficulty difficulty)
+        public List<string> FetchRandomFish(Difficulty difficulty)
         {
             return this.fishSet[difficulty][this.random.Next(this.fishSet[difficulty].Count)];
         }

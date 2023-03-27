@@ -51,6 +51,7 @@ namespace ImagineRITGame
 
         // Cooldowns for button presses and fish spawning
         private double cooldownTime = 0;
+        private double cooldownTime2 = 0;
         private double fishSpawnTime = 0;
 
         private Random random;
@@ -70,6 +71,7 @@ namespace ImagineRITGame
         private CreditsMenu creditsMenu;
         private GameButtonsOverlay gameButtonsOverlay;
         private Inventory inventory;
+        private TutorialsAndInfo tutorialsAndInfo;
         private List<Texture2D> menuTextures;
 
         private Texture2D background;
@@ -181,7 +183,7 @@ namespace ImagineRITGame
             LoadTextures();
 
             questionPack = new QuestionPack();
-            //fishPack = new FishPack();
+            fishPack = new FishPack();
 
             // Initializing Menu objects
             mainMenu = new MainMenu(menuTextures);
@@ -190,9 +192,16 @@ namespace ImagineRITGame
             gameButtonsOverlay= new GameButtonsOverlay(menuTextures);
             inventory = new Inventory(menuTextures, fonts);
             displayQuestion = new DisplayQuestion(menuTextures, fonts);
+            tutorialsAndInfo = new TutorialsAndInfo(menuTextures, fonts);
 
             // Fish for testing
             // testFish = new Fish(fishTexture, new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47), (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)));
+
+            // A fish to start off with so the game doesn't freak out
+            currentFish = new Fish(fishTextures,
+                new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47),
+                (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)),
+                fishPack.FetchRandomFish(currentDifficulty), fonts);
 
             // TODO: add question pack
             //questionPack = new QuestionPack();
@@ -211,6 +220,7 @@ namespace ImagineRITGame
 
             // Cooldown between pressing buttons
             cooldownTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+            cooldownTime2 += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             // Assigning the appropriate current game state and updating the frame based on the game state
             switch (gameState)
@@ -239,34 +249,36 @@ namespace ImagineRITGame
                     // If the player selects 'esc' in the game, go to the pause menu
                     if (SingleKeyPress(Keys.Escape, previousKbState))
                         ChangeGameState(19);
-                    else if (SingleKeyPress(Keys.Space, previousKbState) && drawInQuestion == false && drawInFishType == false)
+                    else if (SingleKeyPress(Keys.Space, previousKbState) && drawInQuestion == false && drawInFishType == false && canOpenQuestion)
                     {
                         currentQuestion = questionPack.FetchRandomQuestion(currentDifficulty);
                         displayQuestion.SetUpQuestion(currentQuestion);
                         drawInQuestion = true;
                     }
-                    else if (SingleKeyPress(Keys.Space, previousKbState) && drawInFishType == true)
+                    else if (SingleKeyPress(Keys.Space, previousKbState) && drawInFishType)
                     {
                         drawInFishType = false;
+                        canOpenQuestion = false;
+                        fishSpawnTime = 0;
                     }
-                    if (drawInQuestion == true)
+                    if (drawInQuestion)
                     {
                         displayQuestion.Update(gameTime);
                         displayQuestion.MenuButtonActivated += ChangeGameState;
                     }
-                    if (drawInQuestion == false && drawInFishType == false)
+                    if (!drawInQuestion && !drawInFishType)
                     {
                         fishSpawnTime += gameTime.ElapsedGameTime.TotalMilliseconds;
-                        if (fishSpawnTime > 5000)
+                        if (fishSpawnTime > 0)//2000)
                         {
-                            randTmp = random.Next(1, 150);
-                            if (randTmp == 100)
+                            randTmp = random.Next(1, 3);
+                            if (randTmp == 2)
                             {
                                 canOpenQuestion = true;
-                                //currentFish = new Fish(fishTextures,
-                                //    new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47),
-                                //    (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)),
-                                //    fishPack.FetchRandomFish(currentDifficulty));
+                                currentFish = new Fish(fishTextures,
+                                    new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47),
+                                    (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)),
+                                    fishPack.FetchRandomFish(currentDifficulty), fonts);
                             }
                         }
                     }
@@ -297,6 +309,7 @@ namespace ImagineRITGame
             {
                 case GameState.Game:
                     player.UpdateAnimation(gameTime);
+                    currentFish.UpdateAnimation(gameTime);
                     //testFish.UpdateAnimation(gameTime);
                     break;
             }
@@ -347,14 +360,18 @@ namespace ImagineRITGame
                     break;
                 case GameState.Game:
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
-                    if (drawInQuestion == true)
+                    if (drawInQuestion)
                     {
                         displayQuestion.Draw(_spriteBatch, Color.Goldenrod, currentQuestion, fonts);
                     }
-                    else if (canOpenQuestion == true)
+                    // If a question is able to be brought up / answered, drawin in the fish
+                    else if (canOpenQuestion)
                     {
-                        canOpenQuestion = true;
-                        //currentFish.DrawShadow(_spriteBatch);
+                        currentFish.DrawShadow(_spriteBatch);
+                    }
+                    if (drawInFishType)
+                    {
+                        tutorialsAndInfo.DrawCatchText(_spriteBatch, fonts, currentFish);
                     }
                     player.Draw(_spriteBatch);
                     break;
@@ -437,7 +454,6 @@ namespace ImagineRITGame
                     {
                         correctOrIncorrect = currentQuestion.CheckAnswer(state - 12);
                         drawInQuestion = false;
-                        canOpenQuestion = false;
                         drawInFishType = true;
                         break;
                     }
@@ -445,6 +461,14 @@ namespace ImagineRITGame
                 correctOrIncorrect = currentQuestion.CheckAnswer(state - 14);
                 drawInQuestion = false;
                 drawInFishType = true;
+                //if (correctOrIncorrect)
+                //{
+                if (cooldownTime2 >= 10)
+                {
+                    cooldownTime2 = 0;
+                    inventory.AddFishToInventory(currentFish);
+                }
+                //}
             }
             else if (state == 18)
             {
