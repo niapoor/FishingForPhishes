@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ImagineRITGame
 {
@@ -40,9 +41,9 @@ namespace ImagineRITGame
             base.Draw(sb, hoverColor);
             string text;
 
-            text = currentDifficulty.ToString();
-            sb.DrawString(fonts[0], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
+            DrawMode(sb, fonts, currentDifficulty);
 
+            DrawInstructions(sb, fonts);
             // This is a debug thing to see the screen size when drawing text
             /*
             text = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height.ToString();
@@ -55,6 +56,59 @@ namespace ImagineRITGame
             //       new Rectangle(800, 100, 894, 588),
             //       new Rectangle(0, 0, 149, 98),
             //       Color.White);
+        }
+
+        public void DrawMode(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, List<SpriteFont> fonts, Difficulty currentDifficulty)
+        {
+            string text;
+            text = "Current Mode:";
+            sb.DrawString(fonts[2], text, new Vector2((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) * .23), (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .22))), Color.DarkGoldenrod);
+
+            text = currentDifficulty.ToString();
+            sb.DrawString(fonts[1], text, new Vector2((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) * .23), (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .26))), Color.DarkGoldenrod);
+        }
+
+        public void DrawInstructions(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, List<SpriteFont> fonts)
+        {
+            // Drawing in the fishing post card backdrop
+            sb.Draw(textures[(int)MenuTextures.FishingPostCard],
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.515), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.16),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17)),
+                new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
+                Color.White);
+
+            // Drawing tutorial 1
+            string text = "When a fish appears, press the spacebar to try to catch it";
+            List<string> currentTextList = base.WrapText(text, 17);
+            double y = ((8 - currentTextList.Count) * .06) - 0.05;
+            for (int i = 0; i < currentTextList.Count; i++)
+            {
+                sb.DrawString
+                    (fonts[2],
+                    currentTextList[i],
+                    new Vector2((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.54), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * ((.06 * i) + y)))),
+                    Color.Black);
+            }
+
+            // Drawing in the fishing post card backdrop
+            sb.Draw(textures[(int)MenuTextures.FishingPostCard],
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.515), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.51),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17)),
+                new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
+                Color.White);
+
+            // Drawing tutorial 2
+            text = "Press the spacebar to try and catch another fish";
+            currentTextList = base.WrapText(text, 15);
+            y = ((8 - currentTextList.Count) * .06) + 0.3;
+            for (int i = 0; i < currentTextList.Count; i++)
+            {
+                sb.DrawString
+                    (fonts[2],
+                    currentTextList[i],
+                    new Vector2((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.54), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * ((.06 * i) + y)))),
+                    Color.Black);
+            }
         }
 
     }

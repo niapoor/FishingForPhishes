@@ -58,6 +58,10 @@ namespace ImagineRITGame
         private Random random;
         private int randTmp;
 
+        // Tutorial bools
+        private bool firstTutorial;
+        private bool secondTutorial;
+
         // Space for sound effects
 
         // Space for fonts
@@ -213,6 +217,9 @@ namespace ImagineRITGame
                 (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .59)));
             finalSeagullFrame = false;
 
+            firstTutorial = true;
+            secondTutorial = true;
+
             // TODO: add question pack
             //questionPack = new QuestionPack();
 
@@ -271,6 +278,7 @@ namespace ImagineRITGame
                         drawInFishType = false;
                         canOpenQuestion = false;
                         fishSpawnTime = 0;
+                        firstTutorial= false;
                     }
                     if (drawInQuestion)
                     {
@@ -359,7 +367,7 @@ namespace ImagineRITGame
                 DepthStencilState.Default,
             RasterizerState.CullCounterClockwise);
 
-            _spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(0, 0, 1705, 955), Color.White, 0f,
+            _spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(0, 0, 1649, 924), Color.White, 0f,
                 Vector2.Zero,
                 0,
                 .9f);
@@ -396,6 +404,8 @@ namespace ImagineRITGame
                     if (drawInQuestion)
                     {
                         displayQuestion.Draw(_spriteBatch, Color.Goldenrod, currentQuestion, fonts);
+                        if(!firstTutorial && secondTutorial)
+                            secondTutorial= false;
                     }
                     // If a question is able to be brought up / answered, draw in in the fish
                     if (canOpenQuestion)
@@ -408,6 +418,15 @@ namespace ImagineRITGame
                             tutorialsAndInfo.DrawCatchText(_spriteBatch, fonts, currentFish);
                         else
                             tutorialsAndInfo.DrawQuestionIncorrect(_spriteBatch, fonts, currentQuestion);
+                        if (firstTutorial)
+                            tutorialsAndInfo.DrawFishAgainInstructions(_spriteBatch, fonts);
+                    }
+                    if(!drawInQuestion && !drawInFishType)
+                    {
+                        if (firstTutorial)
+                            tutorialsAndInfo.DrawGanericInstructions(_spriteBatch, fonts);
+                        else if (secondTutorial)
+                            tutorialsAndInfo.DrawMoreTutorials(_spriteBatch, fonts);
                     }
                     player.Draw(_spriteBatch);
                     seagull.Draw(_spriteBatch);
@@ -548,7 +567,7 @@ namespace ImagineRITGame
             outfitTextures.Add(hair);
             outfitTextures.Add(eyes);
             cyberCorpsLogo = Content.Load<Texture2D>("cybercorps_scholarship_for_service_hor_k1");
-            background = Content.Load<Texture2D>("backgroundv2");
+            background = Content.Load<Texture2D>("backgroundv3");
             darkenBackground = Content.Load<Texture2D>("black");
             allTiles = Content.Load<Texture2D>("tiles_all");
             //easyCSV = Content.Load<IEnumerable<String>>("EasyTemp");
