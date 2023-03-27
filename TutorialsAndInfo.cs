@@ -38,5 +38,31 @@ namespace ImagineRITGame
                     Color.Black);
             }
         }
+
+        public void DrawQuestionIncorrect(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, List<SpriteFont> fonts, Question question)
+        {
+            string correctAnswer = "tmp";
+            for (int i = 0; i < question.NumAnswers(); i++)
+            {
+                if (question.CheckAnswer(i))
+                    correctAnswer = question.AnswerList()[i].Text();
+            }
+            string text = "The fish got away! The correct answer was \"" + correctAnswer +"\"";
+
+            List<string> currentTextList = new List<string> { };
+            currentTextList = base.WrapText(text, 25);
+
+            double y = ((4 - currentTextList.Count) * .06);
+
+            for (int i = 0; i < currentTextList.Count; i++)
+            {
+                sb.DrawString
+                    (fonts[2],
+                    currentTextList[i],
+                    Game1.CenterText(currentTextList[i], (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * ((.06 * i) + y))), fonts[2]),
+                    Color.Black);
+            }
+        }
+
     }
 }

@@ -269,10 +269,10 @@ namespace ImagineRITGame
                     if (!drawInQuestion && !drawInFishType)
                     {
                         fishSpawnTime += gameTime.ElapsedGameTime.TotalMilliseconds;
-                        if (fishSpawnTime > 0)//2000)
+                        if (fishSpawnTime > 1250)//2000)
                         {
-                            randTmp = random.Next(1, 3);
-                            if (randTmp == 2)
+                            randTmp = random.Next(1, 50);
+                            if (randTmp == 25)
                             {
                                 canOpenQuestion = true;
                                 currentFish = new Fish(fishTextures,
@@ -371,7 +371,10 @@ namespace ImagineRITGame
                     }
                     if (drawInFishType)
                     {
-                        tutorialsAndInfo.DrawCatchText(_spriteBatch, fonts, currentFish);
+                        if (correctOrIncorrect)
+                            tutorialsAndInfo.DrawCatchText(_spriteBatch, fonts, currentFish);
+                        else
+                            tutorialsAndInfo.DrawQuestionIncorrect(_spriteBatch, fonts, currentQuestion);
                     }
                     player.Draw(_spriteBatch);
                     break;
@@ -461,14 +464,11 @@ namespace ImagineRITGame
                 correctOrIncorrect = currentQuestion.CheckAnswer(state - 14);
                 drawInQuestion = false;
                 drawInFishType = true;
-                //if (correctOrIncorrect)
-                //{
-                if (cooldownTime2 >= 10)
+                if (cooldownTime2 >= 10 && correctOrIncorrect)
                 {
                     cooldownTime2 = 0;
                     inventory.AddFishToInventory(currentFish);
                 }
-                //}
             }
             else if (state == 18)
             {

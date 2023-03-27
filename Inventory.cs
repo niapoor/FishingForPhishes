@@ -93,8 +93,8 @@ namespace ImagineRITGame
                     if(Int32.Parse(fishInfo[k][1]) > 0)
                     {
                         sb.Draw(textures[(int)MenuTextures.AllFish],
-                            new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.3) + (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * j),
-                                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.1) + (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * i),
+                            new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.3) + (int)((((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * j)),
+                                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.1) + (int)((((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * i)),
                             (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 9.6), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 9.6)),
                             new Rectangle((textures[(int)MenuTextures.AllFish].Width / 10) * j, (textures[(int)MenuTextures.AllFish].Height / 10) * i, 
                                 (textures[(int)MenuTextures.AllFish].Width / 10), (textures[(int)MenuTextures.AllFish].Height / 10)),
