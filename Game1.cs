@@ -52,6 +52,7 @@ namespace ImagineRITGame
         // Cooldowns for button presses and fish spawning
         private double cooldownTime = 0;
         private double cooldownTime2 = 0;
+        private double cooldownTime3 = 0;
         private double fishSpawnTime = 0;
 
         private Random random;
@@ -87,6 +88,7 @@ namespace ImagineRITGame
         private List<Texture2D> fishTextures;
 
         private Seagull seagull;
+        private bool finalSeagullFrame;
 
         // The current difficulty
         private Difficulty currentDifficulty;
@@ -209,6 +211,7 @@ namespace ImagineRITGame
             seagull = new Seagull(allTiles,
                 new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .54),
                 (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .59)));
+            finalSeagullFrame = false;
 
             // TODO: add question pack
             //questionPack = new QuestionPack();
@@ -228,6 +231,7 @@ namespace ImagineRITGame
             // Cooldown between pressing buttons
             cooldownTime += gameTime.ElapsedGameTime.TotalMilliseconds;
             cooldownTime2 += gameTime.ElapsedGameTime.TotalMilliseconds;
+            cooldownTime3 += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             // Assigning the appropriate current game state and updating the frame based on the game state
             switch (gameState)
@@ -317,7 +321,28 @@ namespace ImagineRITGame
                 case GameState.Game:
                     player.UpdateAnimation(gameTime);
                     currentFish.UpdateAnimation(gameTime);
-                    seagull.UpdateAnimation(gameTime);
+                    if (cooldownTime3 > 2000 || finalSeagullFrame)
+                    {
+                        if (finalSeagullFrame)
+                        {
+                            if (seagull.CurrentFrame != 0)
+                            {
+                                seagull.UpdateAnimation(gameTime);
+                            }
+                            else if (seagull.CurrentFrame == 0)
+                            {
+                                finalSeagullFrame = false;
+                                cooldownTime3 = 0;
+                            }
+                            break;
+                        }
+                        randTmp = random.Next(1, 5);
+                        if (randTmp == 2)
+                        {
+                            seagull.UpdateAnimation(gameTime);
+                            finalSeagullFrame = true;
+                        }
+                    }
                     //testFish.UpdateAnimation(gameTime);
                     break;
             }

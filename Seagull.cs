@@ -32,12 +32,20 @@ namespace ImagineRITGame
             position = location;
 
             // Assigning default values to animation data
-            fps = 9.0;
+            fps = 10.0;
             secondsPerFrame = 1 / fps;
             timeCounter = 0;
             gullCurrentFrame = 0;
             gullMaxFrame = 3;
             widthOfSingleSprite = 17;
+        }
+
+        public int CurrentFrame
+        {
+            get
+            {
+                return gullCurrentFrame;
+            }
         }
 
 
