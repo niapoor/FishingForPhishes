@@ -86,6 +86,8 @@ namespace ImagineRITGame
         private Fish currentFish;
         private List<Texture2D> fishTextures;
 
+        private Seagull seagull;
+
         // The current difficulty
         private Difficulty currentDifficulty;
         private Difficulty prevDifficulty;
@@ -109,6 +111,7 @@ namespace ImagineRITGame
         private Texture2D fishingPostCard;
         private Texture2D allFish;
         private Texture2D fishInvShadow;
+        private Texture2D allTiles;
 
         // Player outfit texture fields
         private Texture2D playerTexture;
@@ -197,11 +200,15 @@ namespace ImagineRITGame
             // Fish for testing
             // testFish = new Fish(fishTexture, new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47), (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)));
 
-            // A fish to start off with so the game doesn't freak out
+            // A fish to start off with so the game doesn't freak out about an empty variable
             currentFish = new Fish(fishTextures,
                 new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47),
                 (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)),
                 fishPack.FetchRandomFish(currentDifficulty), fonts);
+
+            seagull = new Seagull(allTiles,
+                new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .54),
+                (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .59)));
 
             // TODO: add question pack
             //questionPack = new QuestionPack();
@@ -310,6 +317,7 @@ namespace ImagineRITGame
                 case GameState.Game:
                     player.UpdateAnimation(gameTime);
                     currentFish.UpdateAnimation(gameTime);
+                    seagull.UpdateAnimation(gameTime);
                     //testFish.UpdateAnimation(gameTime);
                     break;
             }
@@ -364,8 +372,8 @@ namespace ImagineRITGame
                     {
                         displayQuestion.Draw(_spriteBatch, Color.Goldenrod, currentQuestion, fonts);
                     }
-                    // If a question is able to be brought up / answered, drawin in the fish
-                    else if (canOpenQuestion)
+                    // If a question is able to be brought up / answered, draw in in the fish
+                    if (canOpenQuestion)
                     {
                         currentFish.DrawShadow(_spriteBatch);
                     }
@@ -377,6 +385,7 @@ namespace ImagineRITGame
                             tutorialsAndInfo.DrawQuestionIncorrect(_spriteBatch, fonts, currentQuestion);
                     }
                     player.Draw(_spriteBatch);
+                    seagull.Draw(_spriteBatch);
                     break;
                 case GameState.CreditsMenu:
                     creditsMenu.Draw(_spriteBatch, Color.Goldenrod, fonts);
@@ -516,6 +525,7 @@ namespace ImagineRITGame
             cyberCorpsLogo = Content.Load<Texture2D>("cybercorps_scholarship_for_service_hor_k1");
             background = Content.Load<Texture2D>("backgroundv2");
             darkenBackground = Content.Load<Texture2D>("black");
+            allTiles = Content.Load<Texture2D>("tiles_all");
             //easyCSV = Content.Load<IEnumerable<String>>("EasyTemp");
             //mediumCSV = Content.Load<IEnumerable<String>>("MediumTemp");
             //hardCSV = Content.Load<IEnumerable<String>>("HardTemp");
