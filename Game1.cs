@@ -329,7 +329,7 @@ namespace ImagineRITGame
                 case GameState.Game:
                     player.UpdateAnimation(gameTime);
                     currentFish.UpdateAnimation(gameTime);
-                    if (cooldownTime3 > 2000 || finalSeagullFrame)
+                    if (cooldownTime3 > 1500 || finalSeagullFrame)
                     {
                         if (finalSeagullFrame)
                         {
