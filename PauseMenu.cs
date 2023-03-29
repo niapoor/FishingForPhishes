@@ -73,7 +73,7 @@ namespace ImagineRITGame
             // Drawing in the fishing post card backdrop
             sb.Draw(textures[(int)MenuTextures.FishingPostCard],
                 new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.515), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.16),
-                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17)),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .1))),
                 new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
                 Color.White);
 
@@ -93,7 +93,7 @@ namespace ImagineRITGame
             // Drawing in the fishing post card backdrop
             sb.Draw(textures[(int)MenuTextures.FishingPostCard],
                 new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.515), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.51),
-                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17)),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .1))),
                 new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
                 Color.White);
 
@@ -106,7 +106,7 @@ namespace ImagineRITGame
                 sb.DrawString
                     (fonts[2],
                     currentTextList[i],
-                    new Vector2((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.54), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * ((.06 * i) + y)))),
+                    new Vector2((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.54)), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * ((.06 * i) + y)))),
                     Color.Black);
             }
         }

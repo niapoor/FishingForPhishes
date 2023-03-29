@@ -38,6 +38,8 @@ namespace ImagineRITGame
 
         protected List<string> strings;
 
+        protected float aspectRatioFactor;
+
         //Previous Input States
         protected MouseState prevMState;
         protected KeyboardState prevKBState;
@@ -67,6 +69,9 @@ namespace ImagineRITGame
         {
             // Assigning values to the Menu's fields
             this.textures = textures;
+
+            if ((float)((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) < (float)((float)1920 / (float)1080))
+                aspectRatioFactor = (float)((float)((float)1920 / (float)1080) - (float)((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height));
         }
 
 
@@ -108,6 +113,14 @@ namespace ImagineRITGame
             // Buttons
             foreach (Button b in buttons)
                 b.Draw(sb, b.IsHovered ? hoverColor : Color.White);
+        }
+
+        public float AspectRatioFactor
+        {
+            get
+            {
+                return aspectRatioFactor;
+            }
         }
 
         /// <summary>

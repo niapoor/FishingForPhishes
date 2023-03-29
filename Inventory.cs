@@ -40,7 +40,7 @@ namespace ImagineRITGame
                     initialString[0] = "???";
                     initialString[1] = 0.ToString();
                     buttons2.Add(new Button(new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.3) + (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * j),
-                        (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.1) + (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * i)),
+                        (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.1) + (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * i) + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .2)),
                         ButtonType.Inventory,
                         textures[(int)MenuTextures.GeneralButtons]));
                     fishInfo.Add(initialString);
@@ -73,14 +73,14 @@ namespace ImagineRITGame
 
             // Drawing in the fishing post card backdrop (no fish added)
             sb.Draw(textures[(int)MenuTextures.FishingPostCard],
-                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.265), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.12),
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.265), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.0675 + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .2))), // GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.12
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.4), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.4)),
                 new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
                 Color.White);
 
             // Drawing shadows of the fish (if they have not been caught)
             sb.Draw(textures[(int)MenuTextures.FishInvShadow],
-                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.3), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.183),
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.3), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.1029375) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .2)), // GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.183
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332)),
                 new Rectangle(0, 0, textures[(int)MenuTextures.FishInvShadow].Width, textures[(int)MenuTextures.FishInvShadow].Height),
                 Color.Goldenrod);
@@ -94,7 +94,7 @@ namespace ImagineRITGame
                     {
                         sb.Draw(textures[(int)MenuTextures.AllFish],
                             new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.2995) + (int)(((((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * j))),
-                                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.102) + (int)((((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * i)),
+                                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.102) + (int)((((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10) * i) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .2)),
                             (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 9.6), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 9.6)),
                             new Rectangle((textures[(int)MenuTextures.AllFish].Width / 10) * j, (textures[(int)MenuTextures.AllFish].Height / 10) * i, 
                                 (textures[(int)MenuTextures.AllFish].Width / 10), (textures[(int)MenuTextures.AllFish].Height / 10)),

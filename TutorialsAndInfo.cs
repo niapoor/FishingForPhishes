@@ -69,7 +69,7 @@ namespace ImagineRITGame
             // Drawing in the fishing post card backdrop (no fish added)
             sb.Draw(textures[(int)MenuTextures.FishingPostCard],
                 new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.065), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.46),
-                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17)),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .1))),
                 new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
                 Color.White);
 
@@ -92,7 +92,7 @@ namespace ImagineRITGame
             // Drawing in the fishing post card backdrop (no fish added)
             sb.Draw(textures[(int)MenuTextures.FishingPostCard],
                 new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.065), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.46),
-                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17)),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .1))),
                 new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
                 Color.White);
 
@@ -115,7 +115,7 @@ namespace ImagineRITGame
             // Drawing in the fishing post card backdrop (no fish added)
             sb.Draw(textures[(int)MenuTextures.FishingPostCard],
                 new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.065), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.46),
-                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17)),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.25), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.17) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .1))),
                 new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
                 Color.White);
 
