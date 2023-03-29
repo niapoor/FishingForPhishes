@@ -27,7 +27,27 @@ namespace ImagineRITGame
             else
                 currentTextList = base.WrapText(text, 25);
 
-            double y = ((4 - currentTextList.Count) * .06);
+            float textListMax = 0;
+            int indexTestListMax = 0;
+            for (int i = 0; i < currentTextList.Count; i++)
+            {
+                if (fonts[2].MeasureString(currentTextList[i]).X > textListMax)
+                {
+                    textListMax = fonts[2].MeasureString(currentTextList[i]).X;
+                    indexTestListMax = i;
+                }
+            }
+
+            double y = 0.06;
+
+            // Drawing in the fishing post card backdrop (no fish added)
+            sb.Draw(textures[(int)MenuTextures.FishingPostCard],
+                new Rectangle((int)((float)((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)0.5) - (float)((float)textListMax / (float)2) - (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.03)),
+                    (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.03)),
+                    (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.06) + (float)textListMax),
+                    (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .06 * currentTextList.Count) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.03))),
+                new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
+                Color.White);
 
             for (int i = 0; i < currentTextList.Count; i++)
             {
@@ -47,19 +67,42 @@ namespace ImagineRITGame
                 if (question.CheckAnswer(i))
                     correctAnswer = question.AnswerList()[i].Text();
             }
+
+            // Trim the quotes if there are any
+            if (correctAnswer[0].ToString() == "\"")
+                correctAnswer = correctAnswer.Substring(1, question.QuestionText().Length - 2);
+
             string text = "The fish got away! The correct answer was \"" + correctAnswer +"\".";
 
             List<string> currentTextList = new List<string> { };
             currentTextList = base.WrapText(text, 25);
 
-            double y = ((4 - currentTextList.Count) * .06);
+            float textListMax = 0;
+            int indexTestListMax = 0;
+            for (int i = 0; i < currentTextList.Count; i++)
+            {
+                if (fonts[2].MeasureString(currentTextList[i]).X > textListMax)
+                {
+                    textListMax = fonts[2].MeasureString(currentTextList[i]).X;
+                    indexTestListMax = i;
+                }
+            }
+
+            // Drawing in the fishing post card backdrop (no fish added)
+            sb.Draw(textures[(int)MenuTextures.FishingPostCard],
+                new Rectangle((int)((float)((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)0.5) - (float)((float)textListMax / (float)2) - (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.03)), 
+                    (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.03)),
+                    (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.06) + (float)textListMax),
+                    (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .06 * currentTextList.Count) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.03))),
+                new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
+                Color.White);
 
             for (int i = 0; i < currentTextList.Count; i++)
             {
                 sb.DrawString
                     (fonts[2],
                     currentTextList[i],
-                    Game1.CenterText(currentTextList[i], (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * ((.06 * i) + y))), fonts[2]),
+                    Game1.CenterText(currentTextList[i], (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * ((.06 * i) + 0.06))), fonts[2]),
                     Color.Black);
             }
         }
