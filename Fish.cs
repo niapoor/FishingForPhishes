@@ -36,6 +36,9 @@ namespace ImagineRITGame
         private KeyboardState kbState;
         private KeyboardState prevKBState;
 
+        private float transparency;
+        private Color waterColor;
+
         // Fields for Player animation data
         private double fps;
         private double timeCounter;
@@ -51,6 +54,9 @@ namespace ImagineRITGame
             fishTextures = textures[1];
             position = location;
             catchInfo = fishInfo;
+
+            transparency = (float)1;
+            waterColor = new Color(96, 160, 168);
 
             // The player is idle by default because the game starts with them not moving
             fishState = FishStates.Swim;
@@ -77,8 +83,25 @@ namespace ImagineRITGame
             }
         }
 
+        public void UpdateState(FishStates newState)
+        {
+            prevState = fishState;
+            fishState = newState;
+            // Reset the fish transparency
+            if(fishState == FishStates.FadeOut || fishState == FishStates.Swim)
+                transparency = (float)1;
+            else if (fishState == FishStates.FadeIn)
+                transparency = (float)0;
+        }
+
         public void UpdateAnimation(GameTime gameTime)
         {
+            if(fishState == FishStates.FadeIn && transparency == 1)
+            {
+                prevState = fishState;
+                fishState = FishStates.Swim;
+            }
+
             // Update the time since the last frame
             timeCounter += gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -105,14 +128,40 @@ namespace ImagineRITGame
         public void DrawShadow(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
             // Draw in the fish
-            sb.Draw(shadowTexture,
-               new Rectangle((int)position.X, (int)position.Y, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16),
-               new Rectangle(fishCurrentFrame * widthOfSingleSprite, 0, widthOfSingleSprite, 16),
-               Color.White,
-               0f,
-               Vector2.Zero,
-               0,
-               .01f);
+            if (fishState == FishStates.Swim)
+                sb.Draw(shadowTexture,
+                    new Rectangle((int)position.X, (int)position.Y, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16),
+                    new Rectangle(fishCurrentFrame * widthOfSingleSprite, 0, widthOfSingleSprite, 16),
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    0,
+                    .01f);
+            else if (fishState == FishStates.FadeOut && transparency > 0)
+            {
+                sb.Draw(shadowTexture,
+                    new Rectangle((int)position.X, (int)position.Y, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16),
+                    new Rectangle(fishCurrentFrame * widthOfSingleSprite, 0, widthOfSingleSprite, 16),
+                    new Color(waterColor, transparency),
+                    0f,
+                    Vector2.Zero,
+                    0,
+                    .01f);
+                transparency = (float)transparency - (float)0.03;
+            }
+            else if (fishState == FishStates.FadeIn)
+            {
+                sb.Draw(shadowTexture,
+                    new Rectangle((int)position.X, (int)position.Y, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 16),
+                    new Rectangle(fishCurrentFrame * widthOfSingleSprite, 0, widthOfSingleSprite, 16),
+                    new Color(waterColor, transparency),
+                    0f,
+                    Vector2.Zero,
+                    0,
+                    .01f);
+                if(transparency < 1)
+                    transparency = (float)transparency + (float)0.05;
+            }
         }
         
     }

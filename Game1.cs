@@ -289,7 +289,7 @@ namespace ImagineRITGame
                         displayQuestion.Update(gameTime);
                         displayQuestion.MenuButtonActivated += ChangeGameState;
                     }
-                    if (!drawInQuestion && !drawInFishType)
+                    if (!drawInQuestion && !drawInFishType && !canOpenQuestion)
                     {
                         fishSpawnTime += gameTime.ElapsedGameTime.TotalMilliseconds;
                         if (fishSpawnTime > 1250)//2000)
@@ -298,6 +298,7 @@ namespace ImagineRITGame
                             if (randTmp == 25)
                             {
                                 canOpenQuestion = true;
+                                currentFish.UpdateState(FishStates.FadeIn);
                             }
                         }
                     }
@@ -408,7 +409,7 @@ namespace ImagineRITGame
                             secondTutorial= false;
                     }
                     // If a question is able to be brought up / answered, draw in in the fish
-                    if (canOpenQuestion)
+                    if (canOpenQuestion && !(drawInFishType && correctOrIncorrect))
                     {
                         currentFish.DrawShadow(_spriteBatch);
                     }
@@ -521,6 +522,10 @@ namespace ImagineRITGame
                 {
                     cooldownTime2 = 0;
                     inventory.AddFishToInventory(currentFish);
+                }
+                else if (cooldownTime2 >= 10 && !correctOrIncorrect)
+                {
+                    currentFish.UpdateState(FishStates.FadeOut);
                 }
             }
             else if (state == 18)
