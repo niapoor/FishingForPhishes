@@ -272,6 +272,10 @@ namespace ImagineRITGame
                         currentQuestion = questionPack.FetchRandomQuestion(currentDifficulty);
                         displayQuestion.SetUpQuestion(currentQuestion);
                         drawInQuestion = true;
+                        currentFish = new Fish(fishTextures,
+                            new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47),
+                            (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)),
+                            fishPack.FetchRandomFish(currentDifficulty), fonts);
                     }
                     else if (SingleKeyPress(Keys.Space, previousKbState) && drawInFishType)
                     {
@@ -294,10 +298,6 @@ namespace ImagineRITGame
                             if (randTmp == 25)
                             {
                                 canOpenQuestion = true;
-                                currentFish = new Fish(fishTextures,
-                                    new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47),
-                                    (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)),
-                                    fishPack.FetchRandomFish(currentDifficulty), fonts);
                             }
                         }
                     }
