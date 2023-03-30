@@ -112,6 +112,18 @@ namespace ImagineRITGame
             // Make sure to assign the y value of the question based off of how many lines it is
             double y = ((5 - currentTextList.Count) * .08) + 0.2;
 
+            if (currentTextList.Count == 1)
+                y = (2 * 0.08) + 0.2;
+            else if (currentTextList.Count == 2)
+                y = (1.5 * 0.08) + 0.2;
+            else if (currentTextList.Count == 3)
+                y = (1 * 0.08) + 0.2;
+            else if (currentTextList.Count == 4)
+                y = (0.5 * 0.08) + 0.2;
+            else if (currentTextList.Count == 5)
+                y = 0.2;
+
+            // Draw in the question
             for (int i = 0; i < currentTextList.Count; i++)
             {
                 sb.DrawString
@@ -131,6 +143,7 @@ namespace ImagineRITGame
                         currentTextList = base.WrapText(q.AnswerList()[i].Text().Substring(1, q.AnswerList()[i].Text().Length - 2), 90);
                     else
                         currentTextList = base.WrapText(q.AnswerList()[i].Text(), 50);
+
                     for (int j = 0; j < currentTextList.Count; j++)
                     {
                         sb.DrawString

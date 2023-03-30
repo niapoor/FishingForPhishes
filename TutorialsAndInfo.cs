@@ -70,7 +70,7 @@ namespace ImagineRITGame
 
             // Trim the quotes if there are any
             if (correctAnswer[0].ToString() == "\"")
-                correctAnswer = correctAnswer.Substring(1, question.QuestionText().Length - 2);
+                correctAnswer = correctAnswer.Substring(1, correctAnswer.Length - 2);
 
             string text = "The fish got away! The correct answer was \"" + correctAnswer +"\".";
 
