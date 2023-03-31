@@ -1,10 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms.VisualStyles;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.Xna.Framework.Audio;
+using System.IO;
 
 namespace ImagineRITGame
 {
@@ -63,6 +66,15 @@ namespace ImagineRITGame
         private bool secondTutorial;
 
         // Space for sound effects
+        private bool currentlyPlaying;
+        private SoundManager soundManager;
+        private List<Song> songs;
+        private System.Collections.Generic.List<Microsoft.Xna.Framework.Audio.SoundEffect> soundEffects;
+        private Song gameSong;
+        private SoundEffect fishSplash;
+        private SoundEffect castRod;
+        private SoundEffect catchFish;
+        private SoundEffect buttonClick;
 
         // Space for fonts
         private SpriteFont peaberryBaseText1;
@@ -176,6 +188,9 @@ namespace ImagineRITGame
             outfitTextures = new List<Texture2D>();
             fishTextures = new List<Texture2D>();
             outfitTextures = new List<Texture2D>();
+            songs = new List<Song>();
+            soundEffects = new System.Collections.Generic.List<Microsoft.Xna.Framework.Audio.SoundEffect>();
+
 
             this.random = new Random();
 
@@ -193,7 +208,6 @@ namespace ImagineRITGame
 
             questionPack = new QuestionPack();
             fishPack = new FishPack();
-
             // Initializing Menu objects
             mainMenu = new MainMenu(menuTextures);
             pauseMenu = new PauseMenu(menuTextures, fonts);
@@ -202,6 +216,7 @@ namespace ImagineRITGame
             inventory = new Inventory(menuTextures, fonts);
             displayQuestion = new DisplayQuestion(menuTextures, fonts);
             tutorialsAndInfo = new TutorialsAndInfo(menuTextures, fonts);
+            soundManager = new SoundManager(songs, soundEffects);
 
             // Fish for testing
             // testFish = new Fish(fishTexture, new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47), (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)));
@@ -219,6 +234,8 @@ namespace ImagineRITGame
 
             firstTutorial = true;
             secondTutorial = true;
+
+            currentlyPlaying = false;
 
             // TODO: add question pack
             //questionPack = new QuestionPack();
@@ -239,6 +256,12 @@ namespace ImagineRITGame
             cooldownTime += gameTime.ElapsedGameTime.TotalMilliseconds;
             cooldownTime2 += gameTime.ElapsedGameTime.TotalMilliseconds;
             cooldownTime3 += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (!currentlyPlaying)
+            {
+                currentlyPlaying = true;
+                soundManager.PlaySong(gameSong, true);
+            }
 
             // Assigning the appropriate current game state and updating the frame based on the game state
             switch (gameState)
@@ -389,6 +412,7 @@ namespace ImagineRITGame
             // Drawing in assets based on the current game state
             switch (gameState)
             {
+
                 case GameState.MainMenu:
                     mainMenu.Draw(_spriteBatch, Color.Goldenrod);
                     break;
@@ -444,6 +468,7 @@ namespace ImagineRITGame
 
         private void ChangeGameState(int state)
         {
+            //soundManager.PlaySoundEffect(SoundEffects.ButtonPress);
             // The player pressed esc in the main menu or the exit button
             if (state == 0)
             {
@@ -526,6 +551,7 @@ namespace ImagineRITGame
                 else if (cooldownTime2 >= 10 && !correctOrIncorrect)
                 {
                     currentFish.UpdateState(FishStates.FadeOut);
+                    //soundManager.PlaySoundEffect(SoundEffects.FishEscape);
                 }
             }
             else if (state == 18)
@@ -571,6 +597,16 @@ namespace ImagineRITGame
             outfitTextures.Add(shoes);
             outfitTextures.Add(hair);
             outfitTextures.Add(eyes);
+            gameSong = Content.Load<Song>("Water_1");
+            songs.Add(gameSong);
+            fishSplash = Content.Load<SoundEffect>("416710__inspectorj__splash-small-a");
+            castRod = Content.Load<SoundEffect>("51755__erkanozan__whip-01");
+            catchFish = Content.Load<SoundEffect>("270404__littlerobotsoundfactory__jingle_achievement_00");
+            buttonClick = Content.Load<SoundEffect>("448080__breviceps__wet-click");
+            soundEffects.Add(fishSplash);
+            soundEffects.Add(castRod);
+            soundEffects.Add(catchFish);
+            soundEffects.Add(buttonClick);
             cyberCorpsLogo = Content.Load<Texture2D>("cybercorps_scholarship_for_service_hor_k1");
             background = Content.Load<Texture2D>("backgroundv3");
             darkenBackground = Content.Load<Texture2D>("black");

@@ -13,6 +13,54 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin 192271__lebaston100__click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:192271__lebaston100__click.wav
+
+#begin 233417__rocktopus__splash14.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:233417__rocktopus__splash14.wav
+
+#begin 270404__littlerobotsoundfactory__jingle_achievement_00.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:270404__littlerobotsoundfactory__jingle_achievement_00.wav
+
+#begin 416710__inspectorj__splash-small-a.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:416710__inspectorj__splash-small-a.wav
+
+#begin 448080__breviceps__wet-click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:448080__breviceps__wet-click.wav
+
+#begin 496426__sergequadrado__dream-loop.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:496426__sergequadrado__dream-loop.wav
+
+#begin 51755__erkanozan__whip-01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:51755__erkanozan__whip-01.wav
+
+#begin 657946__matrixxx__horror-inspect-sound-ui-or-in-game-notification-02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:657946__matrixxx__horror-inspect-sound-ui-or-in-game-notification-02.wav
+
 #begin backgroundv2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -456,4 +504,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:transparenthorizontal.png
+
+#begin Water_1.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Water_1.wav
 
