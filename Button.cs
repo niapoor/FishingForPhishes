@@ -187,7 +187,6 @@ namespace ImagineRITGame
 
         }
 
-
         /// <summary>
         /// Draws the button with a given color
         /// </summary>

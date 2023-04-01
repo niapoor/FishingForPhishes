@@ -137,6 +137,12 @@ namespace ImagineRITGame
         //    PlaySoundEffect?.Invoke(soundEffect);
         //}
 
+        /// <summary>
+        /// Aligns a button on the screen
+        /// </summary>
+        /// <param name="x">Horizontal factor positioning</param>
+        /// <param name="y">Vertical factor positioning</param>
+        /// <returns></returns>
         protected virtual Point AlignButton(double x, double y)
         {
             return new Point((int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) * x)), (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * y)));

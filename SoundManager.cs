@@ -22,7 +22,7 @@ namespace ImagineRITGame
         Award = 2,
         ButtonPress = 3
     }
-    internal class SoundManager
+    public class SoundManager
     {
 
         private List<Song> music;

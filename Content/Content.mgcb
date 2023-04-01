@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin 109662__grunz__success.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:109662__grunz__success.wav
+
 #begin 192271__lebaston100__click.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

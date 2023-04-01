@@ -59,6 +59,10 @@ namespace ImagineRITGame
         private bool faceRight;
         private int animationType;
         private bool drawFishingBob;
+        private bool fishingRodSoundEffect;
+        
+        // For a sound effect
+        public event PlaySoundEffectDelegate PlaySoundEffect;
 
         /// <summary>
         /// Getter and setter for the playerState
@@ -89,6 +93,7 @@ namespace ImagineRITGame
             prevState = PlayerStates.Idle;
 
             faceRight = true;
+            fishingRodSoundEffect = true;
 
             // Initializing the keyboard states
             prevKBState = new KeyboardState();
@@ -156,6 +161,11 @@ namespace ImagineRITGame
             // Check that enough time has passed between frames
             if (timeCounter >= secondsPerFrame)
             {
+                if (fishingRodSoundEffect)
+                {
+                    PlaySoundEffect?.Invoke(SoundEffects.CastRod);
+                    fishingRodSoundEffect= false;
+                }
                 // Increment the active frame
                 if ((playerState == PlayerStates.Fishing && playerCurrentFrame != 4) || playerState != PlayerStates.Fishing)
                 {
@@ -183,7 +193,6 @@ namespace ImagineRITGame
         public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
             SpriteEffects spe = SpriteEffects.None;
-
             if (!faceRight)
                 spe = SpriteEffects.FlipHorizontally;
 

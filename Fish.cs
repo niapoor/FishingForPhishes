@@ -48,6 +48,9 @@ namespace ImagineRITGame
         private int widthOfSingleSprite;
         private int animationIndex;
 
+        // For a sound effect
+        public event PlaySoundEffectDelegate PlaySoundEffect;
+
         public Fish(List<Texture2D> textures, Vector2 location, List<string> fishInfo, List<SpriteFont> fonts)
         {
             shadowTexture = textures[0];
@@ -92,6 +95,8 @@ namespace ImagineRITGame
                 transparency = (float)1;
             else if (fishState == FishStates.FadeIn)
                 transparency = (float)0;
+            if(fishState == FishStates.FadeOut && prevState == FishStates.Swim)
+                PlaySoundEffect?.Invoke(SoundEffects.FishEscape);
         }
 
         public void UpdateAnimation(GameTime gameTime)

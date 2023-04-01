@@ -211,11 +211,12 @@ namespace ImagineRITGame
             // Initializing Menu objects
             mainMenu = new MainMenu(menuTextures);
             pauseMenu = new PauseMenu(menuTextures, fonts);
-            creditsMenu= new CreditsMenu(menuTextures, fonts);
-            gameButtonsOverlay= new GameButtonsOverlay(menuTextures);
+            creditsMenu = new CreditsMenu(menuTextures, fonts);
+            gameButtonsOverlay = new GameButtonsOverlay(menuTextures);
             inventory = new Inventory(menuTextures, fonts);
             displayQuestion = new DisplayQuestion(menuTextures, fonts);
             tutorialsAndInfo = new TutorialsAndInfo(menuTextures, fonts);
+
             soundManager = new SoundManager(songs, soundEffects);
 
             // Fish for testing
@@ -226,6 +227,7 @@ namespace ImagineRITGame
                 new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47),
                 (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)),
                 fishPack.FetchRandomFish(currentDifficulty), fonts);
+            currentFish.PlaySoundEffect += soundManager.PlaySoundEffect;
 
             seagull = new Seagull(allTiles,
                 new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .54),
@@ -244,6 +246,7 @@ namespace ImagineRITGame
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
 
             player = new Player(outfitTextures, 0.42, 0.4);
+            player.PlaySoundEffect += soundManager.PlaySoundEffect;
         }
 
         protected override void Update(GameTime gameTime)
@@ -299,6 +302,7 @@ namespace ImagineRITGame
                             new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47),
                             (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)),
                             fishPack.FetchRandomFish(currentDifficulty), fonts);
+                        currentFish.PlaySoundEffect += soundManager.PlaySoundEffect;
                     }
                     else if (SingleKeyPress(Keys.Space, previousKbState) && drawInFishType)
                     {
@@ -391,11 +395,13 @@ namespace ImagineRITGame
                 DepthStencilState.Default,
             RasterizerState.CullCounterClockwise);
 
+            // Draw in the game's background
             _spriteBatch.Draw(background, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(0, 0, 1649, 924), Color.White, 0f,
                 Vector2.Zero,
                 0,
                 .9f);
 
+            // Darken the background if the game is "paused" (essentially)
             if (gameState == GameState.CreditsMenu || (gameState == GameState.Game && drawInQuestion) || gameState == GameState.PauseMenu || gameState == GameState.Inventory)
                 _spriteBatch.Draw(darkenBackground, new Rectangle(0, 0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height), new Rectangle(110, 0, 1700, 960), new Color(Color.Black, 0.6f), 0f,
                Vector2.Zero,
@@ -468,7 +474,6 @@ namespace ImagineRITGame
 
         private void ChangeGameState(int state)
         {
-            //soundManager.PlaySoundEffect(SoundEffects.ButtonPress);
             // The player pressed esc in the main menu or the exit button
             if (state == 0)
             {
@@ -547,6 +552,7 @@ namespace ImagineRITGame
                 {
                     cooldownTime2 = 0;
                     inventory.AddFishToInventory(currentFish);
+                    soundManager.PlaySoundEffect(SoundEffects.Award);
                 }
                 else if (cooldownTime2 >= 10 && !correctOrIncorrect)
                 {
@@ -601,7 +607,7 @@ namespace ImagineRITGame
             songs.Add(gameSong);
             fishSplash = Content.Load<SoundEffect>("416710__inspectorj__splash-small-a");
             castRod = Content.Load<SoundEffect>("51755__erkanozan__whip-01");
-            catchFish = Content.Load<SoundEffect>("270404__littlerobotsoundfactory__jingle_achievement_00");
+            catchFish = Content.Load<SoundEffect>("109662__grunz__success");
             buttonClick = Content.Load<SoundEffect>("448080__breviceps__wet-click");
             soundEffects.Add(fishSplash);
             soundEffects.Add(castRod);
