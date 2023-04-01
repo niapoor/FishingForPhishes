@@ -25,6 +25,7 @@ namespace ImagineRITGame
         private double secondsPerFrame;
         private int widthOfSingleSprite;
         private int animationIndex;
+        private float aspectRatioFactor;
 
         public Seagull(Texture2D seagullTexture, Vector2 location) 
         {
@@ -38,6 +39,11 @@ namespace ImagineRITGame
             gullCurrentFrame = 0;
             gullMaxFrame = 3;
             widthOfSingleSprite = 17;
+
+            if ((float)((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) < (float)((float)1920 / (float)1080))
+                aspectRatioFactor = (float)((float)((float)1920 / (float)1080) - (float)((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height));
+            else
+                aspectRatioFactor = 0;
         }
 
         public int CurrentFrame
@@ -78,7 +84,7 @@ namespace ImagineRITGame
         {
             // Seagull
             sb.Draw(texture,
-               new Rectangle((int)position.X, (int)position.Y, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15),
+               new Rectangle((int)position.X, (int)position.Y + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .03), GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15),
                new Rectangle(139 + (gullCurrentFrame * widthOfSingleSprite), 373, widthOfSingleSprite, 17),
                Color.White,
                0f,
