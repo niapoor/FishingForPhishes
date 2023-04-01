@@ -16,10 +16,11 @@ namespace ImagineRITGame
     // An enum that holds all of the states the player can be in
     enum PlayerStates
     {
-        Walking,
-        Idle,
         Fishing,
-        HoldingFish
+        HoldingFish,
+        Idle,
+        CatchFish,
+        PutAway
     }
 
     // An enum that holds all of the outfit pieces a player can have
@@ -41,6 +42,7 @@ namespace ImagineRITGame
         private PlayerStates prevState;
 
         private List<Texture2D> textures;
+        private List<Texture2D> notOutfitTextures;
         private double xLoc;
         private double yLoc;
 
@@ -60,6 +62,8 @@ namespace ImagineRITGame
         private int animationType;
         private bool drawFishingBob;
         private bool fishingRodSoundEffect;
+
+        private float aspectRatioFactor;
         
         // For a sound effect
         public event PlaySoundEffectDelegate PlaySoundEffect;
@@ -73,6 +77,11 @@ namespace ImagineRITGame
             set { playerState = value; }
         }
 
+        public int CurrentFrame
+        {
+            get { return playerCurrentFrame; }
+        }
+
         /// <summary>
         /// A set for the previous keyboard state
         /// </summary>
@@ -82,14 +91,15 @@ namespace ImagineRITGame
         }
 
 
-        public Player(List<Texture2D> sprites, double x, double y)
+        public Player(List<Texture2D> sprites, List<Texture2D> sprites2, double x, double y)
         {
             textures = sprites;
+            notOutfitTextures = sprites2;
             xLoc = x;
             yLoc = y;
 
             // The player is idle by default because the game starts with them not moving
-            playerState = PlayerStates.Idle;
+            playerState = PlayerStates.Fishing;
             prevState = PlayerStates.Idle;
 
             faceRight = true;
@@ -107,6 +117,11 @@ namespace ImagineRITGame
             playerMaxFrame = 4;
             widthOfSingleSprite = 160;
             animationIndex = 2;
+
+            if ((float)((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) < (float)((float)1920 / (float)1080))
+                aspectRatioFactor = (float)((float)((float)1920 / (float)1080) - (float)((float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / (float)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height));
+            else
+                aspectRatioFactor = 0;
         }
 
 
@@ -128,23 +143,24 @@ namespace ImagineRITGame
             // fps: some animations should run faster than others
             // ================================================================
 
-            playerState = PlayerStates.Fishing;
-
-            if (playerState == PlayerStates.Fishing)
+            if (playerState == PlayerStates.Fishing || playerState == PlayerStates.CatchFish)
             {
                 playerMaxFrame = 5;
                 widthOfSingleSprite = 160 / 5;
-                animationIndex = 0;
+                if (playerState == PlayerStates.Fishing)
+                    animationIndex = 0;
+                else
+                    animationIndex = 4;
                 fps = 7.0;
                 animationType = 45;
             }
-            else if (playerState == PlayerStates.Walking)
+            else if (playerState == PlayerStates.HoldingFish || playerState == PlayerStates.PutAway)
             {
                 playerMaxFrame = 6;
                 widthOfSingleSprite = 160 / 5;
                 animationIndex = 1;
                 fps = 10.0;
-                animationType = 0;
+                animationType = 8;
             }
             else if (playerState == PlayerStates.Idle)
             {
@@ -161,22 +177,23 @@ namespace ImagineRITGame
             // Check that enough time has passed between frames
             if (timeCounter >= secondsPerFrame)
             {
-                if (fishingRodSoundEffect)
+                switch (playerState)
                 {
-                    PlaySoundEffect?.Invoke(SoundEffects.CastRod);
-                    fishingRodSoundEffect= false;
-                }
-                // Increment the active frame
-                if ((playerState == PlayerStates.Fishing && playerCurrentFrame != 4) || playerState != PlayerStates.Fishing)
-                {
-                    playerCurrentFrame++;
-                    drawFishingBob = true;
-                }
-
-                if (playerCurrentFrame >= playerMaxFrame)
-                {
-                    playerCurrentFrame = 0;
-                    drawFishingBob = false;
+                    case PlayerStates.Fishing:
+                        UpdateFishingAnimation();
+                        break;
+                    case PlayerStates.HoldingFish:
+                        UpdateHoldingAnimation();
+                        break;
+                    case PlayerStates.Idle:
+                        UpdateIdleAnimation();
+                        break;
+                    case PlayerStates.CatchFish:
+                        UpdateCatchFishAnimation();
+                        break;
+                    case PlayerStates.PutAway:
+                        UpdatePutAwayAnimation();
+                        break;
                 }
 
                 // Reset the time counter for a new frame
@@ -184,6 +201,118 @@ namespace ImagineRITGame
             }
         }
 
+        public void UpdateFishingAnimation()
+        {
+            if (fishingRodSoundEffect)
+            {
+                PlaySoundEffect?.Invoke(SoundEffects.CastRod);
+                fishingRodSoundEffect = false;
+            }
+
+            // Increment the active frame if the player is still casting their rod
+            // Otherwise, the player will fish standing still
+            if (playerCurrentFrame != 4)
+            {
+                playerCurrentFrame++;
+                drawFishingBob = true;
+            }
+
+            if (playerCurrentFrame >= playerMaxFrame)
+            {
+                playerCurrentFrame = 0;
+                drawFishingBob = false;
+            }
+        }
+
+        public void UpdateHoldingAnimation()
+        {
+            // Increment the active frame if the player is still casting their rod
+            // Otherwise, the player will fish standing still
+            if (playerCurrentFrame != 4)
+            {
+                playerCurrentFrame++;
+                drawFishingBob = true;
+            }
+
+            if (playerCurrentFrame >= playerMaxFrame)
+            {
+                playerCurrentFrame = 0;
+                drawFishingBob = false;
+            }
+        }
+
+        public void UpdateIdleAnimation()
+        {
+            playerCurrentFrame = 0;
+        }
+
+        public void UpdateCatchFishAnimation()
+        {
+            if (fishingRodSoundEffect)
+            {
+                PlaySoundEffect?.Invoke(SoundEffects.CastRod);
+                fishingRodSoundEffect = false;
+            }
+
+            // Increment the active frame if the player is still casting their rod
+            // Otherwise, the player will fish standing still
+            if (playerCurrentFrame != 0)
+                playerCurrentFrame--;
+            else
+            {
+                UpdatePlayerState(PlayerStates.HoldingFish);
+            }
+        }
+
+        public void UpdatePutAwayAnimation()
+        {
+            // Increment the active frame if the player is still casting their rod
+            // Otherwise, the player will fish standing still
+            if (playerCurrentFrame != 0)
+                playerCurrentFrame--;
+            else
+            {
+                UpdatePlayerState(PlayerStates.Fishing);
+            }
+        }
+
+        /// <summary>
+        /// Update the player's state for animation purposes
+        /// </summary>
+        /// <param name="state"></param>
+        public void UpdatePlayerState(PlayerStates state)
+        {
+            // Most animations will start on the first frame
+            if (state != PlayerStates.CatchFish && state != PlayerStates.PutAway)
+                playerCurrentFrame = 0;
+            else
+                playerCurrentFrame = 4;
+            prevState = playerState;
+            playerState = state;
+            fishingRodSoundEffect = true;
+            drawFishingBob = false;
+        }
+
+        public void DrawFish(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Fish fish)
+        {
+            int indexX = Int32.Parse(fish.CatchInfo[2]);
+            int indexY = (indexX / 10);
+            indexX = (indexX % 10) - 1;
+            if (indexX < 0)
+            {
+                indexX = 9;
+                indexY--;
+            }
+
+            // Drawing the fish for the player to hold
+            sb.Draw(notOutfitTextures[0],
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.444) + (int)(((((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10)))),
+                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.251) + (int)((((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10)) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .3)),
+                (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.664) / 9.6), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.664) / 9.6)),
+                new Rectangle((notOutfitTextures[0].Width / 10) * indexX, (notOutfitTextures[0].Height / 10) * indexY,
+                (notOutfitTextures[0].Width / 10), (notOutfitTextures[0].Height / 10)),
+                Color.White);
+        }
 
         /// <summary>
         /// Draws in the player facing the correct direction with the correct
@@ -196,10 +325,14 @@ namespace ImagineRITGame
             if (!faceRight)
                 spe = SpriteEffects.FlipHorizontally;
 
+            double conditionalY = 0;
+            if (playerState == PlayerStates.Idle)
+                conditionalY = 0.04;
+
             // Drawing in the player
             for (int i = 0; i < textures.Count; i++)
                 sb.Draw(textures[i],
-                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * yLoc),
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (yLoc - conditionalY)),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765)),
                 new Rectangle((playerCurrentFrame * widthOfSingleSprite) + (3 * 8 * widthOfSingleSprite), (animationType * 32), widthOfSingleSprite, textures[i].Height / 44),
                 Color.White,

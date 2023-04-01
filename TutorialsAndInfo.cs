@@ -17,6 +17,12 @@ namespace ImagineRITGame
         {
         }
 
+        /// <summary>
+        /// Drawing the text of the fish and 
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="fonts"></param>
+        /// <param name="fish"></param>
         public void DrawCatchText(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, List<SpriteFont> fonts, Fish fish)
         {
             List<string> currentTextList = new List<string> { };
@@ -57,6 +63,35 @@ namespace ImagineRITGame
                     Game1.CenterText(currentTextList[i], (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * ((.06 * i) + y))), fonts[2]),
                     Color.Black);
             }
+
+            // =============
+            // Drawing in the fish on screen! TURTLE and BALLAN WRASSE
+            // =============
+            int indexX = Int32.Parse(fish.CatchInfo[2]);
+            int indexY = (indexX / 10);
+            indexX = (indexX % 10) - 1;
+            if (indexX < 0)
+            {
+                indexX = 9;
+                indexY--;
+            }
+
+            // Drawing in the fishing post card backdrop (no fish added)
+            sb.Draw(textures[(int)MenuTextures.FishingPostCard],
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.71), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.46),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.1825), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.1725) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .1))),
+                new Rectangle(0, 0, textures[(int)MenuTextures.FishingPostCard].Width, textures[(int)MenuTextures.FishingPostCard].Height),
+                Color.White);
+
+            // Drawing the fish to display on the side of the screen
+            sb.Draw(textures[(int)MenuTextures.AllFish],
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.698) + (int)(((((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10)))),
+                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.245) + (int)((((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10)) + (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .25)),
+                (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 1.328) / 9.6), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 1.328) / 9.6)),
+                new Rectangle((textures[(int)MenuTextures.AllFish].Width / 10) * indexX, (textures[(int)MenuTextures.AllFish].Height / 10) * indexY,
+                (textures[(int)MenuTextures.AllFish].Width / 10), (textures[(int)MenuTextures.AllFish].Height / 10)),
+                Color.White);
+
         }
 
         public void DrawQuestionIncorrect(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, List<SpriteFont> fonts, Question question)

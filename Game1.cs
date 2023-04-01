@@ -139,6 +139,7 @@ namespace ImagineRITGame
         private Texture2D hair;
         private Texture2D eyes;
         private List<Texture2D> outfitTextures;
+        private List<Texture2D> playerTexturesNotOutfit;
 
 
         // Sprite sheet data
@@ -188,6 +189,7 @@ namespace ImagineRITGame
             outfitTextures = new List<Texture2D>();
             fishTextures = new List<Texture2D>();
             outfitTextures = new List<Texture2D>();
+            playerTexturesNotOutfit = new List<Texture2D>();
             songs = new List<Song>();
             soundEffects = new System.Collections.Generic.List<Microsoft.Xna.Framework.Audio.SoundEffect>();
 
@@ -245,7 +247,7 @@ namespace ImagineRITGame
             numSpritesInSheet = 8;
             widthOfSingleSprite = playerTexture.Width / numSpritesInSheet;
 
-            player = new Player(outfitTextures, 0.42, 0.4);
+            player = new Player(outfitTextures, playerTexturesNotOutfit, 0.42, 0.4);
             player.PlaySoundEffect += soundManager.PlaySoundEffect;
         }
 
@@ -310,6 +312,10 @@ namespace ImagineRITGame
                         canOpenQuestion = false;
                         fishSpawnTime = 0;
                         firstTutorial= false;
+                        if (correctOrIncorrect)
+                            player.UpdatePlayerState(PlayerStates.PutAway);
+                        else
+                            player.UpdatePlayerState(PlayerStates.Fishing);
                     }
                     if (drawInQuestion)
                     {
@@ -432,6 +438,7 @@ namespace ImagineRITGame
                     break;
                 case GameState.Game:
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
+                    player.Draw(_spriteBatch);
                     if (drawInQuestion)
                     {
                         displayQuestion.Draw(_spriteBatch, Color.Goldenrod, currentQuestion, fonts);
@@ -451,6 +458,8 @@ namespace ImagineRITGame
                             tutorialsAndInfo.DrawQuestionIncorrect(_spriteBatch, fonts, currentQuestion);
                         if (firstTutorial)
                             tutorialsAndInfo.DrawFishAgainInstructions(_spriteBatch, fonts);
+                        if (player.PlayerState == PlayerStates.HoldingFish && player.CurrentFrame == 4)
+                            player.DrawFish(_spriteBatch, currentFish);
                     }
                     if(!drawInQuestion && !drawInFishType)
                     {
@@ -459,7 +468,6 @@ namespace ImagineRITGame
                         else if (secondTutorial)
                             tutorialsAndInfo.DrawMoreTutorials(_spriteBatch, fonts);
                     }
-                    player.Draw(_spriteBatch);
                     seagull.Draw(_spriteBatch);
                     break;
                 case GameState.CreditsMenu:
@@ -553,10 +561,12 @@ namespace ImagineRITGame
                     cooldownTime2 = 0;
                     inventory.AddFishToInventory(currentFish);
                     soundManager.PlaySoundEffect(SoundEffects.Award);
+                    player.UpdatePlayerState(PlayerStates.CatchFish);
                 }
                 else if (cooldownTime2 >= 10 && !correctOrIncorrect)
                 {
                     currentFish.UpdateState(FishStates.FadeOut);
+                    player.UpdatePlayerState(PlayerStates.Idle);
                     //soundManager.PlaySoundEffect(SoundEffects.FishEscape);
                 }
             }
@@ -603,6 +613,7 @@ namespace ImagineRITGame
             outfitTextures.Add(shoes);
             outfitTextures.Add(hair);
             outfitTextures.Add(eyes);
+            playerTexturesNotOutfit.Add(allFish);
             gameSong = Content.Load<Song>("Water_1");
             songs.Add(gameSong);
             fishSplash = Content.Load<SoundEffect>("416710__inspectorj__splash-small-a");
