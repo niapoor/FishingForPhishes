@@ -82,6 +82,21 @@ namespace ImagineRITGame
             get { return playerCurrentFrame; }
         }
 
+        public double XLoc
+        {
+            get { return xLoc; }
+        }
+
+        public double YLoc
+        {
+            get { return yLoc; }
+        }
+
+        public int AnimationType
+        {
+            get { return animationType; }
+        }
+
         /// <summary>
         /// A set for the previous keyboard state
         /// </summary>
@@ -330,16 +345,16 @@ namespace ImagineRITGame
                 conditionalY = 0.04;
 
             // Drawing in the player
-            for (int i = 0; i < textures.Count; i++)
-                sb.Draw(textures[i],
-                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (yLoc - conditionalY)),
-                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765)),
-                new Rectangle((playerCurrentFrame * widthOfSingleSprite) + (3 * 8 * widthOfSingleSprite), (animationType * 32), widthOfSingleSprite, textures[i].Height / 44),
-                Color.White,
-                0f,
-                Vector2.Zero,
-                0,
-                .826f);
+            //for (int i = 0; i < textures.Count; i++)
+            //sb.Draw(textures[0],
+            //    new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (yLoc - conditionalY)),
+            //        (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765)),
+            //    new Rectangle((playerCurrentFrame * widthOfSingleSprite) + (3 * 8 * widthOfSingleSprite), (animationType * 32), widthOfSingleSprite, textures[0].Height / 44),
+            //    Color.White,
+            //    0f,
+            //    Vector2.Zero,
+            //    0,
+            //    .86f);
 
             //if (drawFishingBob == true)
             //{

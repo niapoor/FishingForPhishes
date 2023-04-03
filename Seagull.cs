@@ -84,7 +84,8 @@ namespace ImagineRITGame
         {
             // Seagull
             sb.Draw(texture,
-               new Rectangle((int)position.X, (int)position.Y + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .03), GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15),
+               new Rectangle((int)position.X, (int)position.Y + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .03),
+                    GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15),
                new Rectangle(139 + (gullCurrentFrame * widthOfSingleSprite), 373, widthOfSingleSprite, 17),
                Color.White,
                0f,

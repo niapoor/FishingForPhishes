@@ -36,6 +36,7 @@ namespace ImagineRITGame
         Title = 18,
         Pause = 19,
         Inventory = 20,
+        OutfitShop = 21,
         Back = -1
     }
 
@@ -174,6 +175,10 @@ namespace ImagineRITGame
 
                 case ButtonType.Hard:
                     textRect = new Rectangle(310, 320, 104, 81);
+                    break;
+
+                case ButtonType.OutfitShop:
+                    textRect = new Rectangle(310, 401, 104, 81);
                     break;
 
                 case ButtonType.Title:

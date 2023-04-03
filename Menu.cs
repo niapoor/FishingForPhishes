@@ -17,7 +17,8 @@ namespace ImagineRITGame
         TitleCard = 1,
         FishingPostCard = 2,
         AllFish = 3,
-        FishInvShadow = 4
+        FishInvShadow = 4,
+        ClothingInventory = 5
     }
 
     class Menu

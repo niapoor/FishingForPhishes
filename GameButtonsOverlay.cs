@@ -22,7 +22,8 @@ namespace ImagineRITGame
             // Giving positions and sizes to the main menu's buttons
             buttons = new List<Button>() {
                 new Button(base.AlignButton(.17, .03), ButtonType.ViewItems, textures[(int)MenuTextures.GeneralButtons]),
-                new Button(base.AlignButton(.02, .03), ButtonType.Pause, textures[(int)MenuTextures.GeneralButtons])
+                new Button(base.AlignButton(.02, .03), ButtonType.Pause, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.7, .03), ButtonType.OutfitShop, textures[(int)MenuTextures.GeneralButtons])
             };
         }
 

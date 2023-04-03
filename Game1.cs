@@ -19,7 +19,8 @@ namespace ImagineRITGame
         Game = 2,
         Inventory = 3,
         PauseMenu = 4,
-        CreditsMenu = 5
+        CreditsMenu = 5,
+        ClothingInventory = 6
     }
 
     public class Game1 : Game
@@ -31,6 +32,7 @@ namespace ImagineRITGame
 
         // Player objects
         private Player player;
+        private Player clothingInventoryPlayer;
 
         // Keeps track of the game state so we know which
         // screen of the game to be on
@@ -89,6 +91,7 @@ namespace ImagineRITGame
         private GameButtonsOverlay gameButtonsOverlay;
         private Inventory inventory;
         private TutorialsAndInfo tutorialsAndInfo;
+        private ClothingInventory clothingInventory;
         private List<Texture2D> menuTextures;
 
         private Texture2D background;
@@ -130,6 +133,7 @@ namespace ImagineRITGame
         private Texture2D allFish;
         private Texture2D fishInvShadow;
         private Texture2D allTiles;
+        private Texture2D clothingInventoryTexture;
 
         // Player outfit texture fields
         private Texture2D playerTexture;
@@ -140,6 +144,8 @@ namespace ImagineRITGame
         private Texture2D eyes;
         private List<Texture2D> outfitTextures;
         private List<Texture2D> playerTexturesNotOutfit;
+        private List<List<Texture2D>> allOutfitTextures;
+        private Outfit playerOutfit;
 
 
         // Sprite sheet data
@@ -190,6 +196,7 @@ namespace ImagineRITGame
             fishTextures = new List<Texture2D>();
             outfitTextures = new List<Texture2D>();
             playerTexturesNotOutfit = new List<Texture2D>();
+            allOutfitTextures = new List<List<Texture2D>>();
             songs = new List<Song>();
             soundEffects = new System.Collections.Generic.List<Microsoft.Xna.Framework.Audio.SoundEffect>();
 
@@ -218,6 +225,8 @@ namespace ImagineRITGame
             inventory = new Inventory(menuTextures, fonts);
             displayQuestion = new DisplayQuestion(menuTextures, fonts);
             tutorialsAndInfo = new TutorialsAndInfo(menuTextures, fonts);
+            clothingInventory = new ClothingInventory(menuTextures, fonts, allOutfitTextures);
+            playerOutfit = new Outfit(allOutfitTextures);
 
             soundManager = new SoundManager(songs, soundEffects);
 
@@ -231,6 +240,7 @@ namespace ImagineRITGame
                 fishPack.FetchRandomFish(currentDifficulty), fonts);
             currentFish.PlaySoundEffect += soundManager.PlaySoundEffect;
 
+            // Creating a seagull!
             seagull = new Seagull(allTiles,
                 new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .54),
                 (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .59)));
@@ -249,6 +259,10 @@ namespace ImagineRITGame
 
             player = new Player(outfitTextures, playerTexturesNotOutfit, 0.42, 0.4);
             player.PlaySoundEffect += soundManager.PlaySoundEffect;
+
+            clothingInventoryPlayer = new Player(outfitTextures, playerTexturesNotOutfit, 0.257, 0.32);
+            // The clothing inventory's player will always be idle
+            clothingInventoryPlayer.UpdatePlayerState(PlayerStates.Idle);
         }
 
         protected override void Update(GameTime gameTime)
@@ -343,6 +357,12 @@ namespace ImagineRITGame
                         ChangeGameState(2);
                     creditsMenu.MenuButtonActivated += ChangeGameState;
                     break;
+                case GameState.ClothingInventory:
+                    clothingInventory.Update(gameTime);
+                    if (SingleKeyPress(Keys.Escape, previousKbState))
+                        ChangeGameState(-1);
+                    clothingInventory.MenuButtonActivated += ChangeGameState;
+                    break;
             }
 
             // Updates the previous position of the keyboard / mouse
@@ -387,6 +407,9 @@ namespace ImagineRITGame
                     }
                     //testFish.UpdateAnimation(gameTime);
                     break;
+                case GameState.ClothingInventory:
+                    clothingInventoryPlayer.UpdateAnimation(gameTime);
+                    break;
             }
         }
 
@@ -417,7 +440,7 @@ namespace ImagineRITGame
             // width: 2732, height: 2048
             // Drawing in the RIT CyberCorps logo in the bottom right. This will always be drawn in regardless of other settings.
             // Drawing in size and position is dynamic based on the screen size
-            _spriteBatch.Draw(cyberCorpsLogo, new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .82), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .02),
+            _spriteBatch.Draw(cyberCorpsLogo, new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .82), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .92),
                 (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (.075 * 2.3)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (.0149 * 2.3))), new Rectangle(0, 0, 750, 149), Color.White);
 
 
@@ -439,6 +462,7 @@ namespace ImagineRITGame
                 case GameState.Game:
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
                     player.Draw(_spriteBatch);
+                    playerOutfit.DrawOutfitOnPlayer(_spriteBatch, player, player.CurrentFrame, player.AnimationType, player.XLoc, player.YLoc);
                     if (drawInQuestion)
                     {
                         displayQuestion.Draw(_spriteBatch, Color.Goldenrod, currentQuestion, fonts);
@@ -472,6 +496,11 @@ namespace ImagineRITGame
                     break;
                 case GameState.CreditsMenu:
                     creditsMenu.Draw(_spriteBatch, Color.Goldenrod, fonts);
+                    break;
+                case GameState.ClothingInventory:
+                    clothingInventory.Draw(_spriteBatch);
+                    playerOutfit.DrawInventoryPlayer(_spriteBatch);
+                    playerOutfit.DrawOutfitInInventory(_spriteBatch);
                     break;
             }
 
@@ -580,6 +609,11 @@ namespace ImagineRITGame
                 prevGameState = GameState.Game;
                 gameState = GameState.PauseMenu;
             }
+            else if (state == 21)
+            {
+                prevGameState = GameState.Game;
+                gameState = GameState.ClothingInventory;
+            }
                 
 
         }
@@ -588,7 +622,7 @@ namespace ImagineRITGame
         {
             fishingBobTexture = Content.Load<Texture2D>("inv_items");
             fishTexture = Content.Load<Texture2D>("fish_shadow_black");
-            buttonTexture = Content.Load<Texture2D>("button_spritesheet");
+            buttonTexture = Content.Load<Texture2D>("button_spritesheet_v2");
             menuTextures.Add(buttonTexture);
             titleCardTexture = Content.Load<Texture2D>("phishing_game_logo");
             menuTextures.Add(titleCardTexture);
@@ -598,6 +632,8 @@ namespace ImagineRITGame
             menuTextures.Add(allFish);
             fishInvShadow = Content.Load<Texture2D>("inv_fish_shadow");
             menuTextures.Add(fishInvShadow);
+            clothingInventoryTexture = Content.Load<Texture2D>("inventory_customize");
+            menuTextures.Add(clothingInventoryTexture);
             fishTextures.Add(fishTexture);
             fishTextures.Add(allFish);
             // Outfit / Player textures
@@ -628,6 +664,8 @@ namespace ImagineRITGame
             background = Content.Load<Texture2D>("backgroundv3");
             darkenBackground = Content.Load<Texture2D>("black");
             allTiles = Content.Load<Texture2D>("tiles_all");
+            // Loading all outfit textures!
+            LoadOutfitTextures();
             //easyCSV = Content.Load<IEnumerable<String>>("EasyTemp");
             //mediumCSV = Content.Load<IEnumerable<String>>("MediumTemp");
             //hardCSV = Content.Load<IEnumerable<String>>("HardTemp");
@@ -734,7 +772,71 @@ namespace ImagineRITGame
             fonts.Add(peaberryBaseText3);
         }
 
-
+        /// <summary>
+        /// A helper method to load in all of the outfit textures!
+        /// </summary>
+        public void LoadOutfitTextures()
+        {
+            allOutfitTextures.Add(new List<Texture2D> { });                                              // === Body ===
+            allOutfitTextures[(int)ClothingType.Body].Add(playerTexture);                               // Skin
+            allOutfitTextures[(int)ClothingType.Body].Add(eyes);                                        // Eyes
+            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Hats ===
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_cowboy"));
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_lucky"));
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_pumpkin"));
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_pumpkin_purple"));
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_witch"));
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("mask_clown_blue"));
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("mask_clown_red"));
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("mask_spooky"));
+            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Hair ===
+            allOutfitTextures[(int)ClothingType.Hair].Add(hair);
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("braids"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("buzzcut"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("curly"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("emo"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("extra_long"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("extra_long_skirt"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("french_curl"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("gentleman"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("long_straight "));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("long_straight_skirt"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("midiwave"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("ponytail "));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("spacebuns"));
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("wavy"));
+            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Shirt ===
+            allOutfitTextures[(int)ClothingType.Shirt].Add(shirt);
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("floral"));
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("overalls"));
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("sailor"));
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("sailor_bow"));
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("skull"));
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("spaghetti"));
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("sporty"));
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("stripe"));
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("suit"));
+            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Pants ===
+            allOutfitTextures[(int)ClothingType.Pants].Add(pants);
+            allOutfitTextures[(int)ClothingType.Pants].Add(Content.Load<Texture2D>("pants_suit"));
+            allOutfitTextures[(int)ClothingType.Pants].Add(Content.Load<Texture2D>("skirt"));
+            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Shirt / Pants Combo ===
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("clown"));
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("dress "));
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("pumpkin"));
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("spooky "));
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("witch"));
+            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Shoes ===
+            allOutfitTextures[(int)ClothingType.Shoes].Add(shoes);
+            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Accessories ===
+            allOutfitTextures[(int)ClothingType.Accessories].Add(Content.Load<Texture2D>("beard"));
+            //allOutfitTextures[(int)ClothingType.Accessories].Add(Content.Load<Texture2D>("earring_emerald"));         // NONE OF THE EARRINGS HAVE PROPER ANIMATIONS
+            //allOutfitTextures[(int)ClothingType.Accessories].Add(Content.Load<Texture2D>("earring_emerald_silver"));
+            //allOutfitTextures[(int)ClothingType.Accessories].Add(Content.Load<Texture2D>("earring_red"));
+            //allOutfitTextures[(int)ClothingType.Accessories].Add(Content.Load<Texture2D>("earring_red_silver"));
+            allOutfitTextures[(int)ClothingType.Accessories].Add(Content.Load<Texture2D>("glasses"));
+            allOutfitTextures[(int)ClothingType.Accessories].Add(Content.Load<Texture2D>("glasses_sun"));
+        }
 
         /// <summary>
         /// Returns whether the last key pressed was only pressed one time
