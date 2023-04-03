@@ -781,53 +781,53 @@ namespace ImagineRITGame
             allOutfitTextures[(int)ClothingType.Body].Add(playerTexture);                               // Skin
             allOutfitTextures[(int)ClothingType.Body].Add(eyes);                                        // Eyes
             allOutfitTextures.Add(new List<Texture2D> { });                                             // === Hats ===
-            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_cowboy"));
-            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_lucky"));
-            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_pumpkin"));
-            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_pumpkin_purple"));
-            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_witch"));
-            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("mask_clown_blue"));
-            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("mask_clown_red"));
-            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("mask_spooky"));
-            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Hair ===
-            allOutfitTextures[(int)ClothingType.Hair].Add(hair);
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("braids"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("buzzcut"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("curly"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("emo"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("extra_long"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("extra_long_skirt"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("french_curl"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("gentleman"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("long_straight "));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("long_straight_skirt"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("midiwave"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("ponytail "));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("spacebuns"));
-            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("wavy"));
-            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Shirt ===
-            allOutfitTextures[(int)ClothingType.Shirt].Add(shirt);
-            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("floral"));
-            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("overalls"));
-            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("sailor"));
-            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("sailor_bow"));
-            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("skull"));
-            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("spaghetti"));
-            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("sporty"));
-            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("stripe"));
-            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("suit"));
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_cowboy"));            // 1
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_lucky"));             // 1
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_pumpkin"));           // 1
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_pumpkin_purple"));    // 1
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_witch"));             // 1
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("mask_clown_blue"));       // 1
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("mask_clown_red"));        // 1
+            allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("mask_spooky"));           // 1
+            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Hair === (spritesheets with 14 need 5 elements cut down)
+            allOutfitTextures[(int)ClothingType.Hair].Add(hair);                                            // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("braids"));               // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("buzzcut"));              // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("curly"));                // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("emo"));                  // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("extra_long"));           // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("extra_long_skirt"));     // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("french_curl"));          // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("gentleman"));            // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("long_straight "));       // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("long_straight_skirt"));  // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("midiwave"));             // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("ponytail "));            // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("spacebuns"));            // 14
+            allOutfitTextures[(int)ClothingType.Hair].Add(Content.Load<Texture2D>("wavy"));                 // 14
+            allOutfitTextures.Add(new List<Texture2D> { });                                             // === Shirt === (spritesheets with 10 need 1 element cut down)
+            allOutfitTextures[(int)ClothingType.Shirt].Add(shirt);                                          // 10
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("floral"));              // 10
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("overalls"));            // 10
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("sailor"));              // 10
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("sailor_bow"));          // 10
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("skull"));               // 10
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("spaghetti"));           // 10
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("sporty"));              // 10
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("stripe"));              // 10
+            allOutfitTextures[(int)ClothingType.Shirt].Add(Content.Load<Texture2D>("suit"));                // 10
             allOutfitTextures.Add(new List<Texture2D> { });                                             // === Pants ===
-            allOutfitTextures[(int)ClothingType.Pants].Add(pants);
-            allOutfitTextures[(int)ClothingType.Pants].Add(Content.Load<Texture2D>("pants_suit"));
-            allOutfitTextures[(int)ClothingType.Pants].Add(Content.Load<Texture2D>("skirt"));
+            allOutfitTextures[(int)ClothingType.Pants].Add(pants);                                          // 10
+            allOutfitTextures[(int)ClothingType.Pants].Add(Content.Load<Texture2D>("pants_suit"));          // 10
+            allOutfitTextures[(int)ClothingType.Pants].Add(Content.Load<Texture2D>("skirt"));               // 10
             allOutfitTextures.Add(new List<Texture2D> { });                                             // === Shirt / Pants Combo ===
-            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("clown"));
-            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("dress "));
-            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("pumpkin"));
-            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("spooky "));
-            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("witch"));
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("dress "));    // 10
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("clown"));     // 2
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("pumpkin"));   // 2
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("spooky "));   // 1
+            allOutfitTextures[(int)ClothingType.ShirtPantsCombo].Add(Content.Load<Texture2D>("witch"));     // 1
             allOutfitTextures.Add(new List<Texture2D> { });                                             // === Shoes ===
-            allOutfitTextures[(int)ClothingType.Shoes].Add(shoes);
+            allOutfitTextures[(int)ClothingType.Shoes].Add(shoes);                                          // 10
             allOutfitTextures.Add(new List<Texture2D> { });                                             // === Accessories ===
             allOutfitTextures[(int)ClothingType.Accessories].Add(Content.Load<Texture2D>("beard"));
             //allOutfitTextures[(int)ClothingType.Accessories].Add(Content.Load<Texture2D>("earring_emerald"));         // NONE OF THE EARRINGS HAVE PROPER ANIMATIONS

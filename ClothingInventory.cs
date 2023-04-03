@@ -21,7 +21,7 @@ namespace ImagineRITGame
         Hair,               // bob, braids, buzzcut, curly, emo, extra_long, extra_long_skirt, french_curl, gentleman, long_straight, long_straight_skirt, midiwave, ponytail, spacebuns, wavy (15 rows, 5 pages)
         Shirt,              // basic, floral, sailor, sailor_bow, skull, spaghetti, sporty, stripe, suit, overalls (10 rows, 4 pages)
         Pants,              // pants, skirt, pants_suit (3 rows, 1 page)
-        ShirtPantsCombo,    // clown, dress, pumpkin, spooky, witch (2 rows, 1 page)
+        ShirtPantsCombo,    // dress, clown, pumpkin, spooky, witch (2 rows, 1 page)
         Shoes,              // shoes (1 row, 1 page)
         Accessories         // beard, earring (x4), glasses, glasses_sun (7 elements, 1 page)
     }
