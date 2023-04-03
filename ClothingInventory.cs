@@ -102,7 +102,7 @@ namespace ImagineRITGame
                 new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.2),
                     (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.14)),
                     (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .68671875)),
-                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .309375)),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .55)),
                 new Rectangle(0, yChange, 293, 132),
                 Color.White, 0f,
                Vector2.Zero,
@@ -114,7 +114,7 @@ namespace ImagineRITGame
                 new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.423),
                 (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.34)),
                 (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .4359375),
-                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .1453125)),
+                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .25833333)),
                 new Rectangle(307, 47, 186, 62),
                 Color.White, 0f,
                 Vector2.Zero,
@@ -186,7 +186,7 @@ namespace ImagineRITGame
         {
             sb.Draw(texture,
                 new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .398) + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .0493 * (column - 1)),
-                    (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (.1348125 + yAdd)) + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (0.0515) * (row - 1))),    // First row y position + factor to get to specified row
+                    (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (.1348125 + (0.0515 * 2) + yAdd)) + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (0.046 * 2) * (row - 1))),    // First row y position + factor to get to specified row
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565 / sizing), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765 / sizing)),
                 new Rectangle((texture.Width / 10) * (color - 1), 0, 160 / 5, texture.Height / 44),
                 Color.White,
