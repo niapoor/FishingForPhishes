@@ -53,7 +53,7 @@ namespace ImagineRITGame
                 new Button(base.AlignButton(.04, .75), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons])
             };
 
-            currentPage = ClothingInventoryPage.Shirt;
+            currentPage = ClothingInventoryPage.Pants;
 
             allClothes = allOutfitTextures;
         }
@@ -121,6 +121,18 @@ namespace ImagineRITGame
                 0,
                 .0001f);
 
+            // "Customize" word
+            sb.Draw(textures[(int)MenuTextures.ClothingInventory],
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.423),
+                (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.34)),
+                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .4359375),
+                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .25833333)),
+                new Rectangle(307, 47, 186, 62),
+                Color.White, 0f,
+                Vector2.Zero,
+                0,
+                .0001f);
+
             switch (page)
             {
                 case ClothingInventoryPage.Shirt:
@@ -176,7 +188,7 @@ namespace ImagineRITGame
                     if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Pants].Count))
                     {
                         col++;
-                        Draw10ItemClothing(sb, allClothes[(int)ClothingType.Pants][j + ((currentScreen - 1) * 3)], row, 1.95, i, col, -0.009);
+                        Draw10ItemClothing(sb, allClothes[(int)ClothingType.Pants][j + ((currentScreen - 1) * 3)], row, 1.95, i, col, -0.014);
                     }
                 }
             }

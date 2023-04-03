@@ -50,11 +50,11 @@ namespace ImagineRITGame
             currentPants = allClothes[(int)ClothingType.Pants][0];
             currentShoes = allClothes[(int)ClothingType.Shoes][0];
 
-            currentHat = allClothes[(int)ClothingType.Hat][0];
-            currentAccessories = allClothes[(int)ClothingType.Accessories][1];
+            //currentHat = allClothes[(int)ClothingType.Hat][0];
+            //currentAccessories = allClothes[(int)ClothingType.Accessories][1];
         }
 
-        public void DrawOutfitInInventory(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        public void DrawOutfitInInventory(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D inventoryTexture)
         {
             double xLoc = .343;
             double yLoc = .392;
@@ -67,6 +67,8 @@ namespace ImagineRITGame
             DrawArticleInInventory(sb, currentHat, .2145, .335, true, ClothingType.Hat);
             DrawArticleInInventory(sb, currentHair, .2145, .39, true, ClothingType.Hair);
             DrawArticleInInventory(sb, currentAccessories, .2031, .435, false, ClothingType.Accessories);
+
+            DrawEmptySlot(sb, inventoryTexture);
         }
 
         public void DrawArticleInInventory(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D article, double xLoc, double yLoc, bool makeSmaller, ClothingType type)
@@ -89,6 +91,55 @@ namespace ImagineRITGame
             }
         }
 
+        /// <summary>
+        /// Draws the proper icon in an empty current outfit inventory slot
+        /// </summary>
+        /// <param name="sb">Allows us to draw</param>
+        /// <param name="inventoryTexture">Textures for the inventory</param>
+        public void DrawEmptySlot(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D inventoryTexture)
+        {
+            if (currentHat == null)
+                sb.Draw(inventoryTexture,
+                    new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .2168), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .365),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).06 / (float)1.2)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).105 / (float)1.2))),
+                    new Rectangle(300, 120, 20, 20),
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    0,
+                    .00000001f);
+            if (currentHair == null)
+                sb.Draw(inventoryTexture,
+                    new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .217), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .427),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).06 / (float)1.2)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).105 / (float)1.2))),
+                    new Rectangle(300, 135, 20, 20),
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    0,
+                    .00000001f);
+            if (currentAccessories == null)
+                sb.Draw(inventoryTexture,
+                    new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .2131), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .5),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).1 / (float)1.2)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).13 / (float)1.2))),
+                    new Rectangle(300, 150, 30, 30),
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    0,
+                    .00000001f);
+            if (currentShoes == null)
+                sb.Draw(inventoryTexture,
+                    new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .3345), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .522),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).1 / (float)1.4)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).13 / (float)1.4))),
+                    new Rectangle(350, 156, 30, 30),
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    0,
+                    .00000001f);
+        }
+
         public void DrawOutfitOnPlayer(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Player player, int currentFrame, int animationType, double xLoc, double yLoc)
         {
             double conditionalY = 0;
@@ -103,10 +154,10 @@ namespace ImagineRITGame
             outfitForPlayer.Add(currentPants);
             if (currentShoes != null)
                 outfitForPlayer.Add(currentShoes);
-            if (currentHat != null)
-                outfitForPlayer.Add(currentHat);
             if (currentAccessories != null)
                 outfitForPlayer.Add(currentAccessories);
+            if (currentHat != null)
+                outfitForPlayer.Add(currentHat);
 
             for (int i = 0; i < outfitForPlayer.Count; i++)
                 sb.Draw(outfitForPlayer[i],
@@ -130,10 +181,10 @@ namespace ImagineRITGame
             outfitForPlayer.Add(currentPants);
             if (currentShoes != null)
                 outfitForPlayer.Add(currentShoes);
-            if (currentHat != null)
-                outfitForPlayer.Add(currentHat);
             if (currentAccessories != null)
                 outfitForPlayer.Add(currentAccessories);
+            if (currentHat != null)
+                outfitForPlayer.Add(currentHat);
 
             for (int i = 0; i < outfitForPlayer.Count; i++)
                 sb.Draw(outfitForPlayer[i],
@@ -145,6 +196,7 @@ namespace ImagineRITGame
                     Vector2.Zero,
                     0,
                     .00000000001f);
+
         }
 
         public void DrawArticleIdle(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D article, double xLoc, double yLoc, bool makeSmaller, int spriteCount)

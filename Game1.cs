@@ -500,7 +500,7 @@ namespace ImagineRITGame
                 case GameState.ClothingInventory:
                     clothingInventory.Draw(_spriteBatch);
                     playerOutfit.DrawInventoryPlayer(_spriteBatch);
-                    playerOutfit.DrawOutfitInInventory(_spriteBatch);
+                    playerOutfit.DrawOutfitInInventory(_spriteBatch, clothingInventoryTexture);
                     break;
             }
 
