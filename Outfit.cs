@@ -44,7 +44,7 @@ namespace ImagineRITGame
         public Outfit(List<List<Texture2D>> allOutfitTextures)
         {
             allClothes = allOutfitTextures;
-            currentBody = allClothes[(int)ClothingType.Body][0];
+            currentBody = allClothes[(int)ClothingType.Body][1];
             currentHair = allClothes[(int)ClothingType.Hair][0];
             currentShirt = allClothes[(int)ClothingType.Shirt][0];
             currentPants = allClothes[(int)ClothingType.Pants][0];

@@ -23,7 +23,7 @@ namespace ImagineRITGame
         Pants,              // pants, skirt, pants_suit (3 rows, 1 page)
         ShirtPantsCombo,    // dress, clown, pumpkin, spooky, witch (2 rows, 1 page)
         Shoes,              // shoes (1 row, 1 page)
-        Accessories         // beard, earring (x4), glasses, glasses_sun (7 elements, 1 page)
+        Accessories         // beard, glasses, glasses_sun (11 elements, 1 page)
     }
 
     internal class ClothingInventory : Menu
@@ -53,7 +53,7 @@ namespace ImagineRITGame
                 new Button(base.AlignButton(.04, .75), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons])
             };
 
-            currentPage = ClothingInventoryPage.Pants;
+            currentPage = ClothingInventoryPage.ShirtPantsCombo;
 
             allClothes = allOutfitTextures;
         }
@@ -136,11 +136,21 @@ namespace ImagineRITGame
             switch (page)
             {
                 case ClothingInventoryPage.Shirt:
-                    DrawInShirts(sb);
-                    break;
+                    DrawInShirts(sb); break;
                 case ClothingInventoryPage.Pants:
-                    DrawInPants(sb);
-                    break;
+                    DrawInPants(sb); break;
+                case ClothingInventoryPage.Shoes:
+                    DrawInShoes(sb); break;
+                case ClothingInventoryPage.Hair:
+                    DrawInHair(sb); break;
+                case ClothingInventoryPage.Hat:
+                    DrawInHat(sb); break;
+                case ClothingInventoryPage.Body:
+                    DrawInBody(sb); break;
+                case ClothingInventoryPage.Accessories:
+                    DrawInAccessories(sb); break;
+                case ClothingInventoryPage.ShirtPantsCombo:
+                    DrawInShirtPantsCombo(sb); break;
             }
         }
 
@@ -163,7 +173,7 @@ namespace ImagineRITGame
                     if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Shirt].Count))
                     {
                         col++;
-                        Draw10ItemClothing(sb, allClothes[(int)ClothingType.Shirt][j + ((currentScreen - 1) * 3)], row, 1.95, i, col, 0);
+                        DrawItemClothing(sb, allClothes[(int)ClothingType.Shirt][j + ((currentScreen - 1) * 3)], row, 1.95, i, col, 0, 0, 10);
                     }
                 }
             }
@@ -188,25 +198,232 @@ namespace ImagineRITGame
                     if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Pants].Count))
                     {
                         col++;
-                        Draw10ItemClothing(sb, allClothes[(int)ClothingType.Pants][j + ((currentScreen - 1) * 3)], row, 1.95, i, col, -0.014);
+                        DrawItemClothing(sb, allClothes[(int)ClothingType.Pants][j + ((currentScreen - 1) * 3)], row, 1.95, i, col, -0.014, 0, 10);
                     }
                 }
             }
         }
 
-        public void Draw10ItemClothing(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D texture, int row, double sizing, int color, int column, double yAdd)
+        /// <summary>
+        /// Function to draw in the screens for pants.
+        /// </summary>
+        /// <param name="sb">Allows us to draw</param>
+        public void DrawInShoes(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+
+            int col = 0;
+            int row = 0;
+            int currentScreen = 1;
+            for (int j = 0; j < 3; j++)     // All the elements in the pants list
+            {
+                col = 0;
+                row++;
+                for (int i = 1; i < 11; i++)
+                {
+                    if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Shoes].Count))
+                    {
+                        col++;
+                        DrawItemClothing(sb, allClothes[(int)ClothingType.Shoes][j + ((currentScreen - 1) * 3)], row, 1.95, i, col, -0.023, 0, 10);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Function to draw in the screens for pants.
+        /// </summary>
+        /// <param name="sb">Allows us to draw</param>
+        public void DrawInHair(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            int col = 0;
+            int row = 0;
+            int currentScreen = 1;
+            for (int j = 0; j < 3; j++)     // All the elements in the pants list
+            {
+                col = 0;
+                row++;
+                for (int i = 1; i < 11; i++)
+                {
+                    if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Hair].Count))
+                    {
+                        col++;
+                        DrawItemClothing(sb, allClothes[(int)ClothingType.Hair][j + ((currentScreen - 1) * 3)], row, 2.6, i, col, 0.064, 0.0115, 14);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Function to draw in the screens for pants.
+        /// </summary>
+        /// <param name="sb">Allows us to draw</param>
+        public void DrawInHat(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            int col = 0;
+            int row = 1;
+            int currentScreen = 1;
+            for (int j = 0; j < allClothes[(int)ClothingType.Hat].Count; j++)     // All the elements in the pants list
+            {
+                if(col == 9)
+                    row++;
+                if ((j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Hat].Count))
+                {
+                    col++;
+                    if (j < 5)
+                        DrawItemClothing(sb, allClothes[(int)ClothingType.Hat][j + ((currentScreen - 1) * 3)], row, 2.6, 1, col, 0.081, 0.0115, 1);
+                    else
+                        DrawItemClothing(sb, allClothes[(int)ClothingType.Hat][j + ((currentScreen - 1) * 3)], row, 2.6, 1, col, 0.064, 0.0115, 1);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Function to draw in the screens for pants.
+        /// </summary>
+        /// <param name="sb">Allows us to draw</param>
+        public void DrawInBody(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            int col = 0;
+            int row = 0;
+            int currentScreen = 1;
+            for (int j = 0; j < 3; j++)     // All the elements in the pants list
+            {
+                col = 0;
+                row++;
+                if (j == 0)
+                {
+                    for (int i = 1; i < 11; i++)
+                    {
+                        if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Body].Count))
+                        {
+                            col++;
+                            DrawItemClothing(sb, allClothes[(int)ClothingType.Body][j + ((currentScreen - 1) * 3)], row, 2.6, i, col, 0.06, 0.0115, 8);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < 11; i++)
+                    {
+                        if ((j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Body].Count))
+                        {
+                            col++;
+                            DrawHead(sb, allClothes[(int)ClothingType.Body][j + ((currentScreen - 1) * 3)], row, 3.5, i, col, 0.063, 0.0210, 8);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void DrawInAccessories(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            int col = 0;
+            int row = 0;
+            int currentScreen = 1;
+            for (int j = 0; j < 3; j++)     // All the elements in the pants list
+            {
+                //if (col == 10)
+                //{
+                    col = 0;
+                    row++;
+                //}
+                if (j == 0)
+                {
+                    for (int i = 1; i < 11; i++)
+                    {
+                        if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Accessories].Count))
+                        {
+                            col++;
+                            DrawItemClothing(sb, allClothes[(int)ClothingType.Accessories][j + ((currentScreen - 1) * 3)], row, 2.6, i, col, 0.05, 0.0115, 14);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < 11; i++)
+                    {
+                        if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Accessories].Count))
+                        {
+                            col++;
+                            DrawItemClothing(sb, allClothes[(int)ClothingType.Accessories][j + ((currentScreen - 1) * 3)], row, 2.2, i, col, 0.045, 0.006, 10);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void DrawInShirtPantsCombo(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            int col = 0;
+            int row = 1;
+            int currentScreen = 1;
+            for (int j = 0; j < 5; j++)     // All the elements in the pants list
+            {
+                if (col > 8)
+                {
+                    col = 0;
+                    row++;
+                }
+                if (j == 0)
+                {
+                    for (int i = 1; i < 11; i++)
+                    {
+                        if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.ShirtPantsCombo].Count))
+                        {
+                            col++;
+                            DrawItemClothing(sb, allClothes[(int)ClothingType.ShirtPantsCombo][j + ((currentScreen - 1) * 3)], row, 2, i, col, 0, 0.001, 10);
+                        }
+                    }
+                }
+                else if (j == 1 || j == 2)
+                {
+                    for (int i = 1; i < 3; i++)
+                    {
+                        if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.ShirtPantsCombo].Count))
+                        {
+                            col++;
+                            DrawItemClothing(sb, allClothes[(int)ClothingType.ShirtPantsCombo][j + ((currentScreen - 1) * 3)], row, 2.4, i, col, 0.022, 0.009, 2);
+                        }
+                    }
+                }
+                else
+                {
+                    col++;
+                    DrawItemClothing(sb, allClothes[(int)ClothingType.ShirtPantsCombo][j + ((currentScreen - 1) * 3)], row, 2.4, 1, col, 0.022, 0.009, 1);
+                }
+            }
+        }
+
+
+        public void DrawItemClothing(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D texture, int row, double sizing, int color, int column, double yAdd, double xAdd, int itemCount)
         {
             sb.Draw(texture,
-                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .398) + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .0493 * (column - 1)),
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (.398 + xAdd)) + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .0493 * (column - 1)),
                     (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (.1348125 + (0.0515 * 2) + yAdd)) + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (0.046 * 2) * (row - 1))),    // First row y position + factor to get to specified row
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565 / sizing), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765 / sizing)),
-                new Rectangle((texture.Width / 10) * (color - 1), 0, 160 / 5, texture.Height / 44),
+                new Rectangle((texture.Width / itemCount) * (color - 1), 0, 160 / 5, texture.Height / 44),
                 Color.White,
                 0f,
                 Vector2.Zero,
                 0,
                 .00000000001f);
         }
+
+        public void DrawHead(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D texture, int row, double sizing, int color, int column, double yAdd, double xAdd, int itemCount)
+        {
+            sb.Draw(texture,
+                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (.398 + xAdd)) + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .0493 * (column - 1)),
+                    (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (.1348125 + (0.0515 * 2) + yAdd)) + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (0.046 * 2) * (row - 1))),    // First row y position + factor to get to specified row
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565 / sizing), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765 / sizing)),
+                new Rectangle((texture.Width / itemCount) * (color - 1) + 5, 0, 160 / 5 - 10, (texture.Height / 44) - 11),
+                Color.White,
+                0f,
+                Vector2.Zero,
+                0,
+                .00000000001f);
+        }
+
 
     }
 }

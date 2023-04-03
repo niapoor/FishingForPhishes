@@ -778,8 +778,8 @@ namespace ImagineRITGame
         public void LoadOutfitTextures()
         {
             allOutfitTextures.Add(new List<Texture2D> { });                                              // === Body ===
-            allOutfitTextures[(int)ClothingType.Body].Add(playerTexture);                               // Skin
             allOutfitTextures[(int)ClothingType.Body].Add(eyes);                                        // Eyes
+            allOutfitTextures[(int)ClothingType.Body].Add(playerTexture);                               // Skin
             allOutfitTextures.Add(new List<Texture2D> { });                                             // === Hats ===
             allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_cowboy"));            // 1
             allOutfitTextures[(int)ClothingType.Hat].Add(Content.Load<Texture2D>("hat_lucky"));             // 1
