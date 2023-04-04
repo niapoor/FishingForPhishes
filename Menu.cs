@@ -116,6 +116,18 @@ namespace ImagineRITGame
                 b.Draw(sb, b.IsHovered ? hoverColor : Color.White);
         }
 
+        public virtual void ConditionalDraw(SpriteBatch sb, Color hoverColor, bool drawRightArrow, bool drawLeftArrow)
+        {
+            // Buttons
+            foreach (Button b in buttons)
+            {
+                if ((b.ButtonType == ButtonType.RightArrow && drawRightArrow) || (b.ButtonType != ButtonType.RightArrow && b.ButtonType != ButtonType.LeftArrow))
+                    b.Draw(sb, b.IsHovered ? hoverColor : Color.White);
+                else if (b.ButtonType == ButtonType.LeftArrow && drawLeftArrow)
+                    b.Draw(sb, b.IsHovered ? hoverColor : Color.White, SpriteEffects.FlipHorizontally);
+            }
+        }
+
         public float AspectRatioFactor
         {
             get

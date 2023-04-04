@@ -39,6 +39,8 @@ namespace ImagineRITGame
         OutfitShop = 21,
         OutfitShopCurrentPage = 22,
         OutfitShopAnotherPage = 23,
+        LeftArrow = 24,
+        RightArrow = 25,
         Back = -1
     }
 
@@ -87,6 +89,8 @@ namespace ImagineRITGame
                 rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.375) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 1.13) / 10)));
             else if (buttonType == ButtonType.OutfitShopAnotherPage)
                 rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.375) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.8) / 10)));
+            else if (buttonType == ButtonType.LeftArrow || buttonType == ButtonType.RightArrow)
+                rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.375) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.3) / 10)));
             else
                 rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 7.76), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 5.53)));
             // Assigning values to fields
@@ -202,6 +206,14 @@ namespace ImagineRITGame
                 case ButtonType.Inventory:
                     textRect = new Rectangle(1, 1, 1, 1);
                     break;
+
+                case ButtonType.LeftArrow:
+                    textRect = new Rectangle(309, 219, 14, 9);
+                    break;
+
+                case ButtonType.RightArrow:
+                    textRect = new Rectangle(309, 219, 14, 9);
+                    break;
             }
 
         }
@@ -217,6 +229,23 @@ namespace ImagineRITGame
                 rect,
                 textRect,
                 color);
+        }
+
+        /// <summary>
+        /// Draws the button with a given color
+        /// </summary>
+        /// <param name="sb">the spritebatch that allows us to draw</param>
+        /// <param name="color">the color the button is drawn in</param>
+        public virtual void Draw(SpriteBatch sb, Color color, SpriteEffects flip)
+        {
+            sb.Draw(texture,
+                rect,
+                textRect,
+                color,
+                0f,
+                Vector2.Zero,
+                flip,
+                .00000000001f);
         }
 
     }

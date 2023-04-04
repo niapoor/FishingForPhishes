@@ -618,6 +618,22 @@ namespace ImagineRITGame
             {
                 clothingInventory.UpdateCurrentPage();
             }
+            else if (state == 24)
+            {
+                if (cooldownTime2 >= 175)
+                {
+                    cooldownTime2 = 0;
+                    clothingInventory.LeftArrowPress();
+                }
+            }
+            else if (state == 25)
+            {
+                if (cooldownTime2 >= 175)
+                {
+                    cooldownTime2 = 0;
+                    clothingInventory.RightArrowPress();
+                }
+            }
 
         }
 

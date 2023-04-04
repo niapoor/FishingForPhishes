@@ -45,6 +45,15 @@ namespace ImagineRITGame
             set { currentPage = value; }
         }
 
+        public int CurrentScreen
+        {
+            get
+            {
+                return currentScreen;
+            }
+            set { currentScreen = value; }
+        }
+
         private List<List<Texture2D>> allClothes;
 
         /// <summary>
@@ -55,9 +64,12 @@ namespace ImagineRITGame
         {
             // Giving positions and sizes to the main menu's buttons
             buttons = new List<Button>() {
-                new Button(base.AlignButton(.04, .75), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons])
+                new Button(base.AlignButton(.04, .75), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.8191, .6055), ButtonType.RightArrow, textures[(int)MenuTextures.ClothingInventory]),
+                new Button(base.AlignButton(.423, .6055), ButtonType.LeftArrow, textures[(int)MenuTextures.ClothingInventory])
             };
-
+            
+            // These buttons only exists to be hovered over. It is the raised, selected page button
             buttonsSelectedPage = new List<Button>() {
                 new Button(base.AlignButton(.474 + (.0493 * 0), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(base.AlignButton(.474 + (.04946 * 1), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
@@ -69,6 +81,7 @@ namespace ImagineRITGame
                 new Button(base.AlignButton(.474 + (.0493 * 7), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons])
             };
 
+            // These buttons are used to switch between the different inventory pages
             buttonsAnotherPage = new List<Button>() {
                 new Button(base.AlignButton(.474 + (.0493 * 0), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(base.AlignButton(.474 + (.04946 * 1), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
@@ -80,16 +93,23 @@ namespace ImagineRITGame
                 new Button(base.AlignButton(.474 + (.0493 * 7), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons])
             };
 
-            currentPage = ClothingInventoryPage.Shirt;
+            // The default page will always be the body
+            currentPage = ClothingInventoryPage.Body;
             
+            // Absolutely all of the outfit textures!
             allClothes = allOutfitTextures;
+            // The current screen in the current inventory page
             currentScreen = 1;
         }
 
+        /// <summary>
+        /// Updating the inventory (i.e. the buttons)
+        /// </summary>
+        /// <param name="gameTime">The current time in the game</param>
         public void Update(GameTime gameTime)
         {
-            base.Update();
 
+            // === Buttons for currently selected page ===
             foreach (Button b in buttonsSelectedPage)
             {
                 if (b.IsHovered)
@@ -107,6 +127,7 @@ namespace ImagineRITGame
                 }
             }
 
+            // === Buttons for all pages not currently selected ===
             foreach (Button b in buttonsAnotherPage)
             {
                 if (b.IsHovered)
@@ -124,13 +145,16 @@ namespace ImagineRITGame
                 }
             }
 
+            // Updating the "back" button
+            base.Update();
+
         }
 
         public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
-            base.Draw(sb, Color.Goldenrod);
-
             DrawClothingInventoryBackgrop(sb, currentPage);
+
+            base.ConditionalDraw(sb, Color.Goldenrod, ShouldDrawRightArrow(), ShouldDrawLeftArrow());
 
             DrawPageSelectionButtons(sb);
         }
@@ -144,6 +168,20 @@ namespace ImagineRITGame
                     buttonsAnotherPage[i].Draw(sb, buttonsAnotherPage[i].IsHovered ? new Color(Color.DarkGoldenrod, 0.45f) : Color.Transparent);
 
             }
+        }
+        
+        public bool ShouldDrawRightArrow()
+        {
+            if ((currentPage == ClothingInventoryPage.Shirt && currentScreen < 4) || (currentPage == ClothingInventoryPage.Hair && currentScreen < 5))
+                return true;
+            return false;
+        }
+
+        public bool ShouldDrawLeftArrow()
+        {
+            if ((currentPage == ClothingInventoryPage.Shirt && currentScreen > 1) || (currentPage == ClothingInventoryPage.Hair && currentScreen > 1))
+                return true;
+            return false;
         }
 
         public void UpdateCurrentPage()
@@ -549,6 +587,22 @@ namespace ImagineRITGame
                 }
             }
 
+        }
+
+        public void LeftArrowPress()
+        {
+            if (currentPage == ClothingInventoryPage.Shirt && currentScreen > 1)
+                currentScreen--;
+            else if (currentPage == ClothingInventoryPage.Hair && currentScreen > 1)
+                currentScreen--;
+        }
+
+        public void RightArrowPress()
+        {
+            if (currentPage == ClothingInventoryPage.Shirt && currentScreen < 4)
+                currentScreen++;
+            else if (currentPage == ClothingInventoryPage.Hair && currentScreen < 5)
+                currentScreen++;
         }
 
     }
