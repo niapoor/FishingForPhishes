@@ -571,6 +571,18 @@
 /processorParam:TextureFormat=Color
 /build:inv_items.png
 
+#begin inventory_customize_v3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:inventory_customize_v3.png
+
 #begin inventory_customize.png
 /importer:TextureImporter
 /processor:TextureProcessor

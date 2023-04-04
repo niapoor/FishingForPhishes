@@ -41,6 +41,7 @@ namespace ImagineRITGame
         OutfitShopAnotherPage = 23,
         LeftArrow = 24,
         RightArrow = 25,
+        OutfitInventorySlot = 26,
         Back = -1
     }
 
@@ -91,6 +92,8 @@ namespace ImagineRITGame
                 rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.375) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.8) / 10)));
             else if (buttonType == ButtonType.LeftArrow || buttonType == ButtonType.RightArrow)
                 rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.375) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.3) / 10)));
+            else if (buttonType == ButtonType.OutfitInventorySlot)
+                rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .04611956), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .08287923)));
             else
                 rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 7.76), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 5.53)));
             // Assigning values to fields
@@ -213,6 +216,10 @@ namespace ImagineRITGame
 
                 case ButtonType.RightArrow:
                     textRect = new Rectangle(309, 219, 14, 9);
+                    break;
+
+                case ButtonType.OutfitInventorySlot:
+                    textRect = new Rectangle(306, 24, 20, 20);
                     break;
             }
 

@@ -34,7 +34,7 @@ namespace ImagineRITGame
         private int currentScreen;
 
         private List<Button> buttonsSelectedPage;
-        private List<Button> buttonsAnotherPage;
+        private List<Button> buttonsInventoryItems;
 
         public ClothingInventoryPage CurrentPage
         {
@@ -78,11 +78,7 @@ namespace ImagineRITGame
                 new Button(base.AlignButton(.474 + (.0493 * 4), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(base.AlignButton(.474 + (.0493 * 5), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(base.AlignButton(.474 + (.04929 * 6), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
-                new Button(base.AlignButton(.474 + (.0493 * 7), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons])
-            };
-
-            // These buttons are used to switch between the different inventory pages
-            buttonsAnotherPage = new List<Button>() {
+                new Button(base.AlignButton(.474 + (.0493 * 7), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(base.AlignButton(.474 + (.0493 * 0), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(base.AlignButton(.474 + (.04946 * 1), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(base.AlignButton(.474 + (.0493 * 2), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
@@ -92,6 +88,17 @@ namespace ImagineRITGame
                 new Button(base.AlignButton(.474 + (.04929 * 6), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(base.AlignButton(.474 + (.0493 * 7), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons])
             };
+
+            // These buttons are used to switch between the different inventory pages
+            buttonsInventoryItems = new List<Button>();
+
+            for (int col = 0; col < 3; col++)
+            {
+                for (int row = 0; row < 9; row++)
+                {
+                    buttonsInventoryItems.Add(new Button(base.AlignButton(0.42105 + ((0.0071076825 + .04211956) * row), 0.3365 + ((.07487923 + 0.01684782) * col)), ButtonType.OutfitInventorySlot, textures[(int)MenuTextures.ClothingInventory]));
+                }
+            }
 
             // The default page will always be the body
             currentPage = ClothingInventoryPage.Body;
@@ -127,8 +134,8 @@ namespace ImagineRITGame
                 }
             }
 
-            // === Buttons for all pages not currently selected ===
-            foreach (Button b in buttonsAnotherPage)
+            // === Buttons for all current inventory slots ===
+            foreach (Button b in buttonsInventoryItems)
             {
                 if (b.IsHovered)
                     currentButton = b;
@@ -165,7 +172,7 @@ namespace ImagineRITGame
             for (int i = 0; i < 8; i++)
             {
                 if (i != (int)currentPage)
-                    buttonsAnotherPage[i].Draw(sb, buttonsAnotherPage[i].IsHovered ? new Color(Color.DarkGoldenrod, 0.45f) : Color.Transparent);
+                    buttonsSelectedPage[i + 8].Draw(sb, buttonsSelectedPage[i + 8].IsHovered ? new Color(Color.DarkGoldenrod, 0.45f) : Color.Transparent);
 
             }
         }
@@ -186,9 +193,9 @@ namespace ImagineRITGame
 
         public void UpdateCurrentPage()
         {
-            for (int i = 0; i < buttonsAnotherPage.Count; i++)
+            for (int i = 0; i < 8; i++)
             {
-                if (buttonsAnotherPage[i].IsHovered)
+                if (buttonsSelectedPage[i + 8].IsHovered)
                 {
                     currentPage = (ClothingInventoryPage)i;
                     currentScreen = 1;
@@ -573,17 +580,20 @@ namespace ImagineRITGame
                 {
                     currentBox++;
                     if (currentBox <= numBoxes)
+                    {
                         sb.Draw(textures[(int)MenuTextures.ClothingInventory],
-                        new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (0.423 + ((0.0071076825 + .04211956) * row))),
+                            new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (0.423 + ((0.0071076825 + .04211956) * row))),
                             (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (0.34 + ((.07487923 + 0.01684782) * col))),
                             (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .04211956),
                             (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .07487923)),
-                        new Rectangle(307, 47, 18, 18),
-                        Color.White,
-                        0f,
-                        Vector2.Zero,
-                        0,
-                        .0001f);
+                            new Rectangle(307, 47, 18, 18),
+                            Color.White,
+                            0f,
+                            Vector2.Zero,
+                            0,
+                            .0001f);
+                        buttonsInventoryItems[currentBox - 1].Draw(sb, buttonsInventoryItems[currentBox - 1].IsHovered ? Color.DarkGoldenrod : Color.Transparent);
+                    }
                 }
             }
 

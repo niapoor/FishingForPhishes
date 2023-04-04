@@ -651,7 +651,7 @@ namespace ImagineRITGame
             menuTextures.Add(allFish);
             fishInvShadow = Content.Load<Texture2D>("inv_fish_shadow");
             menuTextures.Add(fishInvShadow);
-            clothingInventoryTexture = Content.Load<Texture2D>("inventory_customize");
+            clothingInventoryTexture = Content.Load<Texture2D>("inventory_customize_v3");
             menuTextures.Add(clothingInventoryTexture);
             fishTextures.Add(fishTexture);
             fishTextures.Add(allFish);
