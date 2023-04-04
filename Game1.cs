@@ -614,7 +614,10 @@ namespace ImagineRITGame
                 prevGameState = GameState.Game;
                 gameState = GameState.ClothingInventory;
             }
-                
+            else if (state == 23)
+            {
+                clothingInventory.UpdateCurrentPage();
+            }
 
         }
 

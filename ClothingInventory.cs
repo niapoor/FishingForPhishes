@@ -11,25 +11,30 @@ using System.IO;
 using System.Reflection;
 using SharpDX.Direct2D1;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ImagineRITGame
 {
     enum ClothingInventoryPage
     {
-        Body,               // char_all, eyes (2 rows, 1 page)
-        Hat,                // hat_cowboy, hat_lucky, hat_pumpkin, hat_pumpkin_purple, hat_witch, mask_clown_blue, mask_clown_red, mask_spooky (8 elements, 1 page)
-        Hair,               // bob, braids, buzzcut, curly, emo, extra_long, extra_long_skirt, french_curl, gentleman, long_straight, long_straight_skirt, midiwave, ponytail, spacebuns, wavy (15 rows, 5 pages)
-        Shirt,              // basic, floral, sailor, sailor_bow, skull, spaghetti, sporty, stripe, suit, overalls (10 rows, 4 pages)
-        Pants,              // pants, skirt, pants_suit (3 rows, 1 page)
-        ShirtPantsCombo,    // dress, clown, pumpkin, spooky, witch (2 rows, 1 page)
-        Shoes,              // shoes (1 row, 1 page)
-        Accessories         // beard, glasses, glasses_sun (11 elements, 1 page)
+        Body = 0,               // char_all, eyes (2 rows, 1 page)
+        Hat = 1,                // hat_cowboy, hat_lucky, hat_pumpkin, hat_pumpkin_purple, hat_witch, mask_clown_blue, mask_clown_red, mask_spooky (8 elements, 1 page)
+        Hair = 2,               // bob, braids, buzzcut, curly, emo, extra_long, extra_long_skirt, french_curl, gentleman, long_straight, long_straight_skirt, midiwave, ponytail, spacebuns, wavy (15 rows, 5 pages)
+        Shirt = 3,              // basic, floral, sailor, sailor_bow, skull, spaghetti, sporty, stripe, suit, overalls (10 rows, 4 pages)
+        Pants = 4,              // pants, skirt, pants_suit (3 rows, 1 page)
+        ShirtPantsCombo = 5,    // dress, clown, pumpkin, spooky, witch (2 rows, 1 page)
+        Shoes = 6,              // shoes (1 row, 1 page)
+        Accessories = 7         // beard, glasses, glasses_sun (11 elements, 1 page)
     }
 
     internal class ClothingInventory : Menu
     {
 
         private ClothingInventoryPage currentPage;
+        private int currentScreen;
+
+        private List<Button> buttonsSelectedPage;
+        private List<Button> buttonsAnotherPage;
 
         public ClothingInventoryPage CurrentPage
         {
@@ -53,20 +58,104 @@ namespace ImagineRITGame
                 new Button(base.AlignButton(.04, .75), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons])
             };
 
-            currentPage = ClothingInventoryPage.ShirtPantsCombo;
+            buttonsSelectedPage = new List<Button>() {
+                new Button(base.AlignButton(.474 + (.0493 * 0), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.04946 * 1), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 2), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 3), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 4), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 5), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.04929 * 6), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 7), .165), ButtonType.OutfitShopCurrentPage, textures[(int)MenuTextures.GeneralButtons])
+            };
 
+            buttonsAnotherPage = new List<Button>() {
+                new Button(base.AlignButton(.474 + (.0493 * 0), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.04946 * 1), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 2), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 3), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 4), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 5), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.04929 * 6), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons]),
+                new Button(base.AlignButton(.474 + (.0493 * 7), .1982), ButtonType.OutfitShopAnotherPage, textures[(int)MenuTextures.GeneralButtons])
+            };
+
+            currentPage = ClothingInventoryPage.Shirt;
+            
             allClothes = allOutfitTextures;
+            currentScreen = 1;
         }
 
         public void Update(GameTime gameTime)
         {
             base.Update();
+
+            foreach (Button b in buttonsSelectedPage)
+            {
+                if (b.IsHovered)
+                    currentButton = b;
+            }
+
+            // Check to see if the button should be activated
+            if (currentButton != null)
+            {
+                if ((Mouse.GetState().LeftButton == ButtonState.Pressed &&
+                prevMState.LeftButton == ButtonState.Released)
+                && currentButton.IsHovered)
+                {
+                    ButtonActivated((int)currentButton.ButtonType);
+                }
+            }
+
+            foreach (Button b in buttonsAnotherPage)
+            {
+                if (b.IsHovered)
+                    currentButton = b;
+            }
+
+            // Check to see if the button should be activated
+            if (currentButton != null)
+            {
+                if ((Mouse.GetState().LeftButton == ButtonState.Pressed &&
+                prevMState.LeftButton == ButtonState.Released)
+                && currentButton.IsHovered)
+                {
+                    ButtonActivated((int)currentButton.ButtonType);
+                }
+            }
+
         }
 
         public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
             base.Draw(sb, Color.Goldenrod);
+
             DrawClothingInventoryBackgrop(sb, currentPage);
+
+            DrawPageSelectionButtons(sb);
+        }
+
+        public void DrawPageSelectionButtons(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            buttonsSelectedPage[(int)currentPage].Draw(sb, buttonsSelectedPage[(int)currentPage].IsHovered ? new Color(Color.DarkGoldenrod, 0.45f) : Color.Transparent);
+            for (int i = 0; i < 8; i++)
+            {
+                if (i != (int)currentPage)
+                    buttonsAnotherPage[i].Draw(sb, buttonsAnotherPage[i].IsHovered ? new Color(Color.DarkGoldenrod, 0.45f) : Color.Transparent);
+
+            }
+        }
+
+        public void UpdateCurrentPage()
+        {
+            for (int i = 0; i < buttonsAnotherPage.Count; i++)
+            {
+                if (buttonsAnotherPage[i].IsHovered)
+                {
+                    currentPage = (ClothingInventoryPage)i;
+                    currentScreen = 1;
+                }
+            }
         }
 
         public void DrawClothingInventoryBackgrop(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, ClothingInventoryPage page)
@@ -110,28 +199,18 @@ namespace ImagineRITGame
                .0001f);
 
             // Drawing in the background boxes
-            sb.Draw(textures[(int)MenuTextures.ClothingInventory],
-                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.423),
-                (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.34)),
-                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .4359375),
-                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .25833333)),
-                new Rectangle(307, 47, 186, 62),
-                Color.White, 0f,
-                Vector2.Zero,
-                0,
-                .0001f);
+            //sb.Draw(textures[(int)MenuTextures.ClothingInventory],
+            //    new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.423),
+            //    (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.34)),
+            //    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .4359375),
+            //    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .25833333)),
+            //    new Rectangle(307, 47, 186, 62),
+            //    Color.White, 0f,
+            //    Vector2.Zero,
+            //    0,
+            //    .0001f);
+            DrawBoxes(sb);
 
-            // "Customize" word
-            sb.Draw(textures[(int)MenuTextures.ClothingInventory],
-                new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.423),
-                (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.34)),
-                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .4359375),
-                (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .25833333)),
-                new Rectangle(307, 47, 186, 62),
-                Color.White, 0f,
-                Vector2.Zero,
-                0,
-                .0001f);
 
             switch (page)
             {
@@ -163,7 +242,6 @@ namespace ImagineRITGame
 
             int col = 0;
             int row = 0;
-            int currentScreen = 1;
             for (int j = 0; j < 3; j++)     // All the elements in the shirts list
             {
                 col = 0;
@@ -188,7 +266,6 @@ namespace ImagineRITGame
 
             int col = 0;
             int row = 0;
-            int currentScreen = 1;
             for (int j = 0; j < 3; j++)     // All the elements in the pants list
             {
                 col = 0;
@@ -213,7 +290,6 @@ namespace ImagineRITGame
 
             int col = 0;
             int row = 0;
-            int currentScreen = 1;
             for (int j = 0; j < 3; j++)     // All the elements in the pants list
             {
                 col = 0;
@@ -237,7 +313,6 @@ namespace ImagineRITGame
         {
             int col = 0;
             int row = 0;
-            int currentScreen = 1;
             for (int j = 0; j < 3; j++)     // All the elements in the pants list
             {
                 col = 0;
@@ -261,7 +336,6 @@ namespace ImagineRITGame
         {
             int col = 0;
             int row = 1;
-            int currentScreen = 1;
             for (int j = 0; j < allClothes[(int)ClothingType.Hat].Count; j++)     // All the elements in the pants list
             {
                 if(col == 9)
@@ -286,7 +360,6 @@ namespace ImagineRITGame
         {
             int col = 0;
             int row = 0;
-            int currentScreen = 1;
             for (int j = 0; j < 3; j++)     // All the elements in the pants list
             {
                 col = 0;
@@ -298,7 +371,7 @@ namespace ImagineRITGame
                         if (i != 5 && (j + ((currentScreen - 1) * 3)) < (allClothes[(int)ClothingType.Body].Count))
                         {
                             col++;
-                            DrawItemClothing(sb, allClothes[(int)ClothingType.Body][j + ((currentScreen - 1) * 3)], row, 2.6, i, col, 0.06, 0.0115, 8);
+                            DrawItemClothing(sb, allClothes[(int)ClothingType.Body][j + ((currentScreen - 1) * 3)], row, 2.6, i, col, 0.06, 0.0115, 14);
                         }
                     }
                 }
@@ -320,7 +393,6 @@ namespace ImagineRITGame
         {
             int col = 0;
             int row = 0;
-            int currentScreen = 1;
             for (int j = 0; j < 3; j++)     // All the elements in the pants list
             {
                 //if (col == 10)
@@ -357,7 +429,6 @@ namespace ImagineRITGame
         {
             int col = 0;
             int row = 1;
-            int currentScreen = 1;
             for (int j = 0; j < 5; j++)     // All the elements in the pants list
             {
                 if (col > 8)
@@ -365,7 +436,7 @@ namespace ImagineRITGame
                     col = 0;
                     row++;
                 }
-                if (j == 0)
+                if (j == 0) // These if statements are hard coded. This is because we know our list of outfit textures; it is static and will not change.
                 {
                     for (int i = 1; i < 11; i++)
                     {
@@ -424,6 +495,61 @@ namespace ImagineRITGame
                 .00000000001f);
         }
 
+        public void DrawBoxes(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            int numBoxes = 0;
+            int currentBox = 0;
+            switch (currentPage)
+            {
+                case ClothingInventoryPage.Shirt:
+                    numBoxes = 27;
+                    if (currentScreen == 4)
+                        numBoxes = 9;
+                    break;
+                case ClothingInventoryPage.Pants:
+                    numBoxes = 27;
+                    break;
+                case ClothingInventoryPage.Shoes:
+                    numBoxes = 9;
+                    break;
+                case ClothingInventoryPage.Hair:
+                    numBoxes = 27;
+                    break;
+                case ClothingInventoryPage.Hat:
+                    numBoxes = 8;
+                    break;
+                case ClothingInventoryPage.Body:
+                    numBoxes = 17;
+                    break;
+                case ClothingInventoryPage.Accessories:
+                    numBoxes = 27;
+                    break;
+                case ClothingInventoryPage.ShirtPantsCombo:
+                    numBoxes = 15;
+                    break;
+            }
+
+            for (int col = 0; col < 3; col++)
+            {
+                for (int row = 0; row < 9; row++)
+                {
+                    currentBox++;
+                    if (currentBox <= numBoxes)
+                        sb.Draw(textures[(int)MenuTextures.ClothingInventory],
+                        new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (0.423 + ((0.0071076825 + .04211956) * row))),
+                            (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (0.34 + ((.07487923 + 0.01684782) * col))),
+                            (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .04211956),
+                            (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .07487923)),
+                        new Rectangle(307, 47, 18, 18),
+                        Color.White,
+                        0f,
+                        Vector2.Zero,
+                        0,
+                        .0001f);
+                }
+            }
+
+        }
 
     }
 }

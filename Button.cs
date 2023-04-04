@@ -37,6 +37,8 @@ namespace ImagineRITGame
         Pause = 19,
         Inventory = 20,
         OutfitShop = 21,
+        OutfitShopCurrentPage = 22,
+        OutfitShopAnotherPage = 23,
         Back = -1
     }
 
@@ -81,6 +83,10 @@ namespace ImagineRITGame
                 rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 3.45), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 3)));
             else if (buttonType == ButtonType.Inventory)
                 rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10)));
+            else if (buttonType == ButtonType.OutfitShopCurrentPage)
+                rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.375) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 1.13) / 10)));
+            else if (buttonType == ButtonType.OutfitShopAnotherPage)
+                rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.375) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.8) / 10)));
             else
                 rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 7.76), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 5.53)));
             // Assigning values to fields
@@ -179,6 +185,14 @@ namespace ImagineRITGame
 
                 case ButtonType.OutfitShop:
                     textRect = new Rectangle(310, 401, 104, 81);
+                    break;
+
+                case ButtonType.OutfitShopCurrentPage:
+                    textRect = new Rectangle(212, 325, 1, 1);
+                    break;
+
+                case ButtonType.OutfitShopAnotherPage:
+                    textRect = new Rectangle(212, 325, 1, 1);
                     break;
 
                 case ButtonType.Title:
