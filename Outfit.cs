@@ -43,6 +43,8 @@ namespace ImagineRITGame
         private Texture2D currentAccessories;
         private Texture2D currentEyes;
         private Texture2D currentShirtPantsCombo;
+        private Texture2D currentTmpArticle;
+        private Texture2D currentTmpSecond;
 
         public int currentBodyOption;
         private int currentHatOption;
@@ -53,6 +55,14 @@ namespace ImagineRITGame
         private int currentAccessoriesOption;
         private int currentShirtPantsComboOption;
         private int currentEyesOption;
+        private int currentTmpArticleOption;
+        private int currentTmpSecondOption;
+
+        private bool drawShirt;
+        private bool drawPants;
+        private bool drawShirtPantsCombo;
+
+        private ClothingType typeOfCurrentTmp;
 
 
         public Outfit(List<List<Texture2D>> allOutfitTextures)
@@ -65,6 +75,8 @@ namespace ImagineRITGame
             currentShoes = allClothes[(int)ClothingType.Shoes][0];
             currentEyes = allClothes[(int)ClothingType.Body][0];
             currentShirtPantsCombo = allClothes[(int)ClothingType.ShirtPantsCombo][0];
+            currentTmpArticle = allClothes[(int)ClothingType.Shirt][0];
+            currentTmpSecond = allClothes[(int)ClothingType.Pants][0];
 
             currentBodyOption = 0;
             currentHatOption = -1;
@@ -75,6 +87,8 @@ namespace ImagineRITGame
             currentAccessoriesOption = -1;
             currentShirtPantsComboOption = -1;
             currentEyesOption = 0;
+            currentTmpArticleOption = -1;
+            currentTmpSecondOption = -1;
             //currentHat = allClothes[(int)ClothingType.Hat][0];
             //currentAccessories = allClothes[(int)ClothingType.Accessories][1];
         }
@@ -149,6 +163,84 @@ namespace ImagineRITGame
                     currentPantsOption = -1;
                     break;
 
+            }
+        }
+
+        public void UpdateTmpArticle(ClothingType page, int newArticle, int newOption)
+        {
+            switch (page)
+            {
+                case ClothingType.Shirt:
+                    currentTmpArticle = allClothes[(int)ClothingType.Shirt][newArticle];
+                    currentTmpArticleOption = newOption;
+                    drawShirtPantsCombo = false;
+                    if (currentTmpSecondOption == -1)
+                    {
+                        currentTmpSecond = allClothes[(int)ClothingType.Pants][0];
+                        currentTmpSecondOption = 0;
+                    }
+                    drawShirt = true;
+                    drawPants = true;
+                    typeOfCurrentTmp = ClothingType.Shirt;
+                    break;
+                case ClothingType.Pants:
+                    currentTmpArticle = allClothes[(int)ClothingType.Pants][newArticle];
+                    currentTmpArticleOption = newOption;
+                    drawShirtPantsCombo = false;
+                    if (currentTmpSecondOption == -1)
+                    {
+                        currentTmpSecond = allClothes[(int)ClothingType.Shirt][0];
+                        currentTmpSecondOption = 0;
+                    }
+                    drawShirt = true;
+                    drawPants = true;
+                    typeOfCurrentTmp = ClothingType.Pants;
+                    break;
+                case ClothingType.Shoes:
+                    currentTmpArticle = allClothes[(int)ClothingType.Shoes][newArticle];
+                    currentTmpArticleOption = newOption;
+                    typeOfCurrentTmp = ClothingType.Shoes;
+                    break;
+                case ClothingType.Hair:
+                    currentTmpArticle = allClothes[(int)ClothingType.Hair][newArticle];
+                    currentTmpArticleOption = newOption;
+                    typeOfCurrentTmp = ClothingType.Hair;
+                    break;
+                case ClothingType.Hat:
+                    currentTmpArticle = allClothes[(int)ClothingType.Hat][newArticle];
+                    currentTmpArticleOption = newOption;
+                    typeOfCurrentTmp = ClothingType.Hat;
+                    break;
+                case ClothingType.Body:
+                    if (newArticle == 1)
+                    {
+                        currentTmpArticleOption = newOption;
+                        typeOfCurrentTmp = ClothingType.Body;
+                    }
+                    else if (newArticle == 0)
+                    {
+                        currentTmpSecondOption = newOption;
+                        typeOfCurrentTmp = ClothingType.Eyes;
+                    }
+                    break;
+                case ClothingType.Accessories:
+                    currentTmpArticle = allClothes[(int)ClothingType.Accessories][newArticle];
+                    currentTmpArticleOption = newOption;
+                    typeOfCurrentTmp = ClothingType.Accessories;
+                    break;
+                case ClothingType.ShirtPantsCombo:
+                    currentTmpArticle = allClothes[(int)ClothingType.ShirtPantsCombo][newArticle];
+                    currentTmpArticleOption = newOption;
+                    drawShirt = false;
+                    drawPants = false;
+                    drawShirtPantsCombo = true;
+                    typeOfCurrentTmp = ClothingType.ShirtPantsCombo;
+                    break;
+            }
+            if (newOption == -1)
+            {
+                currentTmpArticleOption = -1;
+                currentTmpSecondOption = -1;
             }
         }
 
@@ -257,59 +349,6 @@ namespace ImagineRITGame
 
             List<Texture2D> outfitForPlayer = new List<Texture2D>();
             List<int> outfitOptions = new List<int>();
-            
-            outfitForPlayer.Add(currentBody);
-            outfitOptions.Add(currentBodyOption);
-            outfitForPlayer.Add(currentEyes);
-            outfitOptions.Add(currentEyesOption);
-            if (currentHair != null) {
-                outfitForPlayer.Add(currentHair);
-                outfitOptions.Add(currentHairOption);
-            }
-            if (currentShirtOption != -1)
-            {
-                outfitForPlayer.Add(currentShirt);
-                outfitOptions.Add(currentShirtOption);
-                outfitForPlayer.Add(currentPants);
-                outfitOptions.Add(currentPantsOption);
-            }
-            else
-            {
-                outfitForPlayer.Add(currentShirtPantsCombo);
-                outfitOptions.Add(currentShirtPantsComboOption);
-            }
-            if (currentShoes != null && currentShoesOption != -1) {
-                outfitForPlayer.Add(currentShoes);
-                outfitOptions.Add(currentShoesOption);
-            }
-            if (currentAccessories != null && currentAccessoriesOption != -1) {
-                outfitForPlayer.Add(currentAccessories);
-                outfitOptions.Add(currentAccessoriesOption);
-            }
-            if (currentHat != null && currentHatOption != -1) {
-                outfitForPlayer.Add(currentHat);
-                outfitOptions.Add(currentHatOption);
-            }
-
-            for (int i = 0; i < outfitForPlayer.Count; i++) {
-                //if ((int)outfitOptions[0] == 1)
-                sb.Draw(outfitForPlayer[i],
-                    new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (yLoc - conditionalY)),
-                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765)),
-                    new Rectangle((currentFrame * (160 / 5)) + (outfitOptions[i] * 8 * (160 / 5)), (animationType * 32), 160 / 5, outfitForPlayer[i].Height / 44),
-                    Color.White,
-                    0f,
-                    Vector2.Zero,
-                    0,
-                    .86f);
-            }
-        }
-
-        public void DrawInventoryPlayer(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
-        {
-
-            List<Texture2D> outfitForPlayer = new List<Texture2D>();
-            List<int> outfitOptions = new List<int>();
 
             outfitForPlayer.Add(currentBody);
             outfitOptions.Add(currentBodyOption);
@@ -347,6 +386,150 @@ namespace ImagineRITGame
                 outfitForPlayer.Add(currentHat);
                 outfitOptions.Add(currentHatOption);
             }
+
+            for (int i = 0; i < outfitForPlayer.Count; i++) {
+                //if ((int)outfitOptions[0] == 1)
+                sb.Draw(outfitForPlayer[i],
+                    new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (yLoc - conditionalY)),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765)),
+                    new Rectangle((currentFrame * (160 / 5)) + (outfitOptions[i] * 8 * (160 / 5)), (animationType * 32), 160 / 5, outfitForPlayer[i].Height / 44),
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    0,
+                    .86f);
+            }
+        }
+
+        public void DrawInventoryPlayer(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+
+            List<Texture2D> outfitForPlayer = new List<Texture2D>();
+            List<int> outfitOptions = new List<int>();
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Body)
+            {       //BODY
+                outfitForPlayer.Add(allClothes[(int)ClothingType.Body][1]);
+                outfitOptions.Add(currentTmpArticleOption);
+            }
+            else
+            {
+                outfitForPlayer.Add(currentBody);
+                outfitOptions.Add(currentBodyOption);
+            }
+
+            if (currentTmpSecondOption != -1 && typeOfCurrentTmp == ClothingType.Eyes)
+            {       // EYES
+                outfitForPlayer.Add(currentTmpSecond);
+                outfitOptions.Add(currentTmpSecondOption);
+            }
+            else
+            {
+                outfitForPlayer.Add(currentEyes);
+                outfitOptions.Add(currentEyesOption);
+            }
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hair)         // HAIR
+            {
+                outfitForPlayer.Add(currentTmpArticle);
+                outfitOptions.Add(currentTmpArticleOption);
+            }
+            else if (currentHair != null)
+            {
+                outfitForPlayer.Add(currentHair);
+                outfitOptions.Add(currentHairOption);
+            }
+
+            // Drawing in tmp shirt
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shirt)        // SHIRT / PANTS / SHIRT PANTS COMBO
+            {
+                outfitForPlayer.Add(currentTmpArticle);
+                outfitOptions.Add(currentTmpArticleOption);
+                if (currentPantsOption != -1)
+                {
+                    outfitForPlayer.Add(currentPants);
+                    outfitOptions.Add(currentPantsOption);
+                }
+                else
+                {
+                    outfitForPlayer.Add(currentTmpSecond);
+                    outfitOptions.Add(currentTmpSecondOption);
+                }
+            }
+            // Drawing in tmp pants
+            else if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Pants)
+            {
+                outfitForPlayer.Add(currentTmpArticle);
+                outfitOptions.Add(currentTmpArticleOption);
+                if (currentShirtOption != -1)
+                {
+                    outfitForPlayer.Add(currentShirt);
+                    outfitOptions.Add(currentShirtOption);
+                }
+                else
+                {
+                    outfitForPlayer.Add(currentTmpSecond);
+                    outfitOptions.Add(currentTmpSecondOption);
+                }
+            }
+            // Drawing in tmp shirt / pants combo
+            else if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.ShirtPantsCombo)
+            {
+                outfitForPlayer.Add(currentTmpArticle);
+                outfitOptions.Add(currentTmpArticleOption);
+            }
+            // If there is no tmp, see if the shirt / pants can be drawn in
+            else if (currentShirtOption != -1)
+            {
+                outfitForPlayer.Add(currentShirt);
+                outfitOptions.Add(currentShirtOption);
+                outfitForPlayer.Add(currentPants);
+                outfitOptions.Add(currentPantsOption);
+            }
+            // If all else fails, draw in the shirt / pants combo
+            else
+            {
+                outfitForPlayer.Add(currentShirtPantsCombo);
+                outfitOptions.Add(currentShirtPantsComboOption);
+            }
+
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shoes)        // SHOES
+            {
+                outfitForPlayer.Add(currentTmpArticle);
+                outfitOptions.Add(currentTmpArticleOption);
+            }
+            else if (currentShoes != null && currentShoesOption != -1)
+            {
+                outfitForPlayer.Add(currentShoes);
+                outfitOptions.Add(currentShoesOption);
+            }
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Accessories)  // ACCESSORIES
+            {
+                outfitForPlayer.Add(currentTmpArticle);
+                outfitOptions.Add(currentTmpArticleOption);
+            }
+            else if (currentAccessories != null && currentAccessoriesOption != -1)
+            {
+                outfitForPlayer.Add(currentAccessories);
+                outfitOptions.Add(currentAccessoriesOption);
+            }
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hat)          // HAT
+            {
+                outfitForPlayer.Add(currentTmpArticle);
+                outfitOptions.Add(currentTmpArticleOption);
+            }
+            else if (currentHat != null && currentHatOption != -1)
+            {
+                outfitForPlayer.Add(currentHat);
+                outfitOptions.Add(currentHatOption);
+            }
+
+
+
+
 
             for (int i = 0; i < outfitForPlayer.Count; i++)
                 sb.Draw(outfitForPlayer[i],

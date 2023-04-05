@@ -361,6 +361,7 @@ namespace ImagineRITGame
                     clothingInventory.Update(gameTime);
                     if (SingleKeyPress(Keys.Escape, previousKbState))
                         ChangeGameState(-1);
+                    playerOutfit = clothingInventory.UpdateTempHoverOutfit(playerOutfit);
                     clothingInventory.MenuButtonActivated += ChangeGameState;
                     break;
             }

@@ -755,6 +755,98 @@ namespace ImagineRITGame
             return outfit;
         }
 
+        public Outfit UpdateTempHoverOutfit(Outfit outfit)
+        {
+            int buttonSelected = FindIndexButtonSelected();
+            if (buttonSelected != -1)
+            {
+                switch (currentPage)
+                {
+                    case ClothingInventoryPage.Shirt:
+                        if (buttonSelected >= 4)
+                            buttonSelected++;
+                        if (buttonSelected >= 14)
+                            buttonSelected++;
+                        if (buttonSelected >= 24)
+                            buttonSelected++;
+                        outfit.UpdateTmpArticle(ClothingType.Shirt, (int)Math.Floor((double)(buttonSelected / (double)10)) + ((currentScreen - 1) * 3), buttonSelected % 10);
+                        break;
+                    case ClothingInventoryPage.Pants:
+                        if (buttonSelected >= 4)
+                            buttonSelected++;
+                        if (buttonSelected >= 14)
+                            buttonSelected++;
+                        if (buttonSelected >= 24)
+                            buttonSelected++;
+                        outfit.UpdateTmpArticle(ClothingType.Pants, (int)Math.Floor((double)buttonSelected / (double)10), buttonSelected % 10);
+                        break;
+                    case ClothingInventoryPage.Shoes:
+                        if (buttonSelected >= 4)
+                            buttonSelected++;
+                        if (buttonSelected >= 14)
+                            buttonSelected++;
+                        if (buttonSelected >= 24)
+                            buttonSelected++;
+                        outfit.UpdateTmpArticle(ClothingType.Shoes, 0, buttonSelected);
+                        break;
+                    case ClothingInventoryPage.Hair:
+                        if (buttonSelected >= 4)
+                            buttonSelected++;
+                        if (buttonSelected >= 14)
+                            buttonSelected++;
+                        if (buttonSelected >= 24)
+                            buttonSelected++;
+                        outfit.UpdateTmpArticle(ClothingType.Hair, (int)Math.Floor((double)buttonSelected / (double)10) + ((currentScreen - 1) * 3), buttonSelected % 10);
+                        break;
+                    case ClothingInventoryPage.Hat:
+                        outfit.UpdateTmpArticle(ClothingType.Hat, buttonSelected, 0);
+                        break;
+                    case ClothingInventoryPage.Body:
+                        if (buttonSelected < 9)
+                        {
+                            if (buttonSelected >= 4)
+                                buttonSelected++;
+                            outfit.UpdateTmpArticle(ClothingType.Body, 0, buttonSelected);
+                        }
+                        else
+                            outfit.UpdateTmpArticle(ClothingType.Body, 1, buttonSelected - 9);
+                        break;
+                    case ClothingInventoryPage.Accessories:
+                        if (buttonSelected >= 4)
+                            buttonSelected++;
+                        if (buttonSelected >= 14)
+                            buttonSelected++;
+                        if (buttonSelected >= 24)
+                            buttonSelected++;
+                        outfit.UpdateTmpArticle(ClothingType.Accessories, (int)Math.Floor((double)buttonSelected / (double)10), buttonSelected % 10);
+                        break;
+                    case ClothingInventoryPage.ShirtPantsCombo:
+                        if (buttonSelected >= 4)
+                            buttonSelected++;
+                        if (buttonSelected < 10)
+                            outfit.UpdateTmpArticle(ClothingType.ShirtPantsCombo, 0, buttonSelected % 10);
+                        if (buttonSelected == 10)
+                            outfit.UpdateTmpArticle(ClothingType.ShirtPantsCombo, 1, 0);
+                        if (buttonSelected == 11)
+                            outfit.UpdateTmpArticle(ClothingType.ShirtPantsCombo, 1, 1);
+                        if (buttonSelected == 12)
+                            outfit.UpdateTmpArticle(ClothingType.ShirtPantsCombo, 2, 0);
+                        if (buttonSelected == 13)
+                            outfit.UpdateTmpArticle(ClothingType.ShirtPantsCombo, 2, 1);
+                        if (buttonSelected == 14)
+                            outfit.UpdateTmpArticle(ClothingType.ShirtPantsCombo, 3, 0);
+                        if (buttonSelected == 15)
+                            outfit.UpdateTmpArticle(ClothingType.ShirtPantsCombo, 4, 0);
+                        break;
+                }
+            }
+            else
+            {
+                outfit.UpdateTmpArticle(ClothingType.ShirtPantsCombo, 0, -1);
+            }
+            return outfit;
+        }
+
         public Outfit RemoveArticle(Outfit outfit)
         {
             if (buttons[3].IsHovered)
