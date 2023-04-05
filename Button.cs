@@ -42,6 +42,7 @@ namespace ImagineRITGame
         LeftArrow = 24,
         RightArrow = 25,
         OutfitInventorySlot = 26,
+        XButton = 27,
         Back = -1
     }
 
@@ -86,6 +87,8 @@ namespace ImagineRITGame
                 rect = new Rectangle(position, new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 3.45), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 3)));
             else if (buttonType == ButtonType.Inventory)
                 rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 10)));
+            else if (buttonType == ButtonType.XButton)
+                rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 28), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.332) / 28)));
             else if (buttonType == ButtonType.OutfitShopCurrentPage)
                 rect = new Rectangle(position, new Point((int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.375) / 10), (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 1.13) / 10)));
             else if (buttonType == ButtonType.OutfitShopAnotherPage)
@@ -220,6 +223,10 @@ namespace ImagineRITGame
 
                 case ButtonType.OutfitInventorySlot:
                     textRect = new Rectangle(306, 24, 20, 20);
+                    break;
+
+                case ButtonType.XButton:
+                    textRect = new Rectangle(328, 216, 16, 16);
                     break;
             }
 

@@ -12,6 +12,8 @@ using System.Reflection;
 using SharpDX.Direct2D1;
 using System.Diagnostics.Eventing.Reader;
 using System.Windows.Forms.VisualStyles;
+using SharpDX.DXGI;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ImagineRITGame
 {
@@ -24,7 +26,8 @@ namespace ImagineRITGame
         Pants = 4,              // pants, pants_suit, skirt (3 rows, 1 page)
         ShirtPantsCombo = 5,    // clown, dress, pumpkin, spooky, witch (2 rows, 1 page)
         Shoes = 6,              // shoes (1 row, 1 page)
-        Accessories = 7         // beard, earring (x4), glasses, glasses_sun (7 elements, 1 page)
+        Accessories = 7,         // beard, earring (x4), glasses, glasses_sun (7 elements, 1 page)
+        Eyes = 8
     }
 
     internal class Outfit
@@ -38,7 +41,17 @@ namespace ImagineRITGame
         private Texture2D currentPants;
         private Texture2D currentShoes;
         private Texture2D currentAccessories;
+        private Texture2D currentEyes;
 
+        public int currentBodyOption;
+        private int currentHatOption;
+        private int currentHairOption;
+        private int currentShirtOption;
+        private int currentPantsOption;
+        private int currentShoesOption;
+        private int currentAccessoriesOption;
+        private int currentShirtPantsComboOption;
+        private int currentEyesOption;
 
 
         public Outfit(List<List<Texture2D>> allOutfitTextures)
@@ -49,7 +62,17 @@ namespace ImagineRITGame
             currentShirt = allClothes[(int)ClothingType.Shirt][0];
             currentPants = allClothes[(int)ClothingType.Pants][0];
             currentShoes = allClothes[(int)ClothingType.Shoes][0];
+            currentEyes = allClothes[(int)ClothingType.Body][0];
 
+            currentBodyOption = 0;
+            currentHatOption = -1;
+            currentHairOption = 0;
+            currentShirtOption = 0;
+            currentPantsOption = 0;
+            currentShoesOption = 0;
+            currentAccessoriesOption = -1;
+            currentShirtPantsComboOption = -1;
+            currentEyesOption = 0;
             //currentHat = allClothes[(int)ClothingType.Hat][0];
             //currentAccessories = allClothes[(int)ClothingType.Accessories][1];
         }
@@ -68,26 +91,95 @@ namespace ImagineRITGame
             DrawArticleInInventory(sb, currentHair, .2145, .39, true, ClothingType.Hair);
             DrawArticleInInventory(sb, currentAccessories, .2031, .435, false, ClothingType.Accessories);
 
-            DrawEmptySlot(sb, inventoryTexture);
+        DrawEmptySlot(sb, inventoryTexture);
+        }
+
+        public void ChangeCurrentArticle(ClothingType page, int newArticle, int newOption)
+        {
+            switch (page)
+            {
+                case ClothingType.Shirt:
+                    currentShirt = allClothes[(int)ClothingType.Shirt][newArticle];
+                    currentShirtOption = newOption;
+                    break;
+                case ClothingType.Pants:
+                    currentPants = allClothes[(int)ClothingType.Pants][newArticle];
+                    currentPantsOption = newOption;
+                    break;
+                case ClothingType.Shoes:
+                    currentShoes = allClothes[(int)ClothingType.Shoes][newArticle];
+                    currentShoesOption = newOption;
+                    break;
+                case ClothingType.Hair:
+                    currentHair = allClothes[(int)ClothingType.Hair][newArticle];
+                    currentHairOption = newOption;
+                    break;
+                case ClothingType.Hat:
+                    currentHat = allClothes[(int)ClothingType.Hat][newArticle];
+                    currentHatOption = newOption;
+                    break;
+                case ClothingType.Body:
+                    if (newArticle == 1)
+                        currentBodyOption = newOption;
+                    else
+                        currentEyesOption = newOption;
+                    break;
+                case ClothingType.Accessories:
+                    currentAccessories = allClothes[(int)ClothingType.Accessories][newArticle];
+                    currentAccessoriesOption = newOption;
+                    break;
+                case ClothingType.ShirtPantsCombo:
+
+                    break;
+
+            }
         }
 
         public void DrawArticleInInventory(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D article, double xLoc, double yLoc, bool makeSmaller, ClothingType type)
         {
+            int option = 0;
+            switch (type)
+            {
+                case ClothingType.Shirt:
+                    option = currentShirtOption;
+                    break;
+                case ClothingType.Pants:
+                    option = currentPantsOption;
+                    break;
+                case ClothingType.Shoes:
+                    option = currentShoesOption;
+                    break;
+                case ClothingType.Hair:
+                    option = currentHairOption;
+                    break;
+                case ClothingType.Hat:
+                    option = currentHatOption;
+                    break;
+                case ClothingType.Body:
+                    option = currentBodyOption;
+                    break;
+                case ClothingType.Accessories:
+                    option = currentAccessoriesOption;
+                    break;
+                case ClothingType.ShirtPantsCombo:
+                    option = currentShirtPantsComboOption;
+                    break;
+            }
             if (article != null)
             {
                 // If the accessory is the beard there are 14 options
                 if (article.Width == 3584)
-                    DrawArticleIdle(sb, article, xLoc, yLoc, makeSmaller, 14);
+                    DrawArticleIdle(sb, article, xLoc, yLoc, makeSmaller, 14, option);
                 // If the accessory is a type of glasses there are 10 options
                 else if (article.Width == 2560)
-                    DrawArticleIdle(sb, article, xLoc, yLoc, makeSmaller, 10);
+                    DrawArticleIdle(sb, article, xLoc, yLoc, makeSmaller, 10, option);
                 else if (article.Width == 512)
                 {
-                    DrawArticleIdle(sb, article, xLoc, yLoc, makeSmaller, 2);
+                    DrawArticleIdle(sb, article, xLoc, yLoc, makeSmaller, 2, option);
                 }
                 // If the article has 1 option
                 else
-                    DrawArticleIdle(sb, article, xLoc, yLoc, makeSmaller, 1);
+                    DrawArticleIdle(sb, article, xLoc, yLoc, makeSmaller, 1, option);
             }
         }
 
@@ -98,7 +190,7 @@ namespace ImagineRITGame
         /// <param name="inventoryTexture">Textures for the inventory</param>
         public void DrawEmptySlot(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D inventoryTexture)
         {
-            if (currentHat == null)
+            if (currentHat == null || currentHatOption == -1)
                 sb.Draw(inventoryTexture,
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .2168), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .365),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).06 / (float)1.2)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).105 / (float)1.2))),
@@ -108,7 +200,7 @@ namespace ImagineRITGame
                     Vector2.Zero,
                     0,
                     .00000001f);
-            if (currentHair == null)
+            if (currentHair == null || currentHairOption == -1)
                 sb.Draw(inventoryTexture,
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .217), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .427),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).06 / (float)1.2)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).105 / (float)1.2))),
@@ -118,7 +210,7 @@ namespace ImagineRITGame
                     Vector2.Zero,
                     0,
                     .00000001f);
-            if (currentAccessories == null)
+            if (currentAccessories == null || currentAccessoriesOption == -1)
                 sb.Draw(inventoryTexture,
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .2131), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .5),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).1 / (float)1.2)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).13 / (float)1.2))),
@@ -128,7 +220,7 @@ namespace ImagineRITGame
                     Vector2.Zero,
                     0,
                     .00000001f);
-            if (currentShoes == null)
+            if (currentShoes == null || currentShoesOption == -1)
                 sb.Draw(inventoryTexture,
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .3345), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .522),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).1 / (float)1.4)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).13 / (float)1.4))),
@@ -147,50 +239,86 @@ namespace ImagineRITGame
                 conditionalY = 0.04;
 
             List<Texture2D> outfitForPlayer = new List<Texture2D>();
+            List<int> outfitOptions = new List<int>();
+            
             outfitForPlayer.Add(currentBody);
-            if (currentHair != null)
+            outfitOptions.Add(currentBodyOption);
+            outfitForPlayer.Add(currentEyes);
+            outfitOptions.Add(currentEyesOption);
+            if (currentHair != null) {
                 outfitForPlayer.Add(currentHair);
+                outfitOptions.Add(currentHairOption);
+            }
             outfitForPlayer.Add(currentShirt);
+            outfitOptions.Add(currentShirtOption);
             outfitForPlayer.Add(currentPants);
-            if (currentShoes != null)
+            outfitOptions.Add(currentPantsOption);
+            if (currentShoes != null && currentShoesOption != -1) {
                 outfitForPlayer.Add(currentShoes);
-            if (currentAccessories != null)
+                outfitOptions.Add(currentShoesOption);
+            }
+            if (currentAccessories != null && currentAccessoriesOption != -1) {
                 outfitForPlayer.Add(currentAccessories);
-            if (currentHat != null)
+                outfitOptions.Add(currentAccessoriesOption);
+            }
+            if (currentHat != null && currentHatOption != -1) {
                 outfitForPlayer.Add(currentHat);
+                outfitOptions.Add(currentHatOption);
+            }
 
-            for (int i = 0; i < outfitForPlayer.Count; i++)
+            for (int i = 0; i < outfitForPlayer.Count; i++) {
+                //if ((int)outfitOptions[0] == 1)
                 sb.Draw(outfitForPlayer[i],
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (yLoc - conditionalY)),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765)),
-                    new Rectangle((currentFrame * (160 / 5)) + (0 * 8 * (160 / 5)), (animationType * 32), 160 / 5, outfitForPlayer[i].Height / 44),
+                    new Rectangle((currentFrame * (160 / 5)) + (outfitOptions[i] * 8 * (160 / 5)), (animationType * 32), 160 / 5, outfitForPlayer[i].Height / 44),
                     Color.White,
                     0f,
                     Vector2.Zero,
                     0,
                     .86f);
+            }
         }
 
         public void DrawInventoryPlayer(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
             List<Texture2D> outfitForPlayer = new List<Texture2D>();
+            List<int> outfitOptions = new List<int>();
+
             outfitForPlayer.Add(currentBody);
+            outfitOptions.Add(currentBodyOption);
+            outfitForPlayer.Add(currentEyes);
+            outfitOptions.Add(currentEyesOption);
             if (currentHair != null)
+            {
                 outfitForPlayer.Add(currentHair);
+                outfitOptions.Add(currentHairOption);
+            }
             outfitForPlayer.Add(currentShirt);
+            outfitOptions.Add(currentShirtOption);
             outfitForPlayer.Add(currentPants);
-            if (currentShoes != null)
+            outfitOptions.Add(currentPantsOption);
+            if (currentShoes != null && currentShoesOption != -1)
+            {
                 outfitForPlayer.Add(currentShoes);
-            if (currentAccessories != null)
+                outfitOptions.Add(currentShoesOption);
+            }
+            if (currentAccessories != null && currentAccessoriesOption != -1)
+            {
                 outfitForPlayer.Add(currentAccessories);
-            if (currentHat != null)
+                outfitOptions.Add(currentAccessoriesOption);
+            }
+            if (currentHat != null && currentHatOption != -1)
+            {
                 outfitForPlayer.Add(currentHat);
+                outfitOptions.Add(currentHatOption);
+            }
 
             for (int i = 0; i < outfitForPlayer.Count; i++)
                 sb.Draw(outfitForPlayer[i],
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .2525), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .32),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565 / 1.5), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765 / 1.5)),
-                    new Rectangle((0 * 8 * (160 / 5)), 0, 160 / 5, outfitForPlayer[i].Height / 44),
+                    new Rectangle((outfitOptions[i] * 8 * (160 / 5)), 0, 160 / 5, outfitForPlayer[i].Height / 44),
                     Color.White,
                     0f,
                     Vector2.Zero,
@@ -199,7 +327,7 @@ namespace ImagineRITGame
 
         }
 
-        public void DrawArticleIdle(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D article, double xLoc, double yLoc, bool makeSmaller, int spriteCount)
+        public void DrawArticleIdle(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D article, double xLoc, double yLoc, bool makeSmaller, int spriteCount, int option)
         {
             double sizing = 1.95;
             if (makeSmaller)
@@ -210,7 +338,7 @@ namespace ImagineRITGame
             sb.Draw(article,
                 new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * xLoc), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * yLoc),
                 (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 5.565 / sizing), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2.765 / sizing)),
-                new Rectangle((article.Width / spriteCount) * 0, 0, 160 / 5, article.Height / 44),
+                new Rectangle((article.Width / spriteCount) * option, 0, 160 / 5, article.Height / 44),
                 Color.White,
                 0f,
                 Vector2.Zero,

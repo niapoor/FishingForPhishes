@@ -12,6 +12,7 @@ using System.Reflection;
 using SharpDX.Direct2D1;
 using System.ComponentModel.DataAnnotations.Schema;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using SharpDX.DXGI;
 
 namespace ImagineRITGame
 {
@@ -66,7 +67,11 @@ namespace ImagineRITGame
             buttons = new List<Button>() {
                 new Button(base.AlignButton(.04, .75), ButtonType.Back, textures[(int)MenuTextures.GeneralButtons]),
                 new Button(base.AlignButton(.8191, .6055), ButtonType.RightArrow, textures[(int)MenuTextures.ClothingInventory]),
-                new Button(base.AlignButton(.423, .6055), ButtonType.LeftArrow, textures[(int)MenuTextures.ClothingInventory])
+                new Button(base.AlignButton(.423, .6055), ButtonType.LeftArrow, textures[(int)MenuTextures.ClothingInventory]),
+                new Button(base.AlignButton(.224, .354), ButtonType.XButton, textures[(int)MenuTextures.ClothingInventory]),
+                new Button(base.AlignButton(.224, .429), ButtonType.XButton, textures[(int)MenuTextures.ClothingInventory]),
+                new Button(base.AlignButton(.224, .504), ButtonType.XButton, textures[(int)MenuTextures.ClothingInventory]),
+                new Button(base.AlignButton(.352, .504), ButtonType.XButton, textures[(int)MenuTextures.ClothingInventory])
             };
             
             // These buttons only exists to be hovered over. It is the raised, selected page button
@@ -512,6 +517,7 @@ namespace ImagineRITGame
         }
 
 
+
         public void DrawItemClothing(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D texture, int row, double sizing, int color, int column, double yAdd, double xAdd, int itemCount)
         {
             sb.Draw(texture,
@@ -613,6 +619,139 @@ namespace ImagineRITGame
                 currentScreen++;
             else if (currentPage == ClothingInventoryPage.Hair && currentScreen < 5)
                 currentScreen++;
+        }
+
+        public int FindIndexButtonSelected()
+        {
+            int numBoxes = 0;
+            int currentBox = 0;
+            switch (currentPage)
+            {
+                case ClothingInventoryPage.Shirt:
+                    numBoxes = 27;
+                    if (currentScreen == 4)
+                        numBoxes = 9;
+                    break;
+                case ClothingInventoryPage.Pants:
+                    numBoxes = 27;
+                    break;
+                case ClothingInventoryPage.Shoes:
+                    numBoxes = 9;
+                    break;
+                case ClothingInventoryPage.Hair:
+                    numBoxes = 27;
+                    break;
+                case ClothingInventoryPage.Hat:
+                    numBoxes = 8;
+                    break;
+                case ClothingInventoryPage.Body:
+                    numBoxes = 17;
+                    break;
+                case ClothingInventoryPage.Accessories:
+                    numBoxes = 27;
+                    break;
+                case ClothingInventoryPage.ShirtPantsCombo:
+                    numBoxes = 15;
+                    break;
+            }
+
+            for (int col = 0; col < 3; col++)
+            {
+                for (int row = 0; row < 9; row++)
+                {
+                    currentBox++;
+                    if (currentBox <= numBoxes)
+                    {
+                        if (buttonsInventoryItems[currentBox - 1].IsHovered)
+                            return currentBox - 1;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public Outfit EditArticle(Outfit outfit)
+        {
+            int buttonSelected = FindIndexButtonSelected();
+            switch (currentPage)
+            {
+                case ClothingInventoryPage.Shirt:
+                    if (buttonSelected >= 4)
+                        buttonSelected++;
+                    if (buttonSelected >= 14)
+                        buttonSelected++;
+                    if (buttonSelected >= 24)
+                        buttonSelected++;
+                    outfit.ChangeCurrentArticle(ClothingType.Shirt, (int)Math.Floor((double)(buttonSelected / (double)10)) + ((currentScreen - 1) * 3), buttonSelected % 10);
+                    break;
+                case ClothingInventoryPage.Pants:
+                    if (buttonSelected >= 4)
+                        buttonSelected++;
+                    if (buttonSelected >= 14)
+                        buttonSelected++;
+                    if (buttonSelected >= 24)
+                        buttonSelected++;
+                    outfit.ChangeCurrentArticle(ClothingType.Pants, (int)Math.Floor((double)buttonSelected / (double)10), buttonSelected % 10);
+                    break;
+                case ClothingInventoryPage.Shoes:
+                    if (buttonSelected >= 4)
+                        buttonSelected++;
+                    if (buttonSelected >= 14)
+                        buttonSelected++;
+                    if (buttonSelected >= 24)
+                        buttonSelected++;
+                    outfit.ChangeCurrentArticle(ClothingType.Shoes, 0, buttonSelected);
+                    break;
+                case ClothingInventoryPage.Hair:
+                    if (buttonSelected >= 4)
+                        buttonSelected++;
+                    if (buttonSelected >= 14)
+                        buttonSelected++;
+                    if (buttonSelected >= 24)
+                        buttonSelected++;
+                    outfit.ChangeCurrentArticle(ClothingType.Hair, (int)Math.Floor((double)buttonSelected / (double)10) + ((currentScreen - 1) * 3), buttonSelected % 10);
+                    break;
+                case ClothingInventoryPage.Hat:
+                    outfit.ChangeCurrentArticle(ClothingType.Hat, buttonSelected, 0);
+                    break;
+                case ClothingInventoryPage.Body:
+                    if (buttonSelected < 10)
+                    {
+                        if (buttonSelected >= 4)
+                            buttonSelected++;
+                        outfit.ChangeCurrentArticle(ClothingType.Body, 0, buttonSelected);
+                    }
+                    else
+                        outfit.ChangeCurrentArticle(ClothingType.Body, 1, buttonSelected - 9);
+                    break;
+                case ClothingInventoryPage.Accessories:
+                    if (buttonSelected >= 4)
+                        buttonSelected++;
+                    if (buttonSelected >= 14)
+                        buttonSelected++;
+                    if (buttonSelected >= 24)
+                        buttonSelected++;
+                    outfit.ChangeCurrentArticle(ClothingType.Accessories, (int)Math.Floor((double)buttonSelected / (double)10), buttonSelected % 10);
+                    break;
+                case ClothingInventoryPage.ShirtPantsCombo:
+                    
+                    break;
+            }
+            return outfit;
+        }
+
+        public Outfit RemoveArticle(Outfit outfit)
+        {
+            if (buttons[3].IsHovered)
+                outfit.ChangeCurrentArticle(ClothingType.Hat, 0, -1);
+            if (buttons[4].IsHovered)
+                outfit.ChangeCurrentArticle(ClothingType.Hair, 0, -1);
+            if (buttons[5].IsHovered)
+                outfit.ChangeCurrentArticle(ClothingType.Accessories, 0, -1);
+            if (buttons[6].IsHovered)
+                outfit.ChangeCurrentArticle(ClothingType.Shoes, 0, -1);
+            return outfit;
+
         }
 
     }

@@ -634,6 +634,14 @@ namespace ImagineRITGame
                     clothingInventory.RightArrowPress();
                 }
             }
+            else if (state == 26)
+            {
+               playerOutfit = clothingInventory.EditArticle(playerOutfit);
+            }
+            else if (state == 27)
+            {
+                playerOutfit = clothingInventory.RemoveArticle(playerOutfit);
+            }
 
         }
 
