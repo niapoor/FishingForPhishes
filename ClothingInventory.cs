@@ -715,7 +715,7 @@ namespace ImagineRITGame
                     outfit.ChangeCurrentArticle(ClothingType.Hat, buttonSelected, 0);
                     break;
                 case ClothingInventoryPage.Body:
-                    if (buttonSelected < 10)
+                    if (buttonSelected < 9)
                     {
                         if (buttonSelected >= 4)
                             buttonSelected++;
@@ -734,7 +734,22 @@ namespace ImagineRITGame
                     outfit.ChangeCurrentArticle(ClothingType.Accessories, (int)Math.Floor((double)buttonSelected / (double)10), buttonSelected % 10);
                     break;
                 case ClothingInventoryPage.ShirtPantsCombo:
-                    
+                    if (buttonSelected >= 4)
+                        buttonSelected++;
+                    if (buttonSelected < 10)
+                        outfit.ChangeCurrentArticle(ClothingType.ShirtPantsCombo, 0, buttonSelected % 10);
+                    if (buttonSelected == 10)
+                        outfit.ChangeCurrentArticle(ClothingType.ShirtPantsCombo, 1, 0);
+                    if (buttonSelected == 11)
+                        outfit.ChangeCurrentArticle(ClothingType.ShirtPantsCombo, 1, 1);
+                    if (buttonSelected == 12)
+                        outfit.ChangeCurrentArticle(ClothingType.ShirtPantsCombo, 2, 0);
+                    if (buttonSelected == 13)
+                        outfit.ChangeCurrentArticle(ClothingType.ShirtPantsCombo, 2, 1);
+                    if (buttonSelected == 14)
+                        outfit.ChangeCurrentArticle(ClothingType.ShirtPantsCombo, 3, 0);
+                    if (buttonSelected == 15)
+                        outfit.ChangeCurrentArticle(ClothingType.ShirtPantsCombo, 4, 0);
                     break;
             }
             return outfit;

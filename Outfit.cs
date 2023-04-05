@@ -42,6 +42,7 @@ namespace ImagineRITGame
         private Texture2D currentShoes;
         private Texture2D currentAccessories;
         private Texture2D currentEyes;
+        private Texture2D currentShirtPantsCombo;
 
         public int currentBodyOption;
         private int currentHatOption;
@@ -63,6 +64,7 @@ namespace ImagineRITGame
             currentPants = allClothes[(int)ClothingType.Pants][0];
             currentShoes = allClothes[(int)ClothingType.Shoes][0];
             currentEyes = allClothes[(int)ClothingType.Body][0];
+            currentShirtPantsCombo = allClothes[(int)ClothingType.ShirtPantsCombo][0];
 
             currentBodyOption = 0;
             currentHatOption = -1;
@@ -101,10 +103,22 @@ namespace ImagineRITGame
                 case ClothingType.Shirt:
                     currentShirt = allClothes[(int)ClothingType.Shirt][newArticle];
                     currentShirtOption = newOption;
+                    currentShirtPantsComboOption = -1;
+                    if (currentPantsOption == -1)
+                    {
+                        currentPants = allClothes[(int)ClothingType.Pants][0];
+                        currentPantsOption = 0;
+                    }
                     break;
                 case ClothingType.Pants:
                     currentPants = allClothes[(int)ClothingType.Pants][newArticle];
                     currentPantsOption = newOption;
+                    currentShirtPantsComboOption = -1;
+                    if (currentShirtOption == -1)
+                    {
+                        currentShirt = allClothes[(int)ClothingType.Shirt][0];
+                        currentShirtOption = 0;
+                    }
                     break;
                 case ClothingType.Shoes:
                     currentShoes = allClothes[(int)ClothingType.Shoes][newArticle];
@@ -129,7 +143,10 @@ namespace ImagineRITGame
                     currentAccessoriesOption = newOption;
                     break;
                 case ClothingType.ShirtPantsCombo:
-
+                    currentShirtPantsCombo = allClothes[(int)ClothingType.ShirtPantsCombo][newArticle];
+                    currentShirtPantsComboOption = newOption;
+                    currentShirtOption = -1;
+                    currentPantsOption = -1;
                     break;
 
             }
@@ -249,10 +266,18 @@ namespace ImagineRITGame
                 outfitForPlayer.Add(currentHair);
                 outfitOptions.Add(currentHairOption);
             }
-            outfitForPlayer.Add(currentShirt);
-            outfitOptions.Add(currentShirtOption);
-            outfitForPlayer.Add(currentPants);
-            outfitOptions.Add(currentPantsOption);
+            if (currentShirtOption != -1)
+            {
+                outfitForPlayer.Add(currentShirt);
+                outfitOptions.Add(currentShirtOption);
+                outfitForPlayer.Add(currentPants);
+                outfitOptions.Add(currentPantsOption);
+            }
+            else
+            {
+                outfitForPlayer.Add(currentShirtPantsCombo);
+                outfitOptions.Add(currentShirtPantsComboOption);
+            }
             if (currentShoes != null && currentShoesOption != -1) {
                 outfitForPlayer.Add(currentShoes);
                 outfitOptions.Add(currentShoesOption);
@@ -282,6 +307,7 @@ namespace ImagineRITGame
 
         public void DrawInventoryPlayer(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
+
             List<Texture2D> outfitForPlayer = new List<Texture2D>();
             List<int> outfitOptions = new List<int>();
 
@@ -294,10 +320,18 @@ namespace ImagineRITGame
                 outfitForPlayer.Add(currentHair);
                 outfitOptions.Add(currentHairOption);
             }
-            outfitForPlayer.Add(currentShirt);
-            outfitOptions.Add(currentShirtOption);
-            outfitForPlayer.Add(currentPants);
-            outfitOptions.Add(currentPantsOption);
+            if (currentShirtOption != -1)
+            {
+                outfitForPlayer.Add(currentShirt);
+                outfitOptions.Add(currentShirtOption);
+                outfitForPlayer.Add(currentPants);
+                outfitOptions.Add(currentPantsOption);
+            }
+            else
+            {
+                outfitForPlayer.Add(currentShirtPantsCombo);
+                outfitOptions.Add(currentShirtPantsComboOption);
+            }
             if (currentShoes != null && currentShoesOption != -1)
             {
                 outfitForPlayer.Add(currentShoes);
