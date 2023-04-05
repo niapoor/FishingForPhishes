@@ -420,7 +420,7 @@ namespace ImagineRITGame
 
             if (currentTmpSecondOption != -1 && typeOfCurrentTmp == ClothingType.Eyes)
             {       // EYES
-                outfitForPlayer.Add(currentTmpSecond);
+                outfitForPlayer.Add(allClothes[(int)ClothingType.Body][0]);
                 outfitOptions.Add(currentTmpSecondOption);
             }
             else
