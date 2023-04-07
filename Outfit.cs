@@ -99,15 +99,56 @@ namespace ImagineRITGame
             double yLoc = .392;
 
             //1, 2, 10, 14, 8 (just characters)
-            DrawArticleInInventory(sb, currentShirt, .3295, .255, false, ClothingType.Shirt);
-            //DrawArticleIdle(sb, currentShirt, .3433, .324, false, 10);
-            DrawArticleInInventory(sb, currentPants, .3295, .31, false, ClothingType.Pants);
-            DrawArticleInInventory(sb, currentShoes, .3295, .375, false, ClothingType.Shoes);
-            DrawArticleInInventory(sb, currentHat, .2145, .335, true, ClothingType.Hat);
-            DrawArticleInInventory(sb, currentHair, .2145, .39, true, ClothingType.Hair);
-            DrawArticleInInventory(sb, currentAccessories, .2031, .435, false, ClothingType.Accessories);
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shirt)
+            {
+                DrawArticleInInventory(sb, currentTmpArticle, .3295, .255, false, ClothingType.Shirt);
+                if (currentPantsOption == -1)
+                    DrawArticleInInventory(sb, allClothes[(int)ClothingType.Pants][0], .3295, .31, false, ClothingType.Pants);
+            }
+            else if (currentShirtPantsComboOption == -1 && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.ShirtPantsCombo))
+                DrawArticleInInventory(sb, currentShirt, .3295, .255, false, ClothingType.Shirt);
 
-        DrawEmptySlot(sb, inventoryTexture);
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Pants)
+            {
+                DrawArticleInInventory(sb, currentTmpArticle, .3295, .31, false, ClothingType.Pants);
+                if (currentShirtOption == -1)
+                    DrawArticleInInventory(sb, allClothes[(int)ClothingType.Shirt][0], .3295, .255, false, ClothingType.Shirt);
+            }
+            else if (currentShirtPantsComboOption == -1 && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.ShirtPantsCombo))
+                DrawArticleInInventory(sb, currentPants, .3295, .31, false, ClothingType.Pants);
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shoes)
+                DrawArticleInInventory(sb, currentTmpArticle, .3295, .375, false, ClothingType.Shoes);
+            else
+                DrawArticleInInventory(sb, currentShoes, .3295, .375, false, ClothingType.Shoes);
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hat)
+                DrawArticleInInventory(sb, currentTmpArticle, .2145, .335, true, ClothingType.Hat);
+            else
+                DrawArticleInInventory(sb, currentHat, .2145, .335, true, ClothingType.Hat);
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hair)
+                DrawArticleInInventory(sb, currentTmpArticle, .2145, .39, true, ClothingType.Hair);
+            else
+                DrawArticleInInventory(sb, currentHair, .2145, .39, true, ClothingType.Hair);
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Accessories)
+                DrawArticleInInventory(sb, currentTmpArticle, .2031, .435, false, ClothingType.Accessories);
+            else
+                DrawArticleInInventory(sb, currentAccessories, .2031, .435, false, ClothingType.Accessories);
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.ShirtPantsCombo)
+            {
+                DrawArticleInInventory(sb, currentTmpArticle, .3295, .255, false, ClothingType.ShirtPantsCombo);
+                DrawArticleInInventory(sb, currentTmpArticle, .3295, .31, false, ClothingType.ShirtPantsCombo);
+            }
+            else if ((currentPantsOption == -1 && currentShirtOption == -1) && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.Shirt) && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.Pants))
+            {
+                DrawArticleInInventory(sb, currentShirtPantsCombo, .3295, .255, false, ClothingType.ShirtPantsCombo);
+                DrawArticleInInventory(sb, currentShirtPantsCombo, .3295, .31, false, ClothingType.ShirtPantsCombo);
+            }
+
+            DrawEmptySlot(sb, inventoryTexture);
         }
 
         public void ChangeCurrentArticle(ClothingType page, int newArticle, int newOption)
@@ -246,35 +287,63 @@ namespace ImagineRITGame
 
         public void DrawArticleInInventory(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D article, double xLoc, double yLoc, bool makeSmaller, ClothingType type)
         {
-            int option = 0;
+            int option = -1;
             switch (type)
             {
                 case ClothingType.Shirt:
-                    option = currentShirtOption;
+                    if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shirt)
+                        option = currentTmpArticleOption;
+                    else if (currentTmpSecondOption != -1 && typeOfCurrentTmp == ClothingType.Pants)
+                        option = currentTmpSecondOption;
+                    else
+                        option = currentShirtOption;
                     break;
                 case ClothingType.Pants:
-                    option = currentPantsOption;
+                    if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Pants)
+                        option = currentTmpArticleOption;
+                    else if (currentTmpSecondOption != -1 && typeOfCurrentTmp == ClothingType.Shirt)
+                        option = currentTmpSecondOption;
+                    else
+                        option = currentPantsOption;
                     break;
                 case ClothingType.Shoes:
-                    option = currentShoesOption;
+                    if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shoes)
+                        option = currentTmpArticleOption;
+                    else
+                        option = currentShoesOption;
                     break;
                 case ClothingType.Hair:
-                    option = currentHairOption;
+                    if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hair)
+                        option = currentTmpArticleOption;
+                    else
+                        option = currentHairOption;
                     break;
                 case ClothingType.Hat:
-                    option = currentHatOption;
+                    if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hat)
+                        option = currentTmpArticleOption;
+                    else
+                        option = currentHatOption;
                     break;
                 case ClothingType.Body:
-                    option = currentBodyOption;
+                    if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Body)
+                        option = currentTmpArticleOption;
+                    else
+                        option = currentBodyOption;
                     break;
                 case ClothingType.Accessories:
-                    option = currentAccessoriesOption;
+                    if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Accessories)
+                        option = currentTmpArticleOption;
+                    else
+                        option = currentAccessoriesOption;
                     break;
                 case ClothingType.ShirtPantsCombo:
-                    option = currentShirtPantsComboOption;
+                    if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.ShirtPantsCombo)
+                        option = currentTmpArticleOption;
+                    else
+                        option = currentShirtPantsComboOption;
                     break;
             }
-            if (article != null)
+            if (option != -1 || (currentTmpSecondOption != -1 && (type == ClothingType.Shirt || type == ClothingType.Pants))) //DrawArticleInInventory(sb, allClothes[(int)ClothingType.Shirt][0], .3295, .31, false, ClothingType.Shirt);
             {
                 // If the accessory is the beard there are 14 options
                 if (article.Width == 3584)
@@ -299,7 +368,7 @@ namespace ImagineRITGame
         /// <param name="inventoryTexture">Textures for the inventory</param>
         public void DrawEmptySlot(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D inventoryTexture)
         {
-            if (currentHat == null || currentHatOption == -1)
+            if ((currentHat == null || currentHatOption == -1) && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.Hat))
                 sb.Draw(inventoryTexture,
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .2168), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .365),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).06 / (float)1.2)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).105 / (float)1.2))),
@@ -309,7 +378,7 @@ namespace ImagineRITGame
                     Vector2.Zero,
                     0,
                     .00000001f);
-            if (currentHair == null || currentHairOption == -1)
+            if ((currentHair == null || currentHairOption == -1) && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.Hair))
                 sb.Draw(inventoryTexture,
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .217), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .427),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).06 / (float)1.2)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).105 / (float)1.2))),
@@ -319,7 +388,7 @@ namespace ImagineRITGame
                     Vector2.Zero,
                     0,
                     .00000001f);
-            if (currentAccessories == null || currentAccessoriesOption == -1)
+            if ((currentAccessories == null || currentAccessoriesOption == -1) && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.Accessories))
                 sb.Draw(inventoryTexture,
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .2131), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .5),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).1 / (float)1.2)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).13 / (float)1.2))),
@@ -329,7 +398,7 @@ namespace ImagineRITGame
                     Vector2.Zero,
                     0,
                     .00000001f);
-            if (currentShoes == null || currentShoesOption == -1)
+            if ((currentShoes == null || currentShoesOption == -1) && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.Shoes))
                 sb.Draw(inventoryTexture,
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .3345), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .522),
                     (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * (float)((float).1 / (float)1.4)), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * (float)((float).13 / (float)1.4))),
