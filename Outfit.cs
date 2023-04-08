@@ -99,7 +99,7 @@ namespace ImagineRITGame
             double yLoc = .392;
 
             //1, 2, 10, 14, 8 (just characters)
-            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shirt)
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shirt)                                                                // SHIRT
             {
                 DrawArticleInInventory(sb, currentTmpArticle, .3295, .255, false, ClothingType.Shirt);
                 if (currentPantsOption == -1)
@@ -108,7 +108,7 @@ namespace ImagineRITGame
             else if (currentShirtPantsComboOption == -1 && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.ShirtPantsCombo))
                 DrawArticleInInventory(sb, currentShirt, .3295, .255, false, ClothingType.Shirt);
 
-            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Pants)
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Pants)                                                                // PANTS
             {
                 DrawArticleInInventory(sb, currentTmpArticle, .3295, .31, false, ClothingType.Pants);
                 if (currentShirtOption == -1)
@@ -117,35 +117,77 @@ namespace ImagineRITGame
             else if (currentShirtPantsComboOption == -1 && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.ShirtPantsCombo))
                 DrawArticleInInventory(sb, currentPants, .3295, .31, false, ClothingType.Pants);
 
-            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shoes)
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Shoes)                                                                // SHOES
                 DrawArticleInInventory(sb, currentTmpArticle, .3295, .375, false, ClothingType.Shoes);
             else
                 DrawArticleInInventory(sb, currentShoes, .3295, .375, false, ClothingType.Shoes);
 
-            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hat)
-                DrawArticleInInventory(sb, currentTmpArticle, .2145, .335, true, ClothingType.Hat);
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hat)                                                                  // HAT
+            {
+                if (currentTmpArticle == allClothes[(int)ClothingType.Hat][5] || currentTmpArticle == allClothes[(int)ClothingType.Hat][6])     // Clown masks higher up
+                    DrawArticleInInventory(sb, currentTmpArticle, .2145, .321, true, ClothingType.Hat);
+                else if (currentTmpArticle == allClothes[(int)ClothingType.Hat][7])                                                             // Spooky mask even higher up
+                    DrawArticleInInventory(sb, currentTmpArticle, .2145, .3155, true, ClothingType.Hat);
+                else                                                                                                                            // Regular hat height
+                    DrawArticleInInventory(sb, currentTmpArticle, .2145, .336, true, ClothingType.Hat);
+            }
             else
                 DrawArticleInInventory(sb, currentHat, .2145, .335, true, ClothingType.Hat);
 
-            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hair)
-                DrawArticleInInventory(sb, currentTmpArticle, .2145, .39, true, ClothingType.Hair);
-            else
-                DrawArticleInInventory(sb, currentHair, .2145, .39, true, ClothingType.Hair);
-
-            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Accessories)
-                DrawArticleInInventory(sb, currentTmpArticle, .2031, .435, false, ClothingType.Accessories);
-            else
-                DrawArticleInInventory(sb, currentAccessories, .2031, .435, false, ClothingType.Accessories);
-
-            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.ShirtPantsCombo)
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hair)                                                                 // HAIR
             {
-                DrawArticleInInventory(sb, currentTmpArticle, .3295, .255, false, ClothingType.ShirtPantsCombo);
-                DrawArticleInInventory(sb, currentTmpArticle, .3295, .31, false, ClothingType.ShirtPantsCombo);
+                if (currentTmpArticle == allClothes[(int)ClothingType.Hair][2] || currentTmpArticle == allClothes[(int)ClothingType.Hair][3] 
+                    || currentTmpArticle == allClothes[(int)ClothingType.Hair][8] || currentTmpArticle == allClothes[(int)ClothingType.Hair][12])
+                    DrawArticleInInventory(sb, currentTmpArticle, .2145, .407, true, ClothingType.Hair);
+                else if (currentTmpArticle == allClothes[(int)ClothingType.Hair][0] || currentTmpArticle == allClothes[(int)ClothingType.Hair][4] 
+                    || currentTmpArticle == allClothes[(int)ClothingType.Hair][13])
+                    DrawArticleInInventory(sb, currentTmpArticle, .2145, .398, true, ClothingType.Hair);
+                else if (currentTmpArticle == allClothes[(int)ClothingType.Hair][1] || currentTmpArticle == allClothes[(int)ClothingType.Hair][7] 
+                    || currentTmpArticle == allClothes[(int)ClothingType.Hair][11] || currentTmpArticle == allClothes[(int)ClothingType.Hair][14])
+                    DrawArticleInInventory(sb, currentTmpArticle, .2145, .394, true, ClothingType.Hair);
+                else
+                    DrawArticleInInventory(sb, currentTmpArticle, .2145, .39, true, ClothingType.Hair);
             }
-            else if ((currentPantsOption == -1 && currentShirtOption == -1) && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.Shirt) && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.Pants))
+            else
             {
-                DrawArticleInInventory(sb, currentShirtPantsCombo, .3295, .255, false, ClothingType.ShirtPantsCombo);
-                DrawArticleInInventory(sb, currentShirtPantsCombo, .3295, .31, false, ClothingType.ShirtPantsCombo);
+                if (currentHair == allClothes[(int)ClothingType.Hair][2] || currentHair == allClothes[(int)ClothingType.Hair][3]
+                    || currentHair == allClothes[(int)ClothingType.Hair][8] || currentHair == allClothes[(int)ClothingType.Hair][12])
+                    DrawArticleInInventory(sb, currentHair, .2145, .407, true, ClothingType.Hair);
+                else if (currentHair == allClothes[(int)ClothingType.Hair][0] || currentHair == allClothes[(int)ClothingType.Hair][4]
+                    || currentHair == allClothes[(int)ClothingType.Hair][13])
+                    DrawArticleInInventory(sb, currentHair, .2145, .398, true, ClothingType.Hair);
+                else if (currentHair == allClothes[(int)ClothingType.Hair][1] || currentHair == allClothes[(int)ClothingType.Hair][7]
+                    || currentHair == allClothes[(int)ClothingType.Hair][11] || currentHair == allClothes[(int)ClothingType.Hair][14])
+                    DrawArticleInInventory(sb, currentHair, .2145, .394, true, ClothingType.Hair);
+                else
+                    DrawArticleInInventory(sb, currentHair, .2145, .39, true, ClothingType.Hair);
+            }
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Accessories)                                                          // ACCESSORIES
+            {
+                if (currentTmpArticle == allClothes[(int)ClothingType.Accessories][0])                                                          // Draw in the beard higher
+                    DrawArticleInInventory(sb, currentTmpArticle, .2031, .42, false, ClothingType.Accessories);
+                else
+                    DrawArticleInInventory(sb, currentTmpArticle, .2031, .435, false, ClothingType.Accessories);
+            }
+            else
+            {
+                if (currentAccessories == allClothes[(int)ClothingType.Accessories][0])                                                          // Draw in the beard higher
+                    DrawArticleInInventory(sb, currentAccessories, .2031, .42, false, ClothingType.Accessories);
+                else
+                    DrawArticleInInventory(sb, currentAccessories, .2031, .435, false, ClothingType.Accessories);
+            }
+
+            if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.ShirtPantsCombo)                                                      // SHIRT / PANTS
+            {
+                DrawArticleInInventory(sb, currentTmpArticle, .3295, .25, false, ClothingType.ShirtPantsCombo);
+                DrawArticleInInventory(sb, currentTmpArticle, .3295, .323, false, ClothingType.ShirtPantsCombo);
+            }
+            else if ((currentPantsOption == -1 && currentShirtOption == -1) && (currentTmpArticleOption == -1 
+                || typeOfCurrentTmp != ClothingType.Shirt) && (currentTmpArticleOption == -1 || typeOfCurrentTmp != ClothingType.Pants))
+            {
+                DrawArticleInInventory(sb, currentShirtPantsCombo, .3295, .25, false, ClothingType.ShirtPantsCombo);
+                DrawArticleInInventory(sb, currentShirtPantsCombo, .3295, .323, false, ClothingType.ShirtPantsCombo);
             }
 
             DrawEmptySlot(sb, inventoryTexture);

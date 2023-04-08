@@ -758,13 +758,13 @@ namespace ImagineRITGame
                 peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text7");    // 59
                 peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text8");    // 33
             }
-            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1600 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1440)
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1600 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width > 1440)
             {
                 peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text9");    // 79
                 peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50
                 peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text8");    // 33
             }
-            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1440 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1360)
+            else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width <= 1440 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1360)
             {
                 peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text9");    // 79
                 peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50
@@ -774,7 +774,10 @@ namespace ImagineRITGame
             {
                 peaberryBaseText1 = Content.Load<SpriteFont>("peaberry_base_text5");    // 67
                 peaberryBaseText2 = Content.Load<SpriteFont>("peaberry_base_text3");    // 50
-                peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text10");   // 27
+                if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width == 1280)
+                    peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text23");   // 24
+                else
+                    peaberryBaseText3 = Content.Load<SpriteFont>("peaberry_base_text10");   // 27
             }
             else if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < 1280 && GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width >= 1024)
             {

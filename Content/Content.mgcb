@@ -808,6 +808,13 @@
 /processorParam:TextureFormat=Compressed
 /build:peaberry_base_text22.spritefont
 
+#begin peaberry_base_text23.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_text23.spritefont
+
 #begin peaberry_base_text3.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
