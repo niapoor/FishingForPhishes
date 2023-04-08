@@ -59,7 +59,7 @@ Substituting symbols and numbers for letters is a good way to make complex passw
 "A strong password should contain uppercase letters, lowercase letters, numbers, and symbols",TRUE,FALSE,,
 CIA of assets stands for:,"Confidentiality, Integrity, and Availability","Continuity, Integration, and Availability","Continuity, Integrity, and Accessibility","Confidentiality, Integration, and Availability"
 Which of these ensures the privacy of a VPN connection?,Tunneling,Hashing,Authentication,Cleartext credentials
-"While conducting research for purchasing software, a user visits series of blogs and Facebook pages containing fake reviews and testimonials in favor of a paid app intentionally infected with malware. Which social engineering principle applies here?",Consensus,Authority,Scarcity,Urgency
+"While looking for an app to download, a user finds fake reviews in favor of a paid app intentionally infected with malware. Which social engineering principle applies here?",Consensus,Authority,Scarcity,Urgency
 Which of the following terms relates closely to the concept of residual risk?,Risk acceptance,Risk transference,Risk deterrence,Risk avoidance
 An access control model in which every resource has a sensitivity label matching a clearance level assigned to a user is known as:,MAC,RBAC,DAC,ABAC
 Which of the following meets the requirement of multi-factor authentication?,Password and biometric scan,Username and PIN,Smart card and identification badge,Iris and fingerprint scan
