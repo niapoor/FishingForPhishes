@@ -132,7 +132,14 @@ namespace ImagineRITGame
                     DrawArticleInInventory(sb, currentTmpArticle, .2145, .336, true, ClothingType.Hat);
             }
             else
-                DrawArticleInInventory(sb, currentHat, .2145, .335, true, ClothingType.Hat);
+            {
+                if (currentHat == allClothes[(int)ClothingType.Hat][5] || currentHat == allClothes[(int)ClothingType.Hat][6])                   // Clown masks higher up
+                    DrawArticleInInventory(sb, currentHat, .2145, .321, true, ClothingType.Hat);
+                else if (currentHat == allClothes[(int)ClothingType.Hat][7])                                                                    // Spooky mask even higher up
+                    DrawArticleInInventory(sb, currentHat, .2145, .3155, true, ClothingType.Hat);
+                else                                                                                                                            // Regular hat height
+                    DrawArticleInInventory(sb, currentHat, .2145, .336, true, ClothingType.Hat);
+            }
 
             if (currentTmpArticleOption != -1 && typeOfCurrentTmp == ClothingType.Hair)                                                                 // HAIR
             {

@@ -673,6 +673,8 @@ namespace ImagineRITGame
         public Outfit EditArticle(Outfit outfit)
         {
             int buttonSelected = FindIndexButtonSelected();
+            if (buttonSelected == -1)
+                return outfit;
             switch (currentPage)
             {
                 case ClothingInventoryPage.Shirt:

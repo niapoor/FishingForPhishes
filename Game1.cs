@@ -8,6 +8,7 @@ using System.Windows.Forms.VisualStyles;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Xna.Framework.Audio;
 using System.IO;
+using Microsoft.Win32.SafeHandles;
 
 namespace ImagineRITGame
 {
@@ -93,6 +94,8 @@ namespace ImagineRITGame
         private TutorialsAndInfo tutorialsAndInfo;
         private ClothingInventory clothingInventory;
         private List<Texture2D> menuTextures;
+
+        private Shop shop;
 
         private Texture2D background;
         private Texture2D darkenBackground;
@@ -227,6 +230,8 @@ namespace ImagineRITGame
             tutorialsAndInfo = new TutorialsAndInfo(menuTextures, fonts);
             clothingInventory = new ClothingInventory(menuTextures, fonts, allOutfitTextures);
             playerOutfit = new Outfit(allOutfitTextures);
+
+            shop = new Shop(fonts);
 
             soundManager = new SoundManager(songs, soundEffects);
 
@@ -462,6 +467,7 @@ namespace ImagineRITGame
                     break;
                 case GameState.Game:
                     gameButtonsOverlay.Draw(_spriteBatch, Color.Goldenrod);
+                    gameButtonsOverlay.DrawStoreCredit(_spriteBatch, shop, fonts);
                     player.Draw(_spriteBatch);
                     playerOutfit.DrawOutfitOnPlayer(_spriteBatch, player, player.CurrentFrame, player.AnimationType, player.XLoc, player.YLoc);
                     if (drawInQuestion)
@@ -592,6 +598,7 @@ namespace ImagineRITGame
                     inventory.AddFishToInventory(currentFish);
                     soundManager.PlaySoundEffect(SoundEffects.Award);
                     player.UpdatePlayerState(PlayerStates.CatchFish);
+                    shop.AddToBalance(currentDifficulty);
                 }
                 else if (cooldownTime2 >= 10 && !correctOrIncorrect)
                 {
@@ -660,7 +667,7 @@ namespace ImagineRITGame
             menuTextures.Add(allFish);
             fishInvShadow = Content.Load<Texture2D>("inv_fish_shadow");
             menuTextures.Add(fishInvShadow);
-            clothingInventoryTexture = Content.Load<Texture2D>("inventory_customize_v3");
+            clothingInventoryTexture = Content.Load<Texture2D>("inventory_customize_v4");
             menuTextures.Add(clothingInventoryTexture);
             fishTextures.Add(fishTexture);
             fishTextures.Add(allFish);

@@ -262,5 +262,18 @@ namespace ImagineRITGame
                 .00000000001f);
         }
 
+        /// <summary>
+        /// Draws the button with a given color
+        /// </summary>
+        /// <param name="sb">the spritebatch that allows us to draw</param>
+        /// <param name="color">the color the button is drawn in</param>
+        public virtual void DrawInVoid(SpriteBatch sb, Color color)
+        {
+            sb.Draw(texture,
+                new Rectangle(new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 2, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 2), new Point(1, 1)),
+                textRect,
+                color);
+        }
+
     }
 }
