@@ -367,6 +367,8 @@ namespace ImagineRITGame
                     clothingInventory.Update(gameTime);
                     if (SingleKeyPress(Keys.Escape, previousKbState))
                         ChangeGameState(-1);
+                    playerOutfit.CurrentPrice = clothingInventory.GetCurrentPrice(shop, playerOutfit);
+                    playerOutfit.CurrentBalance = shop.CurrentBalance;
                     playerOutfit = clothingInventory.UpdateTempHoverOutfit(playerOutfit);
                     clothingInventory.MenuButtonActivated += ChangeGameState;
                     shop = clothingInventory.SetPriceToZero(shop, playerOutfit);

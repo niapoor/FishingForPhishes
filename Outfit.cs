@@ -63,6 +63,8 @@ namespace ImagineRITGame
         private bool drawShirtPantsCombo;
 
         private ClothingType typeOfCurrentTmp;
+        private int currentPrice;
+        private int currentBalance;
 
         public List<List<Texture2D>> AllClothes
         {
@@ -71,6 +73,20 @@ namespace ImagineRITGame
             }
         }
 
+        public int CurrentPrice
+        {
+            get
+            {
+                return currentPrice;
+            }
+            set { currentPrice= value; }
+        }
+
+        public Texture2D CurrentTmpArticle { get { return currentTmpArticle; } }
+
+        public int CurrentTmpOption { get { return currentTmpArticleOption; } }
+
+        public int CurrentBalance { get { return currentBalance; } set { currentBalance = value; } }
 
         public Outfit(List<List<Texture2D>> allOutfitTextures)
         {
@@ -98,6 +114,7 @@ namespace ImagineRITGame
             currentTmpSecondOption = -1;
             //currentHat = allClothes[(int)ClothingType.Hat][0];
             //currentAccessories = allClothes[(int)ClothingType.Accessories][1];
+            currentPrice = -1;
         }
 
         public void DrawOutfitInInventory(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D inventoryTexture)
@@ -206,60 +223,63 @@ namespace ImagineRITGame
 
             DrawEmptySlot(sb, inventoryTexture);
         }
-
+        
         public void ChangeCurrentArticle(ClothingType page, int newArticle, int newOption)
         {
-            switch (page)
+            if (currentPrice <= currentBalance)
             {
-                case ClothingType.Shirt:
-                    currentShirt = allClothes[(int)ClothingType.Shirt][newArticle];
-                    currentShirtOption = newOption;
-                    currentShirtPantsComboOption = -1;
-                    if (currentPantsOption == -1)
-                    {
-                        currentPants = allClothes[(int)ClothingType.Pants][0];
-                        currentPantsOption = 0;
-                    }
-                    break;
-                case ClothingType.Pants:
-                    currentPants = allClothes[(int)ClothingType.Pants][newArticle];
-                    currentPantsOption = newOption;
-                    currentShirtPantsComboOption = -1;
-                    if (currentShirtOption == -1)
-                    {
-                        currentShirt = allClothes[(int)ClothingType.Shirt][0];
-                        currentShirtOption = 0;
-                    }
-                    break;
-                case ClothingType.Shoes:
-                    currentShoes = allClothes[(int)ClothingType.Shoes][newArticle];
-                    currentShoesOption = newOption;
-                    break;
-                case ClothingType.Hair:
-                    currentHair = allClothes[(int)ClothingType.Hair][newArticle];
-                    currentHairOption = newOption;
-                    break;
-                case ClothingType.Hat:
-                    currentHat = allClothes[(int)ClothingType.Hat][newArticle];
-                    currentHatOption = newOption;
-                    break;
-                case ClothingType.Body:
-                    if (newArticle == 1)
-                        currentBodyOption = newOption;
-                    else
-                        currentEyesOption = newOption;
-                    break;
-                case ClothingType.Accessories:
-                    currentAccessories = allClothes[(int)ClothingType.Accessories][newArticle];
-                    currentAccessoriesOption = newOption;
-                    break;
-                case ClothingType.ShirtPantsCombo:
-                    currentShirtPantsCombo = allClothes[(int)ClothingType.ShirtPantsCombo][newArticle];
-                    currentShirtPantsComboOption = newOption;
-                    currentShirtOption = -1;
-                    currentPantsOption = -1;
-                    break;
+                switch (page)
+                {
+                    case ClothingType.Shirt:
+                        currentShirt = allClothes[(int)ClothingType.Shirt][newArticle];
+                        currentShirtOption = newOption;
+                        currentShirtPantsComboOption = -1;
+                        if (currentPantsOption == -1)
+                        {
+                            currentPants = allClothes[(int)ClothingType.Pants][0];
+                            currentPantsOption = 0;
+                        }
+                        break;
+                    case ClothingType.Pants:
+                        currentPants = allClothes[(int)ClothingType.Pants][newArticle];
+                        currentPantsOption = newOption;
+                        currentShirtPantsComboOption = -1;
+                        if (currentShirtOption == -1)
+                        {
+                            currentShirt = allClothes[(int)ClothingType.Shirt][0];
+                            currentShirtOption = 0;
+                        }
+                        break;
+                    case ClothingType.Shoes:
+                        currentShoes = allClothes[(int)ClothingType.Shoes][newArticle];
+                        currentShoesOption = newOption;
+                        break;
+                    case ClothingType.Hair:
+                        currentHair = allClothes[(int)ClothingType.Hair][newArticle];
+                        currentHairOption = newOption;
+                        break;
+                    case ClothingType.Hat:
+                        currentHat = allClothes[(int)ClothingType.Hat][newArticle];
+                        currentHatOption = newOption;
+                        break;
+                    case ClothingType.Body:
+                        if (newArticle == 1)
+                            currentBodyOption = newOption;
+                        else
+                            currentEyesOption = newOption;
+                        break;
+                    case ClothingType.Accessories:
+                        currentAccessories = allClothes[(int)ClothingType.Accessories][newArticle];
+                        currentAccessoriesOption = newOption;
+                        break;
+                    case ClothingType.ShirtPantsCombo:
+                        currentShirtPantsCombo = allClothes[(int)ClothingType.ShirtPantsCombo][newArticle];
+                        currentShirtPantsComboOption = newOption;
+                        currentShirtOption = -1;
+                        currentPantsOption = -1;
+                        break;
 
+                }
             }
         }
 
@@ -655,7 +675,7 @@ namespace ImagineRITGame
 
 
 
-
+            // Draw in each of the outfits
             for (int i = 0; i < outfitForPlayer.Count; i++)
                 sb.Draw(outfitForPlayer[i],
                     new Rectangle((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .2525), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .32),
