@@ -48,7 +48,7 @@ namespace ImagineRITGame
             sb.DrawString
             (fonts[2],
             shop.CurrentBalance.ToString(),
-            new Vector2((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.885), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.2133)),
+            new Vector2((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.885), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.12)),
             Color.DarkGoldenrod);
         }
 

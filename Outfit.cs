@@ -64,6 +64,13 @@ namespace ImagineRITGame
 
         private ClothingType typeOfCurrentTmp;
 
+        public List<List<Texture2D>> AllClothes
+        {
+            get {
+                return allClothes;
+            }
+        }
+
 
         public Outfit(List<List<Texture2D>> allOutfitTextures)
         {
@@ -660,6 +667,64 @@ namespace ImagineRITGame
                     0,
                     .00000000001f);
 
+        }
+
+        public int GetCurrentOption(ClothingInventoryPage page)
+        {
+            switch (page)
+            {
+                case ClothingInventoryPage.Hat:
+                    return currentHatOption;
+                    break;
+                case ClothingInventoryPage.Hair:
+                    return currentHairOption;
+                    break;
+                case ClothingInventoryPage.Shirt:
+                    return currentShirtOption;
+                    break;
+                case ClothingInventoryPage.Pants:
+                    return currentPantsOption;
+                    break;
+                case ClothingInventoryPage.ShirtPantsCombo:
+                    return currentShirtPantsComboOption;
+                    break;
+                case ClothingInventoryPage.Shoes:
+                    return currentShoesOption;
+                    break;
+                case ClothingInventoryPage.Accessories:
+                    return currentAccessoriesOption;
+                    break;
+            }
+            return -1;
+        }
+
+        public Texture2D CurrentTexture(ClothingInventoryPage page)
+        {
+            switch (page)
+            {
+                case ClothingInventoryPage.Hat:
+                    return currentHat;
+                    break;
+                case ClothingInventoryPage.Hair:
+                    return currentHair;
+                    break;
+                case ClothingInventoryPage.Shirt:
+                    return currentShirt;
+                    break;
+                case ClothingInventoryPage.Pants:
+                    return currentPants;
+                    break;
+                case ClothingInventoryPage.ShirtPantsCombo:
+                    return currentShirtPantsCombo;
+                    break;
+                case ClothingInventoryPage.Shoes:
+                    return currentShoes;
+                    break;
+                case ClothingInventoryPage.Accessories:
+                    return currentAccessories;
+                    break;
+            }
+            return currentAccessories;
         }
 
         public void DrawArticleIdle(Microsoft.Xna.Framework.Graphics.SpriteBatch sb, Texture2D article, double xLoc, double yLoc, bool makeSmaller, int spriteCount, int option)

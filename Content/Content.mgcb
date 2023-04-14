@@ -827,6 +827,48 @@
 /processorParam:TextureFormat=Compressed
 /build:peaberry_base_text23.spritefont
 
+#begin peaberry_base_text24.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_text24.spritefont
+
+#begin peaberry_base_text25.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_text25.spritefont
+
+#begin peaberry_base_text26.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_text26.spritefont
+
+#begin peaberry_base_text27.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_text27.spritefont
+
+#begin peaberry_base_text28.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_text28.spritefont
+
+#begin peaberry_base_text29.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:peaberry_base_text29.spritefont
+
 #begin peaberry_base_text3.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

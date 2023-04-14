@@ -13,6 +13,7 @@ using SharpDX.Direct2D1;
 using System.ComponentModel.DataAnnotations.Schema;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using SharpDX.DXGI;
+using System.Collections;
 
 namespace ImagineRITGame
 {
@@ -847,6 +848,106 @@ namespace ImagineRITGame
                 outfit.UpdateTmpArticle(ClothingType.ShirtPantsCombo, 0, -1);
             }
             return outfit;
+        }
+
+        public Shop SetPriceToZero(Shop shop, Outfit outfit)
+        {
+            int conditionalAdd = 0;
+            if (outfit.GetCurrentOption(currentPage) != -1)
+            {
+                switch (currentPage)
+                {
+                    case ClothingInventoryPage.Hat:             // DONE
+                        if(shop.CurrentBalance >= shop.CurrentPrices[17 + outfit.AllClothes[(int)ClothingType.Hat].IndexOf(outfit.CurrentTexture(currentPage))])
+                        {
+                            shop.CurrentBalance -= shop.CurrentPrices[17 + outfit.AllClothes[(int)ClothingType.Hat].IndexOf(outfit.CurrentTexture(currentPage))];
+                            shop.CurrentPrices[17 + outfit.AllClothes[(int)ClothingType.Hat].IndexOf(outfit.CurrentTexture(currentPage))] = 0;
+                        }
+                        break;
+                    case ClothingInventoryPage.Hair:             // DONE
+                        if (outfit.GetCurrentOption(currentPage) >= 4)
+                            conditionalAdd += -1;
+                        if(shop.CurrentBalance >= shop.CurrentPrices[25 + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Hair].IndexOf(outfit.CurrentTexture(currentPage)) * 9)])
+                        {
+                            shop.CurrentBalance -= shop.CurrentPrices[25 + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Hair].IndexOf(outfit.CurrentTexture(currentPage)) * 9)];
+                            shop.CurrentPrices[25 + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Hair].IndexOf(outfit.CurrentTexture(currentPage)) * 9)] = 0;
+                        }
+                        break;
+                    case ClothingInventoryPage.Shirt:           // DONE
+                        if (outfit.GetCurrentOption(currentPage) >= 4)
+                            conditionalAdd += -1;
+                        if (shop.CurrentBalance >= shop.CurrentPrices[25 + (5 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Shirt].IndexOf(outfit.CurrentTexture(currentPage)) * 9)])
+                        {
+                            shop.CurrentBalance -=  shop.CurrentPrices[25 + (5 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Shirt].IndexOf(outfit.CurrentTexture(currentPage)) * 9)];
+                            shop.CurrentPrices[25 + (5 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Shirt].IndexOf(outfit.CurrentTexture(currentPage)) * 9)] = 0;
+                        }
+                        break;
+                    case ClothingInventoryPage.Pants:           // DONE
+                        if (outfit.GetCurrentOption(currentPage) >= 4)
+                            conditionalAdd += -1;
+                        if (shop.CurrentBalance >= shop.CurrentPrices[34 + (8 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Pants].IndexOf(outfit.CurrentTexture(currentPage)) * 9)])
+                        {
+                            shop.CurrentBalance -= shop.CurrentPrices[34 + (8 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Pants].IndexOf(outfit.CurrentTexture(currentPage)) * 9)];
+                            shop.CurrentPrices[34 + (8 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Pants].IndexOf(outfit.CurrentTexture(currentPage)) * 9)] = 0;
+                        }
+                        break;
+                    case ClothingInventoryPage.ShirtPantsCombo: // DONE
+                        if (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) == 0)
+                        {
+                            if (outfit.GetCurrentOption(currentPage) >= 4)
+                                conditionalAdd += -1;
+                            if (shop.CurrentBalance >= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) * 9)])
+                            {
+                                shop.CurrentBalance -= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) * 9)];
+                                shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) * 9)] = 0;
+                            }
+                        }
+                        else if (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) == 1
+                            && shop.CurrentBalance >= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) * 9)])
+                        {
+                            shop.CurrentBalance -= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) * 9)];
+                            shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) * 9)] = 0;
+                        }
+                        else if (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) == 2
+                            && shop.CurrentBalance >= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + 11])
+                        {
+                            shop.CurrentBalance -= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + 11];
+                            shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + 11] = 0;
+                        }
+                        else if (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) == 3
+                            && shop.CurrentBalance >= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + 13])
+                        {
+                            shop.CurrentBalance -= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + 13];
+                            shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + 13] = 0;
+                        }
+                        else if (outfit.AllClothes[(int)ClothingType.ShirtPantsCombo].IndexOf(outfit.CurrentTexture(currentPage)) == 4
+                            && shop.CurrentBalance >= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + 14])
+                        {
+                            shop.CurrentBalance -= shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + 14];
+                            shop.CurrentPrices[34 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + 14] = 0;
+                        }
+                        break;
+                    case ClothingInventoryPage.Shoes:
+                        if (outfit.GetCurrentOption(currentPage) >= 4)
+                            conditionalAdd += -1;
+                        if (shop.CurrentBalance >= shop.CurrentPrices[49 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Shoes].IndexOf(outfit.CurrentTexture(currentPage)) * 9)])
+                        {
+                            shop.CurrentBalance -= shop.CurrentPrices[49 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Shoes].IndexOf(outfit.CurrentTexture(currentPage)) * 9)];
+                            shop.CurrentPrices[49 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Shoes].IndexOf(outfit.CurrentTexture(currentPage)) * 9)] = 0;
+                        }
+                        break;
+                    case ClothingInventoryPage.Accessories:
+                        if (outfit.GetCurrentOption(currentPage) >= 4)
+                            conditionalAdd += -1;
+                        if (shop.CurrentBalance >= shop.CurrentPrices[58 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Accessories].IndexOf(outfit.CurrentTexture(currentPage)) * 9)])
+                        {
+                            shop.CurrentBalance -= shop.CurrentPrices[58 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Accessories].IndexOf(outfit.CurrentTexture(currentPage)) * 9)];
+                            shop.CurrentPrices[58 + (9 * 27) + outfit.GetCurrentOption(currentPage) + conditionalAdd + (outfit.AllClothes[(int)ClothingType.Accessories].IndexOf(outfit.CurrentTexture(currentPage)) * 9)] = 0;
+                        }
+                        break;
+                }
+            }
+            return shop;
         }
 
         public Outfit RemoveArticle(Outfit outfit)
