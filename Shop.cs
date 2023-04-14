@@ -98,7 +98,7 @@ namespace ImagineRITGame
             switch (difficulty)
             {
                 case Difficulty.Easy:
-                    currentBalance += 10;
+                    currentBalance += 1000;
                     break;
                 case Difficulty.Medium:
                     currentBalance += 20;
@@ -230,7 +230,28 @@ namespace ImagineRITGame
                         }
                     }
                     break;
+
             }
+            sb.DrawString
+                (allFonts[2],
+                "Answering harder questions gives more store credit.",
+                new Vector2((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.21),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.7)),
+                Color.Black);
+
+            sb.DrawString
+                (allFonts[2],
+                "Change the question difficulty in the pause menu.",
+                new Vector2((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.21),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.78)),
+                Color.Black);
+
+            sb.DrawString
+                (allFonts[3],
+                "Current Store Credit: $" + currentBalance.ToString(),
+                new Vector2((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.255),
+                    (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.606)),
+                Color.Black);
         }
 
     }

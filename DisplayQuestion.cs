@@ -105,9 +105,9 @@ namespace ImagineRITGame
             // Write in each line of the question (minus the quotes), properly formatted to different lines when it is too long
             // If anyone finds this confusing (hint: it is) and has any questions feel free to message me (Nia)
             if (q.QuestionText()[0].ToString() == "\"")
-                currentTextList = base.WrapText(q.QuestionText().Substring(1, q.QuestionText().Length - 2), 35);
+                currentTextList = base.WrapText(q.QuestionText().Substring(1, q.QuestionText().Length - 2), 30);
             else
-                currentTextList = base.WrapText(q.QuestionText(), 35);
+                currentTextList = base.WrapText(q.QuestionText(), 30);
 
             // Make sure to assign the y value of the question based off of how many lines it is
             double y = ((5 - currentTextList.Count) * .08) + 0.2;
@@ -140,9 +140,9 @@ namespace ImagineRITGame
                 if (buttons[i].IsHovered)
                 {
                     if (q.AnswerList()[i].Text()[0].ToString() == "\"")
-                        currentTextList = base.WrapText(q.AnswerList()[i].Text().Substring(1, q.AnswerList()[i].Text().Length - 2), 90);
+                        currentTextList = base.WrapText(q.AnswerList()[i].Text().Substring(1, q.AnswerList()[i].Text().Length - 2), 70);
                     else
-                        currentTextList = base.WrapText(q.AnswerList()[i].Text(), 50);
+                        currentTextList = base.WrapText(q.AnswerList()[i].Text(), 70);
 
                     for (int j = 0; j < currentTextList.Count; j++)
                     {

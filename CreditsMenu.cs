@@ -45,14 +45,16 @@ namespace ImagineRITGame
             sb.DrawString(fonts[0], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .08)), fonts[0]), Color.DarkGoldenrod);
             text = "Created By...";
             sb.DrawString(fonts[1], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .28)), fonts[1]), Color.DarkGoldenrod);
-            text = "Nia Poor, Brandon Keller, Lalitha Donga,";
+            text = "Nia Poor, Brandon Keller, Jaime Campanelli,";
             sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .4)), fonts[2]), Color.DarkGoldenrod);
-            text = "Jaime Campanelli, Alexa Krempa, Elijah Heilman";
+            text = "Alexa Krempa, Elijah Heilman, Lalitha Donga";
             sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .47)), fonts[2]), Color.DarkGoldenrod);
-            text = "Special Thanks To Our PIs";
+            text = "Special Thanks To...";
             sb.DrawString(fonts[1], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .56)), fonts[1]), Color.DarkGoldenrod);
-            text = "Bo Yuan, Andy Meneely, Rajendra Raj";
+            text = "The National Science Foundation and OPM";
             sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .68)), fonts[2]), Color.DarkGoldenrod);
+            text = "Bo Yuan, Andy Meneely, Rajendra Raj";
+            sb.DrawString(fonts[2], text, Game1.CenterText(text, (int)(((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height) * .75)), fonts[2]), Color.DarkGoldenrod);
             
             // This is a debug thing to see the screen size when drawing text
             /*
