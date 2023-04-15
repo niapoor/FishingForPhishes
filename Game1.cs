@@ -59,6 +59,7 @@ namespace ImagineRITGame
         private double cooldownTime = 0;
         private double cooldownTime2 = 0;
         private double cooldownTime3 = 0;
+        private double cooldownTime4 = 0;
         private double fishSpawnTime = 0;
 
         private Random random;
@@ -112,6 +113,7 @@ namespace ImagineRITGame
 
         private Seagull seagull;
         private bool finalSeagullFrame;
+        private Seagull flyingSeagull;
 
         // The current difficulty
         private Difficulty currentDifficulty;
@@ -246,11 +248,15 @@ namespace ImagineRITGame
                 fishPack.FetchRandomFish(currentDifficulty), fonts);
             currentFish.PlaySoundEffect += soundManager.PlaySoundEffect;
 
-            // Creating a seagull!
+            // Creating a seagull that pecks
             seagull = new Seagull(allTiles,
                 new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .54),
                 (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .59)));
             finalSeagullFrame = false;
+
+            flyingSeagull = new Seagull(allTiles,
+                new Vector2((float)(-400),
+                (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .28)));
 
             firstTutorial = true;
             secondTutorial = true;
@@ -281,6 +287,7 @@ namespace ImagineRITGame
             cooldownTime += gameTime.ElapsedGameTime.TotalMilliseconds;
             cooldownTime2 += gameTime.ElapsedGameTime.TotalMilliseconds;
             cooldownTime3 += gameTime.ElapsedGameTime.TotalMilliseconds;
+            cooldownTime4 += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (!currentlyPlaying)
             {
@@ -375,6 +382,16 @@ namespace ImagineRITGame
                     break;
             }
 
+            if (flyingSeagull.ShoulUpdatePosition() && cooldownTime4 >= 90000)
+            {
+                flyingSeagull.UpdatePosition();
+            }
+            else if (!flyingSeagull.ShoulUpdatePosition() && cooldownTime4 >= 90000)
+            {
+                flyingSeagull.XPos = -400;
+                cooldownTime4 = 0;
+            }
+
             // Updates the previous position of the keyboard / mouse
             // (this is critical for the SingleKeyPress function, a very important function)
             UpdatePrevInputStates();
@@ -421,6 +438,7 @@ namespace ImagineRITGame
                     clothingInventoryPlayer.UpdateAnimation(gameTime);
                     break;
             }
+            flyingSeagull.UpdateAnimation(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -515,6 +533,8 @@ namespace ImagineRITGame
                     shop.DrawMoneyInShop(_spriteBatch, clothingInventory);
                     break;
             }
+
+            flyingSeagull.DrawFlying(_spriteBatch);
 
             _spriteBatch.End();
 

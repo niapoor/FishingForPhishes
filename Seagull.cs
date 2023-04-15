@@ -27,6 +27,11 @@ namespace ImagineRITGame
         private int animationIndex;
         private float aspectRatioFactor;
 
+        public float XPos
+        {
+            get { return position.X; } set { position.X = (float)value; }
+        }
+
         public Seagull(Texture2D seagullTexture, Vector2 location) 
         {
             texture = seagullTexture;
@@ -80,6 +85,26 @@ namespace ImagineRITGame
             }
         }
 
+        /// <summary>
+        /// Updates the position of the seagull flying across the screen
+        /// </summary>
+        /// <returns>Whether the seagull has flewn off the screen yet</returns>
+        public void UpdatePosition()
+        {
+            gullMaxFrame = 2;
+            fps = 4;
+            widthOfSingleSprite = 18;
+            // Add the the X position (fly across the screen)
+            position.X = position.X + 5;
+        }
+
+        public bool ShoulUpdatePosition()
+        {
+            if (position.X >= (int)GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width)
+                return false;
+            return true;
+        }
+
         public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
             // Seagull
@@ -93,5 +118,20 @@ namespace ImagineRITGame
                0,
                .01f);
         }
+
+        public void DrawFlying(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            // Seagull
+            sb.Draw(texture,
+               new Rectangle((int)position.X, (int)position.Y + (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * aspectRatioFactor * .03),
+                    GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 15),
+               new Rectangle(265 + (gullCurrentFrame * widthOfSingleSprite) + (gullCurrentFrame - 2), 370, widthOfSingleSprite + 1, 20),
+               Color.White,
+               0f,
+               Vector2.Zero,
+               SpriteEffects.FlipHorizontally,
+               .1f);
+        }
+
     }
 }
