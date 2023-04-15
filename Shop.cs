@@ -98,7 +98,7 @@ namespace ImagineRITGame
             switch (difficulty)
             {
                 case Difficulty.Easy:
-                    currentBalance += 1000;
+                    currentBalance += 10;
                     break;
                 case Difficulty.Medium:
                     currentBalance += 20;
