@@ -118,6 +118,7 @@ namespace ImagineRITGame
         // The current difficulty
         private Difficulty currentDifficulty;
         private Difficulty prevDifficulty;
+        private Difficulty currentFishDifficulty;
 
         // Question variables
         private DisplayQuestion displayQuestion;
@@ -194,6 +195,7 @@ namespace ImagineRITGame
 
             // The default difficulty for questions is easy
             currentDifficulty = Difficulty.Easy;
+            currentFishDifficulty = Difficulty.Easy;
             prevDifficulty = Difficulty.Hard;
 
             menuTextures = new List<Texture2D>();
@@ -325,12 +327,13 @@ namespace ImagineRITGame
                     else if (SingleKeyPress(Keys.Space, previousKbState) && drawInQuestion == false && drawInFishType == false && canOpenQuestion)
                     {
                         currentQuestion = questionPack.FetchRandomQuestion(currentDifficulty);
+                        currentFishDifficulty = currentDifficulty;
                         displayQuestion.SetUpQuestion(currentQuestion);
                         drawInQuestion = true;
                         currentFish = new Fish(fishTextures,
                             new Vector2((float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .47),
                             (float)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * .84)),
-                            fishPack.FetchRandomFish(currentDifficulty), fonts);
+                            fishPack.FetchRandomFish(currentFishDifficulty), fonts);
                         currentFish.PlaySoundEffect += soundManager.PlaySoundEffect;
                     }
                     else if (SingleKeyPress(Keys.Space, previousKbState) && drawInFishType)
@@ -623,7 +626,7 @@ namespace ImagineRITGame
                     inventory.AddFishToInventory(currentFish);
                     soundManager.PlaySoundEffect(SoundEffects.Award);
                     player.UpdatePlayerState(PlayerStates.CatchFish);
-                    shop.AddToBalance(currentDifficulty);
+                    shop.AddToBalance(currentFishDifficulty);
                 }
                 else if (cooldownTime2 >= 10 && !correctOrIncorrect)
                 {
