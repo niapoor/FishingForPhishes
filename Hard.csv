@@ -1,25 +1,20 @@
 Question,Correct Answer Choice,Incorrect Answer Choice,Incorrect Answer Choice,Incorrect Answer Choice
 What is the most important aspect of making a password secure?,Complexity,Length,Uniqueness,Familiarity
-What is the difference between Static and Dynamic Analysis in Malware Analysis?,Dynamic means running the malware Static does not,"Static means running the malware, Dynamic does not",Static is Passive (you don't do anything but sit back) Dynamic is Active (you are very engaged with the process),Dynamic is Passive (you don't do anything but sit back) Static is Active (you are very engaged with the process)
-What do policies NOT include?,The list of people who have previously violated the policy,Assets that need to be protected,How assets should be protected,The penalties for not following the policy
-What is risk a combination of?,Threat and vulnerability,Money and availability,Vulnerability and probability,
-An Authentication Factor is not,Something random,Something you have,Something you know,Something you are
-Which is not a method of Biometric authentication,PIN,Fingerprint,FaceID,
-A good password should be:,"Long, Complex, Unique, Not Personal","Short, Simple, Common, Personal","Long, Simple, Unique, Personal","Long, Complex, Unique, Personal"
-What does malware short for?,Malicious Software,Malcontent Wares,Malignant Programs,Malformed Process
+Which is NOT a method of Biometric authentication,PIN,Fingerprint,FaceID,
+A good password should be:,"Long, Complex, Unique","Short, Simple, Common","Long, Simple, Unique",
+What is malware short for?,Malicious Software,Malcontent Wares,Malignant Programs,Malformed Process
 Deleting a file means its immediately completely gone and can never come back,FALSE,TRUE,Only if deleted from the trash folder,true except for Google and Meta
 "Malware is dependent on the System (Windows, Android, iOS, etc)",TRUE,FALSE,,
-What is the name for a type of virus that can spread from computer to computer?,Malware,Social virus,Physical virus,None of the above
 "In Discretionary Access Control, who decides access rights to the data?",File Owner,System Owner,Operating System,The Data
 "In Mandatory Access Control, who decides access rights to the data?",System Owner,File Owner,Operating System,The Data
 What's a responsibility of an incident response team?,To develop a proactive incident response plan,To create incidents,To freak out when incidents occur,To assess the risk of the organization
-IOC stands for,Indicator of Compromise,In Office Covertly,Invitation of Coffee,Invasion of Cats
-What does the C in CIA stand for in Cyber Security?,Confidentiality,Correctness,Complexity,Cyber
-What does the I in CIA stand for in Cyber Security?,Integrity,Intensity,Immersed,Integral
-What does the A in CIA stand for in Cyber Security?,Availability,Attentive,Appropriate,Addressable
+IOC stands for:,Indicator of Compromise,In Office Covertly,Invitation of Coffee,Invasion of Cats
+What does the C in CIA stand for in cybersecurity?,Confidentiality,Correctness,Complexity,Cyber
+What does the I in CIA stand for in cybersecurity?,Integrity,Intensity,Immersed,Integral
+What does the A in CIA stand for in cybersecurity?,Availability,Attentive,Appropriate,Addressable
 How can you tell if a website encrypts its traffic?,It was a lock symbol in the URL,Google it,All websites encrypt traffic,Encrypted sites take longer to load
 Which of the following circumstances should you treat as suspicious?,All of the above,Email from an unknown sender with an urgent message requiring action,Request from Bank with  a link to update information,Flight information attachment from an airline when no travel is planned
-"Many of these attacks are carried out by organization employees/officers or former employees, what is the name of this threat?",Insider Threat,Ethical Hacking,Trolling,Honeypot
+"Many of these attacks are carried out by organization employees or former employees, what is the name of this threat?",Insider Threat,Ethical Hacking,Trolling,Honeypot
 What does social engineering mean in a security context?,"It is a form of social deception focussed on information gathering, fraud, or system access.",Building secure systems that are easy to use for society,It is a Honeypot,All of the above
 What does PIN stand for?,Personal Identification Number,Pizza Italy New,Person Identity Name,Piano In Nations
 What does the acronym OTP stand for? The term dynamic password is often used synonymously with OTP.,One Time Password,One Two Play,Only Two Pizzas,One Time Policy
@@ -29,7 +24,6 @@ Which term describes watching for and catching data packets passing through a ne
 What is the 6-letter term for a group of computers that are networked together and used by hackers to steal information?,Botnet,Hacker,Person,Robots
 "If you want to make sense of ciphertext, you'll need a key to decrypt it. What's the name for the readable, plain language text it turns into?",Plaintext,Normal Text,Text,Message
 What is encrypted plaintext called?,Ciphertext,Encryption,Secret Message,Private Text
-"Which term describes the underlying cybersecurity structure, as well as the technology and policies that support it?",Architecture,Design,Flowchart,Structure
 What does DLP Stand for?,Data Loss Prevention,Data Lose Present,Dynamic Lock Protocol,Disco Looks Party
 What is the term in network security for an attack where a person or program allows themselves to be identified as someone else by falsifying data?,Spoof,Identity Theft,Fraud,Acting
 Which is NOT a certification?,CRISP,CISSP,CCSP,CompTIA Security
@@ -37,10 +31,10 @@ Which is NOT a policy/law?,CIA,PCI-DSS,HIPAA,GLBA
 What industry does the HIPAA regulation apply to?,Healthcare,Finance,Education,Technology
 Which is NOT a security control type?,Investigative,Detective,Preventative,Audit
 Which is NOT part of the incident response process?,Monitoring,Containment,Recovery,Identification
-What's spear phishing?,The attacker focuses on phishing a specific person (typically C-suite) and specifically caters the email to them,The attacker bombards a specific person (typically C-suite) with an insane amount of emails,The attacker focuses on many high-level personnel and sends them generalized emails.,The attacker threatens to harm those who are being sent emails.
+What's spear phishing?,The attacker focuses on phishing a specific executive and specifically caters the email to them,The attacker bombards a specific executive with an insane amount of emails,The attacker focuses on many high-level personnel and sends them generalized emails.,The attacker threatens to harm those who are being sent emails.
 What's the difference between an event and an incident,Events are observable items while incidents are actionable items ,There is no difference,Events are much larger than incidents,Incidents are monitored while events are not
 What is considered an information asset?,All of the above,People,Software,Procedures
-Which is a type of attack?,All of the above,Hacktivist,Nation-state,Organized crime
+Which is a type of attacker?,All of the above,Hacktivist,Nation-state,Organized crime
 What is the purpose of a Security Information and Event Management (SIEM) system?,To monitor and analyze security events and alerts,To encrypt data in transit,To perform vulnerability scans of the network,To prevent unauthorized access to the system
 What is commonly deployed as a cloud service?,All of the above,Infrastructure service,Software service,Platform service
 A cloud system existing partly in-house and partly with a contracted service is called what?,Hybrid cloud,Back-up cloud ,Redundant cloud,Dual-source cloud
@@ -58,7 +52,6 @@ Having great computer skills means you are safe from online hackers,FALSE,TRUE,,
 Substituting symbols and numbers for letters is a good way to make complex passwords.,TRUE,FALSE,,
 "A strong password should contain uppercase letters, lowercase letters, numbers, and symbols",TRUE,FALSE,,
 CIA of assets stands for:,"Confidentiality, Integrity, and Availability","Continuity, Integration, and Availability","Continuity, Integrity, and Accessibility","Confidentiality, Integration, and Availability"
-Which of these ensures the privacy of a VPN connection?,Tunneling,Hashing,Authentication,Cleartext credentials
 "While looking for an app to download, a user finds fake reviews in favor of a paid app intentionally infected with malware. Which social engineering principle applies here?",Consensus,Authority,Scarcity,Urgency
 Which of the following terms relates closely to the concept of residual risk?,Risk acceptance,Risk transference,Risk deterrence,Risk avoidance
 An access control model in which every resource has a sensitivity label matching a clearance level assigned to a user is known as:,MAC,RBAC,DAC,ABAC
@@ -66,10 +59,20 @@ Which of the following meets the requirement of multi-factor authentication?,Pas
 Gaining unauthorized access to a Bluetooth device is referred to as:,Bluesnarfing,Phishing,Bluejacking,Tailgating
 "In forensic analysis, taking hashes ensure that the collected digital evidence retains:",Integrity,Confidentiality,Non-repudiation,Availability
 What is the best countermeasure against social engineering?,User awareness training,Permission auditing and review,Strong authentication,Password complexity requirement
-A type of technology that provides control over the usage of a mobile device within a designated area is known as:,Geofencing,RADIUS,Geolocation,GPS tagging
 Which of these refers to a method for permanent and irreversible removal of data stored on a memory device?,Sanitization,High-level formatting,Recycle Bin (MS Windows),Partitioning
 Which of these terms describes a penetration test in which the tester has limited access to internal information on the targeted system?,Gray-box testing,Fuzz testing,Black-box testing,White-box testing
 A penetration test performed by an authorized professional with the full prior knowledge of how the system that is to be tested works is called:,White-box testing,Black-box testing,Black-hat hacking,White-hat hacking
 A person who breaks into a computer network or system for a politically or socially motivated purpose is typically described as a(n):,Hacktivist,Competitor,Insider threat,Script kiddie
-A person who breaks into a computer network or system whose sole intent behind an attack is monetary gain?,Organized crime,Script kiddie,Hacktivist,Competition
-A person who breaks into a computer network or system that engages in illegal activities to gain market advantage is called?,Business Competitors,Nation states/APT,Organized crime,Insiders
+Which of the following is a safe way to use public Wi-Fi?,Use a VPN,Log in to your online banking account,Share your location with everyone nearby,Enter your personal information
+What does VPN stand for?,Virtual Private Network,Virtual Public Network,Virus Public News,Virus Performance Net
+What is the term for a program that looks like a legitimate program but is actually harmful?,Trojan horse,Worm,Spyware,Firewall
+What is the term for an attack in which a hacker tries to guess your password?,Brute force attack,Social engineering attack,Denial of service attack,Phishing attack
+What is the term for a type of attack in which a hacker floods a website with traffic to make it crash?,Denial of service attack,Phishing attack,Brute force attack,Social engineering attack
+What is the name for a type of virus that can spread through email attachments?,Worm,Trojan horse,Spyware,Adware
+What is the term for a program that tries to trick you into giving away your personal information?,Phishing,Adware,Spyware,Malware
+What is the name for a type of attack in which a hacker tries to trick you into giving away your personal information?,Social engineering attack,Brute force attack,Denial of Service Attack,Man in the middle attack
+What is the name for a type of attack in which a hacker uses software to steal your personal information?,Malware attack,Brute force attack,Social engineering attack,Phishing attack
+What is the name for a type of attack in which a hacker keeps trying to log into your account?,Brute force attack,Malware attack,Man in the middle attack,Phishing attack
+What is the term for a type of software that tracks your online activity without your consent?,Spyware,Adware,Ransomware,Trojan horse
+What is the name for a type of virus that can spread through instant messaging apps?,Worm,Trojan horse,Spyware,Adware
+"What is a group of computers, printers, and devices that are interconnected and controlled as a whole?",Domain,Group,Flock,Herd
