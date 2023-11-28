@@ -10,8 +10,8 @@
 </li><li>A custom made soundtrack
 </li><li>...and more!</li></ul>
 <hr>
-<h2>Download this game to play at <a href="https://niapoor.itch.io/fishing-for-phishes">https://niapoor.itch.io/fishing-for-phishes</a>
-  </h2>
+<h2>Download this game to play: <a href="https://niapoor.itch.io/fishing-for-phishes">https://niapoor.itch.io/fishing-for-phishes</a></h2>
+<h4>This game is entirely free to play and does not accept donations.</h4>
 <hr>
 <h3>Credits</h3>
 <p><u>Code Contributors</u>: Nia Poor, Brandon Keller</p>
@@ -21,5 +21,3 @@
 <ul><li>shubibubi - <a href="https://shubibubi.itch.io/">https://shubibubi.itch.io/</a></li><li>erkanozan - <a href="https://freesound.org/people/erkanozan/">https://freesound.org/people/erkanozan/</a></li><li><span></span>grunz - <a href="https://freesound.org/people/grunz/">https://freesound.org/people/grunz/</a></li><li><span></span>lebaston100 - <a href="https://freesound.org/people/lebaston100/">https://freesound.org/people/lebaston100/</a></li><li>InspectorJ - <a href="https://freesound.org/people/InspectorJ/">https://freesound.org/people/InspectorJ/</a></li></ul>
 <p>Financial Support was provided by the National Science Foundation Cybercorps Scholarship for Service (Grant 1922169) 
 </p>
-<hr>
-<h3>This game is entirely free to play and does not accept donations.</h3>
