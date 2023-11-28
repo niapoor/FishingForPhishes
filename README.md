@@ -10,6 +10,9 @@
 </li><li>A custom made soundtrack
 </li><li>...and more!</li></ul>
 <hr>
+<h2>Download this game to play at <a href="https://niapoor.itch.io/fishing-for-phishes">https://niapoor.itch.io/fishing-for-phishes</a>
+  </h2>
+<hr>
 <h3>Credits</h3>
 <p><u>Code Contributors</u>: Nia Poor, Brandon Keller</p>
 <p><u>Question Contributors</u>: Nia Poor, Brandon Keller, Jaime Campanelli, Alexa Krempa, Elijah Heilman, Lalitha Donga</p>
