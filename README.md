@@ -1,5 +1,4 @@
-# Fishing for Phishes: A K-12 Cybersecurity Education Game
-A K-12 Cybersecurity education game that teaches children how to be safe online.
+# Fishing for Phishes: A K-12 Education Game
 
 <h4><em>Dive into online safety with "Fishing for Phishes", a fin-tastic K-12 cybersecurity education game that teaches kids about how to be safe online!</em></h4>
 <h3>Fishing for Phishing has many features, including...
